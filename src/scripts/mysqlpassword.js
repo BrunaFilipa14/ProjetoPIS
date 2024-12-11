@@ -1,1 +1,1 @@
-module.exports = "aluno2024";
+module.exports = " "; //Insert password

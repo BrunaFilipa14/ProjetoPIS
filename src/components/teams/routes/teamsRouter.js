@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const teamsController = require("../controllers/teamsController.js");
 
-// router.get("/:id", teamsController.allTeams); //TO DO
-router.get("/", teamsController.allTeams); //TO DO
+router.get("/:name", teamsController.getTeamByName); //TO DO
+router.get("/", teamsController.getAllTeams); //TO DO
 
-// router.post("/", teamsController); //TO DO
+// router.post("/", teamsController.createTeam); //TO DO
 
 // router.put("/:id", teamsController); //TO DO
 

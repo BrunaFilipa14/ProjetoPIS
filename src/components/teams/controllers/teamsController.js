@@ -1,7 +1,5 @@
-const path = require("path");
 const mysql = require('mysql2');
 const MYSQLPASSWORD = require("../../../scripts/mysqlpassword");
-const { all } = require("../routes/teamsRouter");
 
 console.log(MYSQLPASSWORD);
 const connectionOptions = {
@@ -13,7 +11,7 @@ const connectionOptions = {
 const connection = mysql.createConnection(connectionOptions);
 connection.connect();
 
-const allTeams = (req,res) => {
+const getAllTeams = (req,res) => {
     connection.query("SELECT * FROM teams", (err, rows, fields) => {
         if (err)
             console.log(err);
@@ -23,6 +21,25 @@ const allTeams = (req,res) => {
             });
         }
     });
-}
+};
 
-module.exports.allTeams = allTeams;
+const getTeamByName = (req, res) => {
+    connection.query(`SELECT * FROM teams WHERE team_name = "${req.params.name}";`, (err, rows, fields) => {
+        if(err){
+            console.error("Error: " + err);
+        }
+        else if(rows.length > 0){
+            res.status(200).render('teams', {
+                teams: rows
+            });
+        }
+        else{
+            res.status(404).send("A equipa não existe!")
+        }
+    })
+};
+ 
+
+
+module.exports.getAllTeams = getAllTeams;
+module.exports.getTeamByName = getTeamByName;

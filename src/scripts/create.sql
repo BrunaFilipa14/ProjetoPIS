@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS projetoPIS;
-CREATE DATABASE projetoPIS;
-USE projetoPIS;
+DROP DATABASE IF EXISTS projetopis;
+CREATE DATABASE projetopis;
+USE projetopis;
 
 CREATE TABLE teams (
 	team_id INT PRIMARY KEY AUTO_INCREMENT,
