@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+    <h1><a href="/home">HOME</a></h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Initials</th>
+            <th>Year of Formation</th>
+            <th>Stadium</th>
+            <th>Country</th>
+        </tr>
+        {{#teams}}
+        <tr>
+            <td>{{team_name}}</td>
+            <td>{{team_initials}}</td>
+            <td>{{team_formedYear}}</td>
+            <td>{{team_stadium}}</td>
+            <td>{{team_country}}</td>
+        </tr>
+        {{/teams}}
+    </table>
+</body>
+</html>
