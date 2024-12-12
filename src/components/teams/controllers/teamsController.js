@@ -1,7 +1,6 @@
 const mysql = require('mysql2');
 const MYSQLPASSWORD = require("../../../scripts/mysqlpassword");
 
-console.log(MYSQLPASSWORD);
 const connectionOptions = {
     host: "localhost",
     user: "root",
@@ -10,6 +9,7 @@ const connectionOptions = {
 };
 const connection = mysql.createConnection(connectionOptions);
 connection.connect();
+
 
 const getAllTeams = (req,res) => {
     connection.query("SELECT * FROM teams", (err, rows, fields) => {
@@ -39,7 +39,82 @@ const getTeamByName = (req, res) => {
     })
 };
  
+const createTeam = (req, res) => {
+    let name = req.body.name;
+    let initials = req.body.initials;
+    //let badge = req.body.badge;
+    let formedYear = parseInt(req.body.formedYear);
+    let stadium = req.body.stadium;
+    let country = req.body.country;
 
+    //TODO Verifications
+
+    connection.query(`INSERT INTO teams (team_name, team_initials, team_formedYear, team_stadium, team_country) VALUES ("${name}", "${initials}", ${formedYear}, "${stadium}", "${country}");`, (err, result) => {
+        if (err){
+            console.log(err);
+        }else{
+            console.log("Teams inserted: " + result.affectedRows)
+            res.status(200).send(200);
+        }
+    });
+}
+
+const editTeam = (req,res) => {
+
+    if(req.body.name != null){
+        //TODO Verifications
+        if(true){
+            connection.query(`UPDATE teams SET team_name = "${req.body.name}" WHERE team_id = ${req.params.id};`)
+            console.log("Team NAME updated successfully");
+        }
+        else{
+            res.status(400).send("");
+        }
+    }
+    if(req.body.initials != null){
+        //TODO Verifications
+        if(true){
+            connection.query(`UPDATE teams SET team_initials = "${req.body.initials}" WHERE team_id = ${req.params.id};`)
+            console.log("Team INITIALS updated successfully");
+        }
+        else{
+            res.status(400).send("Numero invalido!");
+        }
+    }
+    if(req.body.formedYear != null){
+        //TODO Verifications
+        if(true){
+            connection.query(`UPDATE teams SET team_formedYear = ${parseInt(req.body.formedYear)} WHERE team_id = ${req.params.id};`)
+            console.log("Team FORMED YEAR updated successfully");
+        }
+        else{
+            res.status(400).send("");
+        }
+    }
+    if(req.body.stadium != null){
+        //TODO Verifications
+        if(true){
+            connection.query(`UPDATE teams SET team_stadium = "${req.body.stadium}" WHERE team_id = ${req.params.id};`)
+            console.log("Team STADIUM updated successfully");
+        }
+        else{
+            res.status(400).send("");
+        }
+    }
+    if(req.body.country != null){
+        //TODO Verifications
+        if(true){
+            connection.query(`UPDATE teams SET team_country = "${req.body.country}" WHERE team_id = ${req.params.id};`)
+            console.log("Team COUNTRY updated successfully");
+        }
+        else{
+            res.status(400).send("");
+        }
+    }
+    res.status(200).send("The team was edited successfully!");
+}
 
 module.exports.getAllTeams = getAllTeams;
 module.exports.getTeamByName = getTeamByName;
+module.exports.createTeam = createTeam;
+module.exports.editTeam = editTeam;
