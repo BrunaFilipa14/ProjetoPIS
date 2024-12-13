@@ -9,7 +9,7 @@ router.post("/", teamsController.createTeam); //TODO fetch + verifications
 
 router.put("/:id", teamsController.editTeam); //TODO fetch + verifications
 
-// router.delete("/:id", teamsController); //TODO
-// router.delete("/", teamsController); //TODO
+router.delete("/:id", teamsController.deleteTeam); //TODO fetch
+router.delete("/", teamsController.deleteAllTeams); //TODO fetch
 
 module.exports = router;

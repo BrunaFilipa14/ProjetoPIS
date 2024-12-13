@@ -34,7 +34,7 @@
                 </tr>
             </thead>
             <tbody>
-                {{#teams}}
+            {{#teams}}
                 <tr class="align-middle">
                     <td>{{team_name}}</td>
                     <td>{{team_initials}}</td>
@@ -48,7 +48,7 @@
                         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal" style="color:#fff;">Edit</button>
                     </td>
                 </tr>
-                {{/teams}}
+            {{/teams}}
             </tbody>
         </table>
     </div>
@@ -85,7 +85,7 @@
                 <div class="modal-body">
                     <form id="editModalForm">
                         <div class="mb-3">
-                            <label for="inputName" class="form-label">Name</label>
+                            <label for="inputTeamName" class="form-label">Name</label>
                             <input type="text" class="form-control" id="inputTeamName">
                         </div>
                         <div class="mb-3">
@@ -108,14 +108,15 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-warning" id="btnEditConfirm" data-bs-dismiss="modal" form="editModalForm">Confirm Changes</button>
+                    <button type="button" onclick="editTeam({{team_id}})" class="btn btn-warning" id="btnEditConfirm" data-bs-dismiss="modal" form="editModalForm">Confirm Changes</button>
                 </div>
             </div>
         </div>
     </div>
 
-
     <!-- Bootstrap Bundle w/ Popper-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="/js/teams/fetch.js"> </script>
 </body>
 </html>

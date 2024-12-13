@@ -114,7 +114,21 @@ const editTeam = (req,res) => {
     res.status(200).send("The team was edited successfully!");
 }
 
+const deleteTeam = (req, res) => {
+    connection.query(`DELETE FROM teams WHERE team_id = "${req.params.id}";`);
+
+    res.status(200).send("Team deleted successfully");
+}
+
+const deleteAllTeams = (req,res) => {
+    connection.query(`DELETE FROM teams;`)
+
+    res.status(200).send("200");
+}
+
 module.exports.getAllTeams = getAllTeams;
 module.exports.getTeamByName = getTeamByName;
 module.exports.createTeam = createTeam;
 module.exports.editTeam = editTeam;
+module.exports.deleteTeam = deleteTeam;
+module.exports.deleteAllTeams = deleteAllTeams;

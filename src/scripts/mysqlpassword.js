@@ -1,1 +1,1 @@
-module.exports = "..."; //TODO Insert password
+module.exports = ""; //TODO Insert password
