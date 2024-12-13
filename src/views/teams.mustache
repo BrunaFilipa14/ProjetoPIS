@@ -10,7 +10,6 @@
 </head>
 
 <body>
-    <h1>Backoffice</h1>
     <!-- 
         Não adicionei nada para o "View Team Players", não sei se queres sequer manter esse botão.
         Pensei em fazer outro ficheiro mustache para mostrar os jogadores da equipa, mas vai ser bués views probably.
@@ -21,6 +20,7 @@
     -->
     <!-- Tabela de Backoffice -->
     <div class="container">
+        <h1>Backoffice</h1>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -45,7 +45,7 @@
                     <td>
                         <button type="button" class="btn btn-primary">View Players</button>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
-                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal" style="color:#fff;">Edit</button>
+                        <button type="button" onclick="getId({{team_id}})" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal" style="color:#fff;">Edit</button>
                     </td>
                 </tr>
             {{/teams}}
@@ -108,7 +108,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                    <button type="button" onclick="editTeam({{team_id}})" class="btn btn-warning" id="btnEditConfirm" data-bs-dismiss="modal" form="editModalForm">Confirm Changes</button>
+                    <button type="button" onclick="editTeam()" class="btn btn-warning" id="btnEditConfirm{{team_id}}" data-bs-dismiss="modal" form="editModalForm">Confirm Changes</button>
                 </div>
             </div>
         </div>

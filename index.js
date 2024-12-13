@@ -13,13 +13,13 @@ app.set('views', __dirname + '/src/views'); //indicação de qual a pasta que ir
 app.use(express.urlencoded());
 app.use(express.json());
 
-app.use("/api/teams", teamsRouter);
-// app.use("/api/athletes", athletesRouter);
-// app.use("/api/competitions", competitionsRouter);
-// app.use("/api/statistics", statisticsRouter);
-// app.use("/api/games", gamesRouter);
-// app.use("/api/fav_athletes", favAthletesRouter);
-// app.use("/api/fav_teams", favTeamsRouter);
+app.use("/teams", teamsRouter);
+// app.use("/athletes", athletesRouter);
+// app.use("/competitions", competitionsRouter);
+// app.use("/statistics", statisticsRouter);
+// app.use("/games", gamesRouter);
+// app.use("/fav_athletes", favAthletesRouter);
+// app.use("/fav_teams", favTeamsRouter);
 
 
 app.get('/', (req, res) => {
