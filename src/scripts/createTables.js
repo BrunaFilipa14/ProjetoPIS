@@ -82,3 +82,11 @@ connection.query(("CREATE TABLE fav_teams (fav_team_id INT PRIMARY KEY AUTO_INCR
         console.log("FAV_TEAMS TABLE created!");
     }
 });
+
+connection.end((err) => {
+    if (err) {
+        console.error("Error closing the connection:", endErr);
+    } else {
+        console.log("connection closed.");
+    }
+});

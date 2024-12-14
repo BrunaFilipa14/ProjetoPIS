@@ -16,4 +16,11 @@ connection.connect((err) => {
             console.log("Database created!");
         }
     })
+    connection.end((err) => {
+        if (err) {
+            console.error("Error closing the connection:", endErr);
+        } else {
+            console.log("connection closed.");
+        }
+    });
 });
