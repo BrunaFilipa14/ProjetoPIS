@@ -12,8 +12,6 @@ function editTeam(){
     let stadium = document.getElementById(`inputTeamStadiumEdit`).value;
     let country = document.getElementById(`inputTeamCountryEdit`).value;
 
-    console.log(name);
-    console.log(teamId);
     fetch(`/teams/${teamId}`, {
         method: "PUT",
         headers:  {
