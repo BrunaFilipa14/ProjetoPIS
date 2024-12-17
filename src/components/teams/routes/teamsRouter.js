@@ -3,6 +3,7 @@ const router = express.Router();
 const teamsController = require("../controllers/teamsController.js");
 
 router.get("/:name", teamsController.getTeamByName);
+router.get("/:id/players", teamsController.getTeamPlayers); // TODO get it working
 router.get("/", teamsController.getAllTeams);
 
 router.post("/", teamsController.createTeam); //TODO verifications

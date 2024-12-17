@@ -92,3 +92,9 @@ function deleteAllTeams(){
     //refresh page
     location.reload();
 }
+
+function getTeamPlayers(id){
+    fetch(`/teams/${id}/players`)
+    .then(response => console.log(response))
+    .catch(err => console.error(err));
+}

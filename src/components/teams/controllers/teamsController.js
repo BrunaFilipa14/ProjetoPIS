@@ -121,9 +121,31 @@ const deleteTeam = (req, res) => {
 }
 
 const deleteAllTeams = (req,res) => {
-    connection.query(`DELETE FROM teams;`)
+    connection.query(`DELETE FROM teams;`);
 
     res.status(200).send("200");
+}
+
+const getTeamPlayers = (req,res) => {
+    connection.query(`SELECT * FROM athletes WHERE athlete_team_id = ${req.params.id};`, (err, rows, fields) => {
+        if (err){
+            console.log(err);
+        }else{
+            // console.log(result);
+            res.status(200).render('athletes', {
+                athletes: {
+                    name : athlete_name,
+                    birthDate: athlete_birthDate,
+                    height: rows.athlete_height,
+                    weight: rows.athlete_weight,
+                    nationality: rows.athlete_nationality,
+                    position: rows.athlete_position,
+                    team: req.params.id
+                }
+            });
+            res.render("athletes");
+        }
+    });
 }
 
 module.exports.getAllTeams = getAllTeams;
@@ -132,3 +154,4 @@ module.exports.createTeam = createTeam;
 module.exports.editTeam = editTeam;
 module.exports.deleteTeam = deleteTeam;
 module.exports.deleteAllTeams = deleteAllTeams;
+module.exports.getTeamPlayers = getTeamPlayers;

@@ -46,7 +46,7 @@
                     <td>{{team_stadium}}</td>
                     <td>{{team_country}}</td>
                     <td>
-                        <button type="button" class="btn btn-primary">View Players</button>
+                        <button type="button" class="btn btn-primary" onclick="getTeamPlayers({{team_id}})">View Players</button>
                         <button type="button" class="btn btn-danger" onclick="getId({{team_id}})" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                         <button type="button" onclick="getId({{team_id}})" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal" style="color:#fff;">Edit</button>
                     </td>
@@ -95,12 +95,10 @@
                             <label for="inputTeamInitialsEdit" class="form-label">Initials</label>
                             <input type="text" class="form-control" id="inputTeamInitialsEdit">
                         </div>
-                        <!-- BADGE (A ADICIONAR)
                         <div class="mb-3">
                             <label for="inputTeamBadgeEdit" class="form-label">Badge</label>
-                            <input class="form-control" type="file" id="inputTeamBadgeEdit">
+                            <input class="form-control" type="file" accept="image/jpeg, image/png, image/jpg" id="inputTeamBadgeEdit">
                         </div>
-                        -->
                         <div class="mb-3">
                             <label for="inputTeamFormedYearEdit" class="form-label">Formed Year</label>
                             <input type="number" class="form-control" id="inputTeamFormedYearEdit">
@@ -142,11 +140,9 @@
                             <label for="inputTeamInitialsCreate" class="form-label">Initials</label>
                             <input type="text" class="form-control" id="inputTeamInitialsCreate">
                         </div>
-                        <!-- BADGE (A ADICIONAR)
                         <div class="mb-3">
                             <label for="inputTeamBadgeCreate" class="form-label">Badge</label>
-                            <input class="form-control" type="file" id="inputTeamBadgeCreate">
-                        </div> -->
+                            <input class="form-control" type="file" accept="image/jpeg, image/png, image/jpg" id="inputTeamBadgeCreate">
                         <div class="mb-3">
                             <label for="inputTeamFormedYearCreate" class="form-label">Formed Year</label>
                             <input type="number" class="form-control" id="inputTeamFormedYearCreate">
