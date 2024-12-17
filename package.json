@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx nodemon index.js",
-    "firststart": "node src/scripts/createDatabase.js && node src/scripts/createTables.js && npx nodemon index.js"
+    "firststart": "node src/scripts/createDatabase.js && node src/scripts/createTables.js && npx nodemon index.js",
+    "initDatabase": "node src/scripts/createDatabase.js &&  node src/scripts/createTables.js"
   },
   "keywords": [],
   "author": "",
