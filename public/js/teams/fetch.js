@@ -93,8 +93,41 @@ function deleteAllTeams(){
     location.reload();
 }
 
-function getTeamPlayers(id){
+
+function getTeamPlayers(id) {
+    const modalBody = document.querySelector('#teamPlayersModal .modal-body tbody');
+    modalBody.innerHTML = `<tr><td colspan="6" class="text-center">Loading...</td></tr>`;
+
     fetch(`/teams/${id}/players`)
-    .then(response => console.log(response))
-    .catch(err => console.error(err));
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to fetch team players.");
+            }
+            return response.json();
+        })
+        .then(data => {
+            modalBody.innerHTML = "";
+
+            if (data.length > 0) {
+                data.forEach(data => {
+                    const row = `
+                        <tr class="align-middle">
+                            <td>${data.athlete_name}</td>
+                            <td>${data.athlete_birthDate}</td>
+                            <td>${data.athlete_height}</td>
+                            <td>${data.athlete_weight}</td>
+                            <td>${data.athlete_nationality}</td>
+                            <td>${data.athlete_position}</td>
+                        </tr>
+                    `;
+                    modalBody.innerHTML += row;
+                });
+            } else {
+                modalBody.innerHTML = `<tr><td colspan="6" class="text-center">No players found for this team.</td></tr>`;
+            }
+        })
+        .catch(err => {
+            console.error("Error:", err);
+            modalBody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Failed to load players.</td></tr>`;
+        });
 }

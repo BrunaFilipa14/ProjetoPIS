@@ -4,24 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Backoffice</title>
 </head>
 
 <body>
-    <!-- 
-        Não adicionei nada para o "View Team Players", não sei se queres sequer manter esse botão.
-        Pensei em fazer outro ficheiro mustache para mostrar os jogadores da equipa, mas vai ser bués views probably.
-        Podemos também fazer um modal, mas não sei como vai ficar
-
-
-        Adicionei o código para o mustache mas não o testei (ainda falta adicionar o url do badge à base de dados)
-    -->
-    <!-- Tabela de Backoffice -->
     <div class="container">
         <h1>Backoffice</h1>
         <br>
+        <table>
             <thead>
                 <tr>
                     <th scope="col">Name</th>
@@ -31,25 +21,26 @@
                     <th scope="col">Nationality</th>
                     <th scope="col">Position</th>
                     <th scope="col">Team</th>
-                    athlete_name, athlete_birthDate, athlete_height, athlete_weight, athlete_nationality, athlete_position, athlete_team_id
                 </tr>
             </thead>
             <tbody>
             {{#athletes}}
                 <tr class="align-middle">
-                    <td>{{name}}</td>
-                    <td>{{birthDate}}</td>
-                    <td>{{height}}</td>
-                    <td>{{weight}}</td>
-                    <td>{{nationality}}</td>
-                    <td>{{position}}</td>
-                    <td>{{team}}</td>
+                    <td>{{athlete_name}}</td>
+                    <td>{{athlete_birthDate}}</td>
+                    <td>{{athlete_height}}</td>
+                    <td>{{athlete_weight}}</td>
+                    <td>{{athlete_nationality}}</td>
+                    <td>{{athlete_position}}</td>
+                    <td>{{athlete_team_id}}</td>
                 </tr>
+            {{/athletes}}
+            {{^athletes}}
+            <tr><td colspan="6">No athletes found</td></tr>
             {{/athletes}}
             </tbody>
         </table>
     </div>
-
     
     <script src="/js/teams/fetch.js"> </script>
 </body>

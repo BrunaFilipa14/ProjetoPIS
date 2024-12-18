@@ -34,7 +34,7 @@ const getTeamByName = (req, res) => {
             });
         }
         else{
-            res.status(404).send("A equipa não existe!")
+            res.status(404).send("The team doesn't exist")
         }
     })
 };
@@ -126,27 +126,30 @@ const deleteAllTeams = (req,res) => {
     res.status(200).send("200");
 }
 
-const getTeamPlayers = (req,res) => {
-    connection.query(`SELECT * FROM athletes WHERE athlete_team_id = ${req.params.id};`, (err, rows, fields) => {
-        if (err){
-            console.log(err);
-        }else{
-            // console.log(result);
-            res.status(200).render('athletes', {
-                athletes: {
-                    name : athlete_name,
-                    birthDate: athlete_birthDate,
-                    height: rows.athlete_height,
-                    weight: rows.athlete_weight,
-                    nationality: rows.athlete_nationality,
-                    position: rows.athlete_position,
-                    team: req.params.id
-                }
-            });
-            res.render("athletes");
+// const getTeamPlayers = (req,res) => {
+//     connection.query(`SELECT * FROM athletes WHERE athlete_team_id = ${req.params.id};`, (err, rows, fields) => {
+//         if (err){
+//             console.log(err);
+//         }else{
+//             res.send(rows);
+//         }
+//     });
+// }
+
+const getTeamPlayers = (req, res) => {
+    const teamId = req.params.id;
+
+    const query = `SELECT athlete_name, athlete_birthDate, athlete_height, athlete_weight, athlete_nationality, athlete_position FROM athletes WHERE athlete_team_id = ?`;
+
+    connection.query(query, [teamId], (err, rows) => {
+        if (err) {
+            console.error("Error fetching players:", err);
+            return res.status(500).json({ error: "Failed to fetch players." });
         }
+        res.status(200).json(rows);
     });
-}
+};
+
 
 module.exports.getAllTeams = getAllTeams;
 module.exports.getTeamByName = getTeamByName;
