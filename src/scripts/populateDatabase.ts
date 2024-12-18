@@ -1,4 +1,4 @@
-let teams;
+let teams : object[];
 
 fetch("https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=NBA")
     .then((res) => {
@@ -9,10 +9,11 @@ fetch("https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=NBA")
         return res.json();
     })
     .then((data) => {
-        teams = data.teams.map(team => ({
+        teams = data.teams.map((team: { strTeam: string; strTeamShort: string; strBadge: string; intFormedYear: number; strStadium: string; strCountry: string; }) => ({
             team_name : team.strTeam,
             team_initials : team.strTeamShort,
             team_badge : team.strBadge,
+            team_formedYear : team.intFormedYear,
             team_stadium : team.strStadium,
             team_country : team.strCountry
         }));
