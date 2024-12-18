@@ -94,11 +94,14 @@ function deleteAllTeams(){
 }
 
 
-function getTeamPlayers(id) {
+function getTeamPlayers(name) {
     const modalBody = document.querySelector('#teamPlayersModal .modal-body tbody');
     modalBody.innerHTML = `<tr><td colspan="6" class="text-center">Loading...</td></tr>`;
 
-    fetch(`/teams/${id}/players`)
+    let modalTitle = document.getElementById("teamName");
+    modalTitle.textContent = name;
+
+    fetch(`/teams/${name}/players`)
         .then(response => {
             if (!response.ok) {
                 throw new Error("Failed to fetch team players.");

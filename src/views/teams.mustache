@@ -46,7 +46,7 @@
                     <td>{{team_stadium}}</td>
                     <td>{{team_country}}</td>
                     <td>
-                        <button type="button" class="btn btn-primary" onclick="getTeamPlayers({{team_id}})" data-bs-toggle="modal" data-bs-target="#teamPlayersModal">View Players</button>
+                        <button type="button" class="btn btn-primary" onclick="getTeamPlayers(`{{team_name}}`)" data-bs-toggle="modal" data-bs-target="#teamPlayersModal">View Players</button>
                         <button type="button" class="btn btn-danger" onclick="getId({{team_id}})" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                         <button type="button" onclick="getId({{team_id}})" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal" style="color:#fff;">Edit</button>
                     </td>
@@ -197,6 +197,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <h2 id="teamName"></h2>
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>

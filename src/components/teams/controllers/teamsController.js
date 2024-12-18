@@ -137,15 +137,18 @@ const deleteAllTeams = (req,res) => {
 // }
 
 const getTeamPlayers = (req, res) => {
-    const teamId = req.params.id;
+    const teamName = req.params.name;
 
-    const query = `SELECT athlete_name, athlete_birthDate, athlete_height, athlete_weight, athlete_nationality, athlete_position FROM athletes WHERE athlete_team_id = ?`;
+    const query = `SELECT athlete_name, athlete_birthDate, athlete_height, athlete_weight, athlete_nationality, athlete_position, athlete_team_name FROM athletes WHERE athlete_team_name = ?`;
 
-    connection.query(query, [teamId], (err, rows) => {
+    connection.query(query, [teamName], (err, rows) => {
         if (err) {
             console.error("Error fetching players:", err);
             return res.status(500).json({ error: "Failed to fetch players." });
         }
+        rows.forEach(row => {
+            row.athlete_birthDate = row.athlete_birthDate.toISOString().split('T')[0]; // Remove time from Date
+        });
         res.status(200).json(rows);
     });
 };

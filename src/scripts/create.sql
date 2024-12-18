@@ -4,7 +4,7 @@ USE projetopis;
 
 CREATE TABLE teams (
 	team_id INT PRIMARY KEY AUTO_INCREMENT,
-    team_name VARCHAR(50),
+    team_name VARCHAR(50) UNIQUE,
     team_initials VARCHAR (5),
     team_badge VARCHAR (1024),
     team_formedYear INT,
@@ -28,8 +28,8 @@ CREATE TABLE athletes (
     athlete_weight DECIMAL (5, 2),
     athlete_nationality VARCHAR (50) NOT NULL,
     athlete_position VARCHAR (50),
-    athlete_team_id INT,
-    FOREIGN KEY(athlete_team_id) REFERENCES teams(team_id)
+    athlete_team_name VARCHAR(50),
+    FOREIGN KEY(athlete_team_name) REFERENCES teams(team_name)
 );
 
 CREATE TABLE games (
