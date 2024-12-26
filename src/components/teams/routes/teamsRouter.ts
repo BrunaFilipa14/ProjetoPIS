@@ -13,4 +13,4 @@ router.put("/:id", teamsController.editTeam); //TODO verifications
 router.delete("/:id", teamsController.deleteTeam);
 router.delete("/", teamsController.deleteAllTeams);
 
-module.exports = router;
+export default router;
