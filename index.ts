@@ -1,6 +1,6 @@
-import * as express from "express";
+import express from "express";
 import teamsRouter from "./src/components/teams/routes/teamsRouter.js";
-import * as mustacheExpress from "mustache-express";
+import mustacheExpress from "mustache-express";
 
 const app : express.Application = express();
 

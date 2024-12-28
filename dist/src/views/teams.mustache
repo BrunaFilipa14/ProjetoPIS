@@ -86,7 +86,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editModalForm">
+                    <form id="editModalForm" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="inputTeamNameEdit" class="form-label">Name</label>
                             <input type="text" class="form-control" id="inputTeamNameEdit">
@@ -131,7 +131,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="createModalForm">
+                    <form id="createModalForm" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="inputTeamNameCreate" class="form-label">Name</label>
                             <input type="text" class="form-control" id="inputTeamNameCreate">
@@ -142,7 +142,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="inputTeamBadgeCreate" class="form-label">Badge</label>
-                            <input class="form-control" type="file" accept="image/jpeg, image/png, image/jpg" id="inputTeamBadgeCreate">
+                            <input class="form-control" type="file" accept="image/jpeg, image/png, image/jpg" id="inputTeamBadgeCreate" name="teamBadge">
                         </div>
                         <div class="mb-3">
                             <label for="inputTeamFormedYearCreate" class="form-label">Formed Year</label>

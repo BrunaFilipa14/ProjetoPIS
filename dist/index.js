@@ -1,16 +1,19 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express = require("express");
-const teamsRouter_js_1 = require("./src/components/teams/routes/teamsRouter.js");
-const mustacheExpress = require("mustache-express");
-const app = express();
+const express_1 = __importDefault(require("express"));
+const teamsRouter_js_1 = __importDefault(require("./src/components/teams/routes/teamsRouter.js"));
+const mustache_express_1 = __importDefault(require("mustache-express"));
+const app = (0, express_1.default)();
 //define a pasta public como estatica, tem de estar no inicio
-app.use(express.static(__dirname + '/public'));
-app.engine('mustache', mustacheExpress());
+app.use(express_1.default.static(__dirname + '/public'));
+app.engine('mustache', (0, mustache_express_1.default)());
 app.set('view engine', 'mustache'); //extensão dos ficheiros das views
 app.set('views', __dirname + '/src/views'); //indicação de qual a pasta que irá conter as views
-app.use(express.urlencoded());
-app.use(express.json());
+app.use(express_1.default.urlencoded());
+app.use(express_1.default.json());
 app.use("/teams", teamsRouter_js_1.default);
 // app.use("/athletes", athletesRouter);
 // app.use("/competitions", competitionsRouter);

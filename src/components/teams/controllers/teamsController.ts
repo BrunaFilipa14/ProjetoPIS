@@ -1,6 +1,7 @@
 import * as mysql from 'mysql2';
 import MYSQLPASSWORD from "../../../scripts/mysqlpassword";
 import { Request, Response } from 'express';
+import multer from 'multer';
 
 const connectionOptions : mysql.ConnectionOptions = {
     host: "localhost",
@@ -43,14 +44,13 @@ const getTeamByName = (req : Request, res : Response) => {
 const createTeam = (req : Request, res : Response) => {
     let name = req.body.name;
     let initials = req.body.initials;
-    //let badge = req.body.badge;
+    let badge = req.file;
     let formedYear = parseInt(req.body.formedYear);
     let stadium = req.body.stadium;
     let country = req.body.country;
 
     //TODO Verifications
-
-    connection.query<mysql.ResultSetHeader>(`INSERT INTO teams (team_name, team_initials, team_formedYear, team_stadium, team_country) VALUES ("${name}", "${initials}", ${formedYear}, "${stadium}", "${country}");`, (err : Error, result : any) => {
+    connection.query<mysql.ResultSetHeader>(`INSERT INTO teams (team_name, team_initials, team_badge, team_formedYear, team_stadium, team_country) VALUES ("${name}", "${initials}", ${badge}, ${formedYear}, "${stadium}", "${country}");`, (err : Error, result : any) => {
         if (err){
             console.log(err);
         }else{
