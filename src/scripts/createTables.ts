@@ -18,7 +18,7 @@ connection.query<mysql.ResultSetHeader>(("CREATE TABLE teams (team_id INT PRIMAR
     }
 });
 
-connection.query<mysql.ResultSetHeader>(("CREATE TABLE competitions (competition_id INT PRIMARY KEY AUTO_INCREMENT, competition_name VARCHAR(100), competition_format VARCHAR(50), competition_winner_team_id INT, competition_season VARCHAR(50), FOREIGN KEY(competition_winner_team_id) REFERENCES teams(team_id));"), (err, result) => {
+connection.query<mysql.ResultSetHeader>(("CREATE TABLE competitions (competition_id INT PRIMARY KEY AUTO_INCREMENT, competition_name VARCHAR(100));"), (err, result) => {
     if (err) {
         console.log(err);
     }
@@ -57,7 +57,7 @@ connection.query<mysql.ResultSetHeader>(("CREATE TABLE statistics (statistic_id 
 connection.query<mysql.ResultSetHeader>(("CREATE TABLE users (user_id INT PRIMARY KEY AUTO_INCREMENT,user_type VARCHAR(5),user_name VARCHAR (50),user_password VARCHAR(50));"), (err, result) => {
     if (err) {
         console.log(err);
-    }
+    } 
     else {
         console.log("USERS TABLE created!");
     }

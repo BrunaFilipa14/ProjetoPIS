@@ -44,7 +44,6 @@ const connectionOptions = {
     database: "projeto",
     password: mysqlpassword_1.default
 };
-let teams;
 const connection = mysql.createConnection(connectionOptions);
 fetch("https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=NBA")
     .then((res) => {
@@ -64,17 +63,38 @@ fetch("https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=NBA")
             }
         });
     });
-    /*teams = data.teams.map((team: { strTeam: string; strTeamShort: string; strBadge: string; intFormedYear: number; strStadium: string; strCountry: string; }) => ({
-        team_name: team.strTeam,
-        team_initials: team.strTeamShort,
-        team_badge: team.strBadge,
-        team_formedYear: team.intFormedYear,
-        team_stadium: team.strStadium,
-        team_country: team.strCountry
-    }));*/
 })
     .catch((error) => console.error("Unable to fetch data:", error));
-/*setTimeout(() => {
-    console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    console.log("Stored Data:", teams);
-}, 2000);*/ 
+fetch("https://www.thesportsdb.com/api/v1/json/3/all_leagues.php")
+    .then((res) => {
+    if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+    return res.json();
+})
+    .then((data) => {
+    let basketballLeagues = data.leagues;
+    basketballLeagues = basketballLeagues.filter((league) => league.strSport == "Basketball");
+    console.log(basketballLeagues);
+    /*basketballLeagues.forEach((league: { strName: String, strSport: String }) => {
+        connection.query<mysql.ResultSetHeader>((`INSERT INTO competitions (competition_name) VALUES ('${league.strName}');`), (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                console.log("COMPETITIONS TABLE populated!");
+            }
+        });
+    });*/
+})
+    .catch((error) => console.error("Unable to fetch data:", error));
+setTimeout(() => {
+    connection.end((err) => {
+        if (err) {
+            console.error("Error closing the connection:", err);
+        }
+        else {
+            console.log("connection closed.");
+        }
+    });
+}, 2000);

@@ -7,16 +7,7 @@ const express = require("express");
 const router = express.Router();
 const teamsController = require("../controllers/teamsController.js");
 const multer_1 = __importDefault(require("multer"));
-const storageTeams = multer_1.default.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './dist/public/images/teams');
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, file.fieldname + '-' + uniqueSuffix);
-    }
-});
-const uploadTeamBadge = (0, multer_1.default)({ storage: storageTeams });
+const uploadTeamBadge = (0, multer_1.default)({ dest: './../../../public/images/teams/' });
 router.get("/:name", teamsController.getTeamByName);
 router.get("/:name/players", teamsController.getTeamPlayers); // TODO get it working
 router.get("/", teamsController.getAllTeams);
