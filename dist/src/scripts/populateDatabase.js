@@ -45,6 +45,31 @@ const connectionOptions = {
     password: mysqlpassword_1.default
 };
 const connection = mysql.createConnection(connectionOptions);
+//* COMPETITIONS FETCH
+fetch("https://www.thesportsdb.com/api/v1/json/3/all_leagues.php")
+    .then((res) => {
+    if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+    return res.json();
+})
+    .then((data) => {
+    let basketballLeagues = data.leagues;
+    basketballLeagues = basketballLeagues.filter((league) => league.strSport == "Basketball");
+    console.log(basketballLeagues);
+    basketballLeagues.forEach((league) => {
+        connection.query((`INSERT INTO competitions (competition_name) VALUES ('${league.strName}');`), (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                console.log("COMPETITIONS TABLE populated!");
+            }
+        });
+    });
+})
+    .catch((error) => console.error("Unable to fetch data:", error));
+//TODO: TEAMS FETCH (USE THE COMPETITIONS DATABASE TO GET THE COMPETITIONS NAMES IN THE FETCH URL)
 fetch("https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=NBA")
     .then((res) => {
     if (!res.ok) {
@@ -65,29 +90,7 @@ fetch("https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=NBA")
     });
 })
     .catch((error) => console.error("Unable to fetch data:", error));
-fetch("https://www.thesportsdb.com/api/v1/json/3/all_leagues.php")
-    .then((res) => {
-    if (!res.ok) {
-        throw new Error(`HTTP error! Status: ${res.status}`);
-    }
-    return res.json();
-})
-    .then((data) => {
-    let basketballLeagues = data.leagues;
-    basketballLeagues = basketballLeagues.filter((league) => league.strSport == "Basketball");
-    console.log(basketballLeagues);
-    /*basketballLeagues.forEach((league: { strName: String, strSport: String }) => {
-        connection.query<mysql.ResultSetHeader>((`INSERT INTO competitions (competition_name) VALUES ('${league.strName}');`), (err, result) => {
-            if (err) {
-                console.log(err);
-            }
-            else {
-                console.log("COMPETITIONS TABLE populated!");
-            }
-        });
-    });*/
-})
-    .catch((error) => console.error("Unable to fetch data:", error));
+//TODO: TIMEOUT, REPLACE WITH ASYNC (ASK TEACHER FOR HELP)
 setTimeout(() => {
     connection.end((err) => {
         if (err) {

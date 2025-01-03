@@ -38,6 +38,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mysql = __importStar(require("mysql2"));
 const mysqlpassword_1 = __importDefault(require("../../../scripts/mysqlpassword"));
+const multer_1 = __importDefault(require("multer"));
+const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
 const connectionOptions = {
     host: "localhost",
     user: "root",
@@ -46,6 +49,19 @@ const connectionOptions = {
 };
 const connection = mysql.createConnection(connectionOptions);
 connection.connect();
+// Configure Multer for file uploads
+const upload = (0, multer_1.default)({
+    storage: multer_1.default.diskStorage({
+        destination: (req, file, cb) => {
+            console.log(req.body);
+            cb(null, 'dist/public/images/teams/');
+        },
+        filename: (req, file, cb) => {
+            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+            cb(null, file.fieldname + '-' + uniqueSuffix + path_1.default.extname(file.originalname));
+        }
+    })
+});
 const getAllTeams = (req, res) => {
     connection.query("SELECT * FROM teams", (err, rows, fields) => {
         if (err)
@@ -73,77 +89,146 @@ const getTeamByName = (req, res) => {
     });
 };
 const createTeam = (req, res) => {
-    let name = req.body.name;
-    let initials = req.body.initials;
-    let badge = req.file;
-    let formedYear = parseInt(req.body.formedYear);
-    let stadium = req.body.stadium;
-    let country = req.body.country;
-    //TODO Verifications
-    connection.query(`INSERT INTO teams (team_name, team_initials, team_badge, team_formedYear, team_stadium, team_country) VALUES ("${name}", "${initials}", ${badge}, ${formedYear}, "${stadium}", "${country}");`, (err, result) => {
+    upload.single('teamBadge')(req, res, (err) => {
+        var _a;
         if (err) {
-            console.log(err);
+            console.error("Error during file upload:", err);
+            return res.status(500).send("Failed to upload file.");
         }
-        else {
-            console.log("Teams inserted: " + result.affectedRows);
-            res.status(200).send(200);
-        }
+        //console.log("Uploaded file:", req.file); // Log the uploaded file
+        console.log("Request body:", req.body); // Log the rest of the form data
+        console.log("req file: " + ((_a = req.file) === null || _a === void 0 ? void 0 : _a.filename));
+        const { name, initials, formedYear, stadium, country } = req.body;
+        const badgePath = req.file ? `/images/teams/${req.file.filename}` : null;
+        console.log(__dirname);
+        console.log(badgePath);
+        //TODO Verifications
+        connection.query(`INSERT INTO teams (team_name, team_initials, team_badge, team_formedYear, team_stadium, team_country) VALUES ("${name}", "${initials}", "${badgePath}", "${formedYear}", "${stadium}", "${country}");`, (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                console.log("Teams inserted: " + result.affectedRows);
+                res.status(200).send(200);
+            }
+        });
     });
 };
 const editTeam = (req, res) => {
-    if (req.body.name != null) {
-        //TODO Verifications
-        if (true) {
-            connection.query(`UPDATE teams SET team_name = "${req.body.name}" WHERE team_id = ${req.params.id};`);
-            console.log("Team NAME updated successfully");
+    upload.single('teamBadgeEdit')(req, res, (err) => {
+        if (err) {
+            console.error("Error during file upload:", err);
+            return res.status(500).send("Failed to upload file.");
         }
-        else {
-            res.status(400).send("");
+        console.log("body:");
+        console.log(req.body);
+        const { nameEdit, initialsEdit, formedYearEdit, stadiumEdit, countryEdit } = req.body;
+        const badgePathEdit = req.file ? `/images/teams/${req.file.filename}` : null;
+        console.log(badgePathEdit);
+        if (nameEdit != null && nameEdit != "") {
+            //TODO Verifications
+            if (true) {
+                connection.query(`UPDATE teams SET team_name = "${nameEdit}" WHERE team_id = ${req.params.id};`);
+                console.log("Team NAME updated successfully");
+            }
+            else {
+                res.status(400).send("");
+            }
         }
-    }
-    if (req.body.initials != null) {
-        //TODO Verifications
-        if (true) {
-            connection.query(`UPDATE teams SET team_initials = "${req.body.initials}" WHERE team_id = ${req.params.id};`);
-            console.log("Team INITIALS updated successfully");
+        if (initialsEdit != null && initialsEdit != "") {
+            //TODO Verifications
+            if (true) {
+                connection.query(`UPDATE teams SET team_initials = "${initialsEdit}" WHERE team_id = ${req.params.id};`);
+                console.log("Team INITIALS updated successfully");
+            }
+            else {
+                res.status(400).send("Numero invalido!");
+            }
         }
-        else {
-            res.status(400).send("Numero invalido!");
+        if (badgePathEdit != null && badgePathEdit != "") {
+            //TODO Verifications
+            if (true) {
+                connection.query(`SELECT team_badge FROM teams WHERE team_id = "${req.params.id}";`, (err, rows, result) => {
+                    if (err) {
+                        console.error("Error: " + err);
+                    }
+                    else if (rows.length > 0) {
+                        let badgePath = rows[0].team_badge;
+                        console.log(badgePath);
+                        // Delete the image from the server
+                        try {
+                            fs_1.default.unlinkSync(`dist/public${badgePath}`);
+                            console.log('File deleted!');
+                        }
+                        catch (err) {
+                            console.error(err.message);
+                        }
+                    }
+                    else {
+                        res.status(404).send("The team doesn't exist!");
+                    }
+                });
+                connection.query(`UPDATE teams SET team_badge = "${badgePathEdit}" WHERE team_id = ${req.params.id};`);
+                console.log("Team BADGE updated successfully");
+            }
+            else {
+                res.status(400).send("");
+            }
         }
-    }
-    if (req.body.formedYear != null) {
-        //TODO Verifications
-        if (true) {
-            connection.query(`UPDATE teams SET team_formedYear = ${parseInt(req.body.formedYear)} WHERE team_id = ${req.params.id};`);
-            console.log("Team FORMED YEAR updated successfully");
+        if (formedYearEdit != null && formedYearEdit != "") {
+            //TODO Verifications
+            if (true) {
+                connection.query(`UPDATE teams SET team_formedYear = ${parseInt(formedYearEdit)} WHERE team_id = ${req.params.id};`);
+                console.log("Team FORMED YEAR updated successfully");
+            }
+            else {
+                res.status(400).send("");
+            }
         }
-        else {
-            res.status(400).send("");
+        if (stadiumEdit != null && stadiumEdit != "") {
+            //TODO Verifications
+            if (true) {
+                connection.query(`UPDATE teams SET team_stadium = "${stadiumEdit}" WHERE team_id = ${req.params.id};`);
+                console.log("Team STADIUM updated successfully");
+            }
+            else {
+                res.status(400).send("");
+            }
         }
-    }
-    if (req.body.stadium != null) {
-        //TODO Verifications
-        if (true) {
-            connection.query(`UPDATE teams SET team_stadium = "${req.body.stadium}" WHERE team_id = ${req.params.id};`);
-            console.log("Team STADIUM updated successfully");
+        if (countryEdit != null && countryEdit != "") {
+            //TODO Verifications
+            if (true) {
+                connection.query(`UPDATE teams SET team_country = "${countryEdit}" WHERE team_id = ${req.params.id};`);
+                console.log("Team COUNTRY updated successfully");
+            }
+            else {
+                res.status(400).send("");
+            }
         }
-        else {
-            res.status(400).send("");
-        }
-    }
-    if (req.body.country != null) {
-        //TODO Verifications
-        if (true) {
-            connection.query(`UPDATE teams SET team_country = "${req.body.country}" WHERE team_id = ${req.params.id};`);
-            console.log("Team COUNTRY updated successfully");
-        }
-        else {
-            res.status(400).send("");
-        }
-    }
-    res.status(200).send("The team was edited successfully!");
+        res.status(200).send("The team was edited successfully!");
+    });
 };
 const deleteTeam = (req, res) => {
+    connection.query(`SELECT team_badge FROM teams WHERE team_id = "${req.params.id}";`, (err, rows, result) => {
+        if (err) {
+            console.error("Error: " + err);
+        }
+        else if (rows.length > 0) {
+            let badgePath = rows[0].team_badge;
+            console.log(badgePath);
+            // Delete the image from the server
+            try {
+                fs_1.default.unlinkSync(`dist/public${badgePath}`);
+                console.log('File deleted!');
+            }
+            catch (err) {
+                console.error(err.message);
+            }
+        }
+        else {
+            res.status(404).send("A equipa não existe!");
+        }
+    });
     connection.query(`DELETE FROM teams WHERE team_id = "${req.params.id}";`);
     res.status(200).send("Team deleted successfully");
 };

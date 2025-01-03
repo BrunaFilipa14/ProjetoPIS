@@ -6,59 +6,67 @@ function getId(id){
 
 //? PUT - EDITAR EQUIPA
 function editTeam(){
-    let name = document.getElementById(`inputTeamNameEdit`).value;
-    let initials = document.getElementById(`inputTeamInitialsEdit`).value;
-    let formedYear = document.getElementById(`inputTeamFormedYearEdit`).value;
-    let stadium = document.getElementById(`inputTeamStadiumEdit`).value;
-    let country = document.getElementById(`inputTeamCountryEdit`).value;
+    
+    const form = document.getElementById("editModalForm");
+    const formData = new FormData(form); // Automatically includes file input
+
+    console.log("FormData created:", Array.from(formData.entries())); // Log form data for debugging
+
+    console.log(formData);
+
 
     fetch(`/teams/${teamId}`, {
         method: "PUT",
-        headers:  {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-                "name": name!="" ? name : null,
-                "initials": initials!="" ? initials : null,
-                "formedYear": formedYear!="" ? formedYear : null,
-                "stadium": stadium!="" ? stadium : null,
-                "country": country!="" ? country : null
-        })
+        body: formData // Send the form data as multipart/form-data
     })
-    .then((response) => console.log(response))
-    .catch((err) => console.log("Error:", err));
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+    })
+    .then(data => {
+        console.log("Success:", data);
+        alert("Team edited successfully!");
+        location.reload();
+    })
+    .catch(error => {
+        console.error("Error in fetch:", error);
+        alert("An error occurred: " + error.message);
+    });
 
-    //refresh page
-    location.reload();
 }
 
 //* POST - CRIAR EQUIPA
 function createTeam(){
-    let name = document.getElementById(`inputTeamNameCreate`).value;
-    let initials = document.getElementById(`inputTeamInitialsCreate`).value;
-    let formedYear = document.getElementById(`inputTeamFormedYearCreate`).value;
-    let stadium = document.getElementById(`inputTeamStadiumCreate`).value;
-    let country = document.getElementById(`inputTeamCountryCreate`).value;
+    
+    const form = document.getElementById("createModalForm");
+    const formData = new FormData(form); // Automatically includes file input
 
-    console.log(name);
-    fetch(`/teams/`, {
+    console.log("FormData created:", Array.from(formData.entries())); // Log form data for debugging
+
+    console.log(formData);
+
+
+    fetch("/teams", {
         method: "POST",
-        headers:  {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-                "name": name!="" ? name : null,
-                "initials": initials!="" ? initials : null,
-                "formedYear": formedYear!="" ? formedYear : null,
-                "stadium": stadium!="" ? stadium : null,
-                "country": country!="" ? country : null
-        })
+        body: formData // Send the form data as multipart/form-data
     })
-    .then((response) => console.log(response))
-    .catch((err) => console.log("Error:", err));
-
-    //refresh page
-    location.reload();
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+    })
+    .then(data => {
+        console.log("Success:", data);
+        alert("Team created successfully!");
+        location.reload();
+    })
+    .catch(error => {
+        console.error("Error in fetch:", error);
+        alert("An error occurred: " + error.message);
+    });
 }
 
 //! DELETE - Apagar Equipa
