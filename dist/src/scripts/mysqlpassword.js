@@ -1,3 +1,3 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = ""; //TODO Insert password
+exports.default = "mysql"; //TODO Insert password

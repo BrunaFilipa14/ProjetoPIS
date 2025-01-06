@@ -17,6 +17,10 @@ app.set('views', __dirname + '/src/views'); //indicação de qual a pasta que ir
 
 
 app.use("/teams", teamsRouter);
+
+
+// app.use("/api", apiRouter);
+
 // app.use("/athletes", athletesRouter);
 // app.use("/competitions", competitionsRouter);
 // app.use("/statistics", statisticsRouter);

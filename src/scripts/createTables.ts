@@ -7,23 +7,23 @@ const connectionOptions: mysql.ConnectionOptions = {
     password: MYSQLPASSWORD,
     database: "projeto"
 }
-
 const connection: mysql.Connection = mysql.createConnection(connectionOptions);
+
+connection.query<mysql.ResultSetHeader>(("CREATE TABLE competitions (competition_id INT PRIMARY KEY, competition_name VARCHAR(100));"), (err, result) => {
+    if (err) {
+        console.log(err);
+    }
+    else {
+        console.log("COMPETITIONS TABLE created!");
+    }
+});
+
 connection.query<mysql.ResultSetHeader>(("CREATE TABLE teams (team_id INT PRIMARY KEY AUTO_INCREMENT, team_name VARCHAR(50) UNIQUE, team_initials VARCHAR (5), team_badge VARCHAR (1024), team_formedYear INT, team_stadium VARCHAR(100), team_country VARCHAR(50));"), (err, result) => {
     if (err) {
         console.log(err);
     }
     else {
         console.log("TEAMS TABLE created!");
-    }
-});
-
-connection.query<mysql.ResultSetHeader>(("CREATE TABLE competitions (competition_id INT PRIMARY KEY AUTO_INCREMENT, competition_name VARCHAR(100));"), (err, result) => {
-    if (err) {
-        console.log(err);
-    }
-    else {
-        console.log("COMPETITIONS TABLE created!");
     }
 });
 

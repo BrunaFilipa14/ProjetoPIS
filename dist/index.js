@@ -16,6 +16,7 @@ app.engine('mustache', (0, mustache_express_1.default)());
 app.set('view engine', 'mustache'); //extensão dos ficheiros das views
 app.set('views', __dirname + '/src/views'); //indicação de qual a pasta que irá conter as views
 app.use("/teams", teamsRouter_js_1.default);
+// app.use("/api", apiRouter);
 // app.use("/athletes", athletesRouter);
 // app.use("/competitions", competitionsRouter);
 // app.use("/statistics", statisticsRouter);
