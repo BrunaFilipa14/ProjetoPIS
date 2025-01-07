@@ -1,50 +1,20 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const mysql = __importStar(require("mysql2"));
-const mysqlpassword_js_1 = __importDefault(require("./mysqlpassword.js"));
+import * as mysql from "mysql2";
+import MYSQLPASSWORD from "./mysqlpassword.js";
 const connectionOptions = {
     host: "localhost",
     user: "root",
-    password: mysqlpassword_js_1.default,
+    password: MYSQLPASSWORD,
     database: "projeto"
 };
 const connection = mysql.createConnection(connectionOptions);
+connection.query(("CREATE TABLE users(user_id INT PRIMARY KEY AUTO_INCREMENT,user_username VARCHAR(255) UNIQUE NOT NULL,user_password_hash VARCHAR(255) NOT NULL);"), (err, result) => {
+    if (err) {
+        console.log(err);
+    }
+    else {
+        console.log("TEAMS TABLE created!");
+    }
+});
 connection.query(("CREATE TABLE teams (team_id INT PRIMARY KEY AUTO_INCREMENT, team_name VARCHAR(50) UNIQUE, team_initials VARCHAR (5), team_badge VARCHAR (1024), team_formedYear INT, team_stadium VARCHAR(100), team_country VARCHAR(50));"), (err, result) => {
     if (err) {
         console.log(err);

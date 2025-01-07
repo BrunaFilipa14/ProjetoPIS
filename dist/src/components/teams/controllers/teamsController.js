@@ -1,64 +1,29 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const mysql = __importStar(require("mysql2"));
-const mysqlpassword_1 = __importDefault(require("../../../scripts/mysqlpassword"));
-const multer_1 = __importDefault(require("multer"));
-const path_1 = __importDefault(require("path"));
-const fs_1 = __importDefault(require("fs"));
+import * as mysql from 'mysql2';
+import MYSQLPASSWORD from "../../../scripts/mysqlpassword.js";
+import multer from 'multer';
+import { fileURLToPath } from "url";
+import path from 'path';
+import fs from "fs";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const connectionOptions = {
     host: "localhost",
     user: "root",
-    password: mysqlpassword_1.default,
+    password: MYSQLPASSWORD,
     database: "projeto"
 };
 const connection = mysql.createConnection(connectionOptions);
 connection.connect();
 // Configure Multer for file uploads
-const upload = (0, multer_1.default)({
-    storage: multer_1.default.diskStorage({
+const upload = multer({
+    storage: multer.diskStorage({
         destination: (req, file, cb) => {
             console.log(req.body);
             cb(null, 'dist/public/images/teams/');
         },
         filename: (req, file, cb) => {
             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-            cb(null, file.fieldname + '-' + uniqueSuffix + path_1.default.extname(file.originalname));
+            cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
         }
     })
 });
@@ -67,9 +32,7 @@ const getAllTeams = (req, res) => {
         if (err)
             console.log(err);
         else {
-            res.status(200).render('teams', {
-                teams: rows
-            });
+            res.status(200).json(rows);
         }
     });
 };
@@ -90,14 +53,13 @@ const getTeamByName = (req, res) => {
 };
 const createTeam = (req, res) => {
     upload.single('teamBadge')(req, res, (err) => {
-        var _a;
         if (err) {
             console.error("Error during file upload:", err);
             return res.status(500).send("Failed to upload file.");
         }
         //console.log("Uploaded file:", req.file); // Log the uploaded file
         console.log("Request body:", req.body); // Log the rest of the form data
-        console.log("req file: " + ((_a = req.file) === null || _a === void 0 ? void 0 : _a.filename));
+        console.log("req file: " + req.file?.filename);
         const { name, initials, formedYear, stadium, country } = req.body;
         const badgePath = req.file ? `/images/teams/${req.file.filename}` : null;
         console.log(__dirname);
@@ -157,7 +119,7 @@ const editTeam = (req, res) => {
                         console.log(badgePath);
                         // Delete the image from the server
                         try {
-                            fs_1.default.unlinkSync(`dist/public${badgePath}`);
+                            fs.unlinkSync(`dist/public${badgePath}`);
                             console.log('File deleted!');
                         }
                         catch (err) {
@@ -218,7 +180,7 @@ const deleteTeam = (req, res) => {
             console.log(badgePath);
             // Delete the image from the server
             try {
-                fs_1.default.unlinkSync(`dist/public${badgePath}`);
+                fs.unlinkSync(`dist/public${badgePath}`);
                 console.log('File deleted!');
             }
             catch (err) {
@@ -250,10 +212,4 @@ const getTeamPlayers = (req, res) => {
         res.status(200).json(rows);
     });
 };
-module.exports.getAllTeams = getAllTeams;
-module.exports.getTeamByName = getTeamByName;
-module.exports.createTeam = createTeam;
-module.exports.editTeam = editTeam;
-module.exports.deleteTeam = deleteTeam;
-module.exports.deleteAllTeams = deleteAllTeams;
-module.exports.getTeamPlayers = getTeamPlayers;
+export default { getAllTeams, getTeamByName, createTeam, editTeam, deleteTeam, deleteAllTeams, getTeamPlayers };

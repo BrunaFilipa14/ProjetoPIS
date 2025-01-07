@@ -1,6 +1,6 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const teamsController = require("../controllers/teamsController.js");
+import teamsController from "../controllers/teamsController.js";
 
 
 router.get("/:name", teamsController.getTeamByName);
@@ -13,5 +13,6 @@ router.put("/:id", teamsController.editTeam); //TODO verifications
 
 router.delete("/:id", teamsController.deleteTeam);
 router.delete("/", teamsController.deleteAllTeams);
+
 
 export default router;

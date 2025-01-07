@@ -1,9 +1,14 @@
 import * as mysql from 'mysql2';
-import MYSQLPASSWORD from "../../../scripts/mysqlpassword";
+import MYSQLPASSWORD from "../../../scripts/mysqlpassword.js";
 import { Request, Response } from 'express';
 import multer from 'multer';
+import { fileURLToPath } from "url";
 import path from 'path';
 import fs from "fs";
+import jwt from "jsonwebtoken";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const connectionOptions : mysql.ConnectionOptions = {
     host: "localhost",
@@ -33,9 +38,7 @@ const getAllTeams = (req : Request, res : Response) => {
         if (err)
             console.log(err);
         else{
-            res.status(200).render('teams', {
-                teams: rows
-            });
+            res.status(200).json(rows);
         }
     });
 };
@@ -241,10 +244,5 @@ const getTeamPlayers = (req : Request, res : Response) => {
     });
 };
 
-module.exports.getAllTeams = getAllTeams;
-module.exports.getTeamByName = getTeamByName;
-module.exports.createTeam = createTeam;
-module.exports.editTeam = editTeam;
-module.exports.deleteTeam = deleteTeam;
-module.exports.deleteAllTeams = deleteAllTeams;
-module.exports.getTeamPlayers = getTeamPlayers;
+
+export default {getAllTeams, getTeamByName, createTeam, editTeam, deleteTeam, deleteAllTeams, getTeamPlayers};

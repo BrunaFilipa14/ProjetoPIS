@@ -15,7 +15,7 @@ function editTeam(){
     console.log(formData);
 
 
-    fetch(`/teams/${teamId}`, {
+    fetch(`/api/teams/${teamId}`, {
         method: "PUT",
         body: formData // Send the form data as multipart/form-data
     })
@@ -43,12 +43,8 @@ function createTeam(){
     const form = document.getElementById("createModalForm");
     const formData = new FormData(form); // Automatically includes file input
 
-    console.log("FormData created:", Array.from(formData.entries())); // Log form data for debugging
 
-    console.log(formData);
-
-
-    fetch("/teams", {
+    fetch("/api/teams", {
         method: "POST",
         body: formData // Send the form data as multipart/form-data
     })
@@ -72,7 +68,7 @@ function createTeam(){
 //! DELETE - Apagar Equipa
 function deleteTeam(){
     console.log(teamId);
-    fetch(`/teams/${teamId}`, {
+    fetch(`/api/teams/${teamId}`, {
         method: "Delete",
         headers:  {
             "Content-Type": "application/json"
@@ -88,7 +84,7 @@ function deleteTeam(){
 //! DELETE - Apagar TODAS as equipas
 function deleteAllTeams(){
     console.log(teamId);
-    fetch(`/teams/`, {
+    fetch(`/api/teams/`, {
         method: "Delete",
         headers:  {
             "Content-Type": "application/json"
@@ -102,7 +98,7 @@ function deleteAllTeams(){
 }
 
 function getTeamPlayers(id){
-    fetch(`/teams/${id}/players`)
+    fetch(`/api/teams/${id}/players`)
     .then(response => console.log(response))
     .catch(err => console.error(err));
 }
