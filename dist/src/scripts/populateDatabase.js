@@ -7,59 +7,108 @@ const connectionOptions = {
     password: MYSQLPASSWORD
 };
 const connection = mysql.createConnection(connectionOptions);
+main();
+function main() {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield fetchCompetitions();
+        yield populateTeams();
+        connection.end((err) => {
+            if (err) {
+                console.error("Error closing the connection:", err);
+            }
+            else {
+                console.log("connection closed.");
+            }
+        });
+    });
+}
 //* COMPETITIONS FETCH
-fetch("https://www.thesportsdb.com/api/v1/json/3/all_leagues.php")
-    .then((res) => {
-    if (!res.ok) {
-        throw new Error(`HTTP error! Status: ${res.status}`);
-    }
-    return res.json();
-})
-    .then((data) => {
-    let basketballLeagues = data.leagues;
-    basketballLeagues = basketballLeagues.filter((league) => league.strSport == "Basketball");
-    console.log(basketballLeagues);
-    basketballLeagues.forEach((league) => {
-        connection.query((`INSERT INTO competitions (competition_name) VALUES ('${league.strName}');`), (err, result) => {
-            if (err) {
-                console.log(err);
-            }
-            else {
-                console.log("COMPETITIONS TABLE populated!");
-            }
+function fetchCompetitions() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => {
+            connection.query((`INSERT INTO competitions (competition_id, competition_name) VALUES ('4546','EuroLeague Basketball');`), (err, result) => {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    console.log("COMPETITIONS TABLE populated!");
+                }
+            });
+            fetch("https://www.thesportsdb.com/api/v1/json/3/all_leagues.php")
+                .then((res) => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+                return res.json();
+            })
+                .then((data) => {
+                let basketballLeagues = data.leagues;
+                basketballLeagues = basketballLeagues.filter((league) => league.strSport == "Basketball");
+                console.log(basketballLeagues);
+                basketballLeagues.forEach((league) => {
+                    connection.query((`INSERT INTO competitions (competition_id, competition_name) VALUES (${league.idLeague},'${league.strLeagueAlternate}');`), (err, result) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                        else {
+                            resolve({});
+                            console.log("COMPETITIONS TABLE populated!");
+                        }
+                    });
+                });
+            })
+                .catch((error) => {
+                console.error("Unable to fetch data:", error);
+                reject();
+            });
         });
     });
-})
-    .catch((error) => console.error("Unable to fetch data:", error));
+}
+function populateTeams() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => {
+            let competitions;
+            competitions = [];
+            connection.query((`SELECT competition_name FROM competitions;`), (err, rows, result) => {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    rows.forEach(row => {
+                        competitions.push(row.toString());
+                        console.log(row);
+                    });
+                    console.log("COMPETITIONS TABLE populated!");
+                }
+            });
+            competitions.forEach(competition => {
+                fetch(`https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=${competition}`)
+                    .then((res) => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! Status: ${res.status}`);
+                    }
+                    return res.json();
+                })
+                    .then((data) => {
+                    data.teams.forEach((team) => {
+                        connection.query((`INSERT INTO teams (team_name, team_initials, team_badge, team_formedYear, team_stadium, team_country) VALUES ('${team.strTeam}','${team.strTeamShort}','${team.strBadge}',${team.intFormedYear},'${team.strStadium}','${team.strCountry}');`), (err, result) => {
+                            if (err) {
+                                console.log(err);
+                            }
+                            else {
+                                resolve({});
+                                console.log("TEAMS TABLE populated!");
+                            }
+                        });
+                    });
+                })
+                    .catch((error) => {
+                    reject();
+                    console.error("Unable to fetch data:", error);
+                });
+            });
+        });
+    });
+}
 //TODO: TEAMS FETCH (USE THE COMPETITIONS DATABASE TO GET THE COMPETITIONS NAMES IN THE FETCH URL)
-fetch("https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=NBA")
-    .then((res) => {
-    if (!res.ok) {
-        throw new Error(`HTTP error! Status: ${res.status}`);
-    }
-    return res.json();
-})
-    .then((data) => {
-    data.teams.forEach((team) => {
-        connection.query((`INSERT INTO teams (team_name, team_initials, team_badge, team_formedYear, team_stadium, team_country) VALUES ('${team.strTeam}','${team.strTeamShort}','${team.strBadge}',${team.intFormedYear},'${team.strStadium}','${team.strCountry}');`), (err, result) => {
-            if (err) {
-                console.log(err);
-            }
-            else {
-                console.log("TEAMS TABLE populated!");
-            }
-        });
-    });
-})
-    .catch((error) => console.error("Unable to fetch data:", error));
-//TODO: TIMEOUT, REPLACE WITH ASYNC (ASK TEACHER FOR HELP)
-setTimeout(() => {
-    connection.end((err) => {
-        if (err) {
-            console.error("Error closing the connection:", err);
-        }
-        else {
-            console.log("connection closed.");
-        }
-    });
-}, 2000);
+//TODO: ASYNC

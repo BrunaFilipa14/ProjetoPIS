@@ -14,6 +14,8 @@ app.use(express.urlencoded());
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache'); //extensão dos ficheiros das views
 app.set('views', __dirname + '/src/views'); //indicação de qual a pasta que irá conter as views
+
+
 app.use("/api", api);
 app.use("/teams", async (req, res) => {
     try {

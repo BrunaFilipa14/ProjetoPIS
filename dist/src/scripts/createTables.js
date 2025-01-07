@@ -7,12 +7,12 @@ const connectionOptions = {
     database: "projeto"
 };
 const connection = mysql.createConnection(connectionOptions);
-connection.query(("CREATE TABLE users(user_id INT PRIMARY KEY AUTO_INCREMENT,user_username VARCHAR(255) UNIQUE NOT NULL,user_password_hash VARCHAR(255) NOT NULL);"), (err, result) => {
+connection.query(("CREATE TABLE competitions (competition_id INT PRIMARY KEY, competition_name VARCHAR(100));"), (err, result) => {
     if (err) {
         console.log(err);
     }
     else {
-        console.log("TEAMS TABLE created!");
+        console.log("COMPETITIONS TABLE created!");
     }
 });
 connection.query(("CREATE TABLE teams (team_id INT PRIMARY KEY AUTO_INCREMENT, team_name VARCHAR(50) UNIQUE, team_initials VARCHAR (5), team_badge VARCHAR (1024), team_formedYear INT, team_stadium VARCHAR(100), team_country VARCHAR(50));"), (err, result) => {
@@ -21,14 +21,6 @@ connection.query(("CREATE TABLE teams (team_id INT PRIMARY KEY AUTO_INCREMENT, t
     }
     else {
         console.log("TEAMS TABLE created!");
-    }
-});
-connection.query(("CREATE TABLE competitions (competition_id INT PRIMARY KEY AUTO_INCREMENT, competition_name VARCHAR(100));"), (err, result) => {
-    if (err) {
-        console.log(err);
-    }
-    else {
-        console.log("COMPETITIONS TABLE created!");
     }
 });
 connection.query(("CREATE TABLE athletes (athlete_id INT PRIMARY KEY AUTO_INCREMENT, athlete_name VARCHAR(100) NOT NULL, athlete_birthDate DATE NOT NULL, athlete_height DECIMAL (3, 2), athlete_weight DECIMAL (5, 2), athlete_nationality VARCHAR (50) NOT NULL, athlete_position VARCHAR (50), athlete_team_name VARCHAR(50), FOREIGN KEY(athlete_team_name) REFERENCES teams(team_name));"), (err, result) => {
