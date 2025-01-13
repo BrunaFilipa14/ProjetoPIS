@@ -34,7 +34,7 @@ app.use("/teams", async (req, res) => {
 
         const teamsData = await response.json();
 
-        res.render("teams", {
+        res.render("backofficeTeams", {
             teams: teamsData,
         });
     } catch (error) {

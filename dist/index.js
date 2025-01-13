@@ -22,7 +22,7 @@ app.use("/teams", async (req, res) => {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const teamsData = await response.json();
-        res.render("teams", {
+        res.render("backofficeTeams", {
             teams: teamsData,
         });
     }
