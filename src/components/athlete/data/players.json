@@ -1,0 +1,1955 @@
+[
+    {
+        "team_name": "Atlanta Hawks",
+        "players": [
+            {
+                "name": "Trae Young",
+                "date_of_birth": "1998-09-19",
+                "height_cm": 185,
+                "weight_kg": 82,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "John Collins",
+                "date_of_birth": "1997-09-23",
+                "height_cm": 206,
+                "weight_kg": 107,
+                "nationality": "American",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Boston Celtics",
+        "players": [
+            {
+                "name": "Jayson Tatum",
+                "date_of_birth": "1998-03-03",
+                "height_cm": 203,
+                "weight_kg": 95,
+                "nationality": "American",
+                "position": "Small Forward"
+            },
+            {
+                "name": "Jaylen Brown",
+                "date_of_birth": "1996-10-24",
+                "height_cm": 198,
+                "weight_kg": 101,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Brooklyn Nets",
+        "players": [
+            {
+                "name": "Kevin Durant",
+                "date_of_birth": "1988-09-29",
+                "height_cm": 208,
+                "weight_kg": 109,
+                "nationality": "American",
+                "position": "Small Forward"
+            },
+            {
+                "name": "Kyrie Irving",
+                "date_of_birth": "1992-03-23",
+                "height_cm": 188,
+                "weight_kg": 88,
+                "nationality": "American",
+                "position": "Point Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Charlotte Hornets",
+        "players": [
+            {
+                "name": "LaMelo Ball",
+                "date_of_birth": "2001-08-22",
+                "height_cm": 201,
+                "weight_kg": 82,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Gordon Hayward",
+                "date_of_birth": "1990-03-23",
+                "height_cm": 201,
+                "weight_kg": 102,
+                "nationality": "American",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Chicago Bulls",
+        "players": [
+            {
+                "name": "Zach LaVine",
+                "date_of_birth": "1995-03-10",
+                "height_cm": 196,
+                "weight_kg": 91,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "DeMar DeRozan",
+                "date_of_birth": "1989-08-07",
+                "height_cm": 198,
+                "weight_kg": 100,
+                "nationality": "American",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Cleveland Cavaliers",
+        "players": [
+            {
+                "name": "Darius Garland",
+                "date_of_birth": "2000-01-26",
+                "height_cm": 185,
+                "weight_kg": 87,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Evan Mobley",
+                "date_of_birth": "2001-06-18",
+                "height_cm": 213,
+                "weight_kg": 98,
+                "nationality": "American",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Dallas Mavericks",
+        "players": [
+            {
+                "name": "Luka Dončić",
+                "date_of_birth": "1999-02-28",
+                "height_cm": 201,
+                "weight_kg": 104,
+                "nationality": "Slovenian",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Kristaps Porziņģis",
+                "date_of_birth": "1995-08-02",
+                "height_cm": 221,
+                "weight_kg": 109,
+                "nationality": "Latvian",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Denver Nuggets",
+        "players": [
+            {
+                "name": "Nikola Jokić",
+                "date_of_birth": "1995-02-19",
+                "height_cm": 211,
+                "weight_kg": 129,
+                "nationality": "Serbian",
+                "position": "Center"
+            },
+            {
+                "name": "Jamal Murray",
+                "date_of_birth": "1997-02-23",
+                "height_cm": 193,
+                "weight_kg": 98,
+                "nationality": "Canadian",
+                "position": "Point Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Detroit Pistons",
+        "players": [
+            {
+                "name": "Cade Cunningham",
+                "date_of_birth": "2001-09-25",
+                "height_cm": 198,
+                "weight_kg": 100,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Jaden Ivey",
+                "date_of_birth": "2002-02-13",
+                "height_cm": 193,
+                "weight_kg": 88,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Golden State Warriors",
+        "players": [
+            {
+                "name": "Stephen Curry",
+                "date_of_birth": "1988-03-14",
+                "height_cm": 188,
+                "weight_kg": 84,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Klay Thompson",
+                "date_of_birth": "1990-02-08",
+                "height_cm": 198,
+                "weight_kg": 98,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Houston Rockets",
+        "players": [
+            {
+                "name": "Jalen Green",
+                "date_of_birth": "2002-02-09",
+                "height_cm": 198,
+                "weight_kg": 82,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Alperen Şengün",
+                "date_of_birth": "2002-07-25",
+                "height_cm": 208,
+                "weight_kg": 109,
+                "nationality": "Turkish",
+                "position": "Center"
+            }
+        ]
+    },
+    {
+        "team_name": "Indiana Pacers",
+        "players": [
+            {
+                "name": "Tyrese Haliburton",
+                "date_of_birth": "2000-02-29",
+                "height_cm": 196,
+                "weight_kg": 84,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Myles Turner",
+                "date_of_birth": "1996-03-24",
+                "height_cm": 211,
+                "weight_kg": 113,
+                "nationality": "American",
+                "position": "Center"
+            }
+        ]
+    },
+    {
+        "team_name": "Los Angeles Clippers",
+        "players": [
+            {
+                "name": "Kawhi Leonard",
+                "date_of_birth": "1991-06-29",
+                "height_cm": 201,
+                "weight_kg": 102,
+                "nationality": "American",
+                "position": "Small Forward"
+            },
+            {
+                "name": "Paul George",
+                "date_of_birth": "1990-05-02",
+                "height_cm": 203,
+                "weight_kg": 100,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Los Angeles Lakers",
+        "players": [
+            {
+                "name": "LeBron James",
+                "date_of_birth": "1984-12-30",
+                "height_cm": 206,
+                "weight_kg": 113,
+                "nationality": "American",
+                "position": "Small Forward"
+            },
+            {
+                "name": "Anthony Davis",
+                "date_of_birth": "1993-03-11",
+                "height_cm": 208,
+                "weight_kg": 115,
+                "nationality": "American",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Memphis Grizzlies",
+        "players": [
+            {
+                "name": "Ja Morant",
+                "date_of_birth": "1999-08-10",
+                "height_cm": 188,
+                "weight_kg": 79,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Jaren Jackson Jr.",
+                "date_of_birth": "1999-09-15",
+                "height_cm": 211,
+                "weight_kg": 109,
+                "nationality": "American",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Miami Heat",
+        "players": [
+            {
+                "name": "Jimmy Butler",
+                "date_of_birth": "1989-09-14",
+                "height_cm": 201,
+                "weight_kg": 104,
+                "nationality": "American",
+                "position": "Small Forward"
+            },
+            {
+                "name": "Bam Adebayo",
+                "date_of_birth": "1997-07-18",
+                "height_cm": 206,
+                "weight_kg": 116,
+                "nationality": "American",
+                "position": "Center"
+            }
+        ]
+    },
+    {
+        "team_name": "Milwaukee Bucks",
+        "players": [
+            {
+                "name": "Giannis Antetokounmpo",
+                "date_of_birth": "1994-12-06",
+                "height_cm": 211,
+                "weight_kg": 110,
+                "nationality": "Greek",
+                "position": "Power Forward"
+            },
+            {
+                "name": "Khris Middleton",
+                "date_of_birth": "1991-08-12",
+                "height_cm": 201,
+                "weight_kg": 101,
+                "nationality": "American",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Minnesota Timberwolves",
+        "players": [
+            {
+                "name": "Karl-Anthony Towns",
+                "date_of_birth": "1995-11-15",
+                "height_cm": 211,
+                "weight_kg": 112,
+                "nationality": "Dominican",
+                "position": "Center"
+            },
+            {
+                "name": "Anthony Edwards",
+                "date_of_birth": "2001-08-05",
+                "height_cm": 193,
+                "weight_kg": 102,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "New Orleans Pelicans",
+        "players": [
+            {
+                "name": "Zion Williamson",
+                "date_of_birth": "2000-07-06",
+                "height_cm": 198,
+                "weight_kg": 129,
+                "nationality": "American",
+                "position": "Power Forward"
+            },
+            {
+                "name": "Brandon Ingram",
+                "date_of_birth": "1997-09-02",
+                "height_cm": 203,
+                "weight_kg": 86,
+                "nationality": "American",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "New York Knicks",
+        "players": [
+            {
+                "name": "Julius Randle",
+                "date_of_birth": "1994-11-29",
+                "height_cm": 203,
+                "weight_kg": 113,
+                "nationality": "American",
+                "position": "Power Forward"
+            },
+            {
+                "name": "RJ Barrett",
+                "date_of_birth": "2000-06-14",
+                "height_cm": 198,
+                "weight_kg": 97,
+                "nationality": "Canadian",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Oklahoma City Thunder",
+        "players": [
+            {
+                "name": "Shai Gilgeous-Alexander",
+                "date_of_birth": "1998-07-12",
+                "height_cm": 198,
+                "weight_kg": 91,
+                "nationality": "Canadian",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Josh Giddey",
+                "date_of_birth": "2002-10-10",
+                "height_cm": 203,
+                "weight_kg": 93,
+                "nationality": "Australian",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Orlando Magic",
+        "players": [
+            {
+                "name": "Paolo Banchero",
+                "date_of_birth": "2002-11-12",
+                "height_cm": 208,
+                "weight_kg": 113,
+                "nationality": "American",
+                "position": "Power Forward"
+            },
+            {
+                "name": "Franz Wagner",
+                "date_of_birth": "2001-08-27",
+                "height_cm": 206,
+                "weight_kg": 100,
+                "nationality": "German",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Philadelphia 76ers",
+        "players": [
+            {
+                "name": "Joel Embiid",
+                "date_of_birth": "1994-03-16",
+                "height_cm": 213,
+                "weight_kg": 127,
+                "nationality": "Cameroonian",
+                "position": "Center"
+            },
+            {
+                "name": "James Harden",
+                "date_of_birth": "1989-08-26",
+                "height_cm": 196,
+                "weight_kg": 100,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Phoenix Suns",
+        "players": [
+            {
+                "name": "Devin Booker",
+                "date_of_birth": "1996-10-30",
+                "height_cm": 196,
+                "weight_kg": 93,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Kevin Durant",
+                "date_of_birth": "1988-09-29",
+                "height_cm": 208,
+                "weight_kg": 109,
+                "nationality": "American",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Portland Trail Blazers",
+        "players": [
+            {
+                "name": "Damian Lillard",
+                "date_of_birth": "1990-07-15",
+                "height_cm": 188,
+                "weight_kg": 88,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Anfernee Simons",
+                "date_of_birth": "1999-06-08",
+                "height_cm": 193,
+                "weight_kg": 84,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Sacramento Kings",
+        "players": [
+            {
+                "name": "De'Aaron Fox",
+                "date_of_birth": "1997-12-20",
+                "height_cm": 191,
+                "weight_kg": 84,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Domantas Sabonis",
+                "date_of_birth": "1996-05-03",
+                "height_cm": 211,
+                "weight_kg": 109,
+                "nationality": "Lithuanian",
+                "position": "Center"
+            }
+        ]
+    },
+    {
+        "team_name": "San Antonio Spurs",
+        "players": [
+            {
+                "name": "Victor Wembanyama",
+                "date_of_birth": "2004-01-04",
+                "height_cm": 224,
+                "weight_kg": 95,
+                "nationality": "French",
+                "position": "Center"
+            },
+            {
+                "name": "Keldon Johnson",
+                "date_of_birth": "1999-10-11",
+                "height_cm": 196,
+                "weight_kg": 100,
+                "nationality": "American",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Toronto Raptors",
+        "players": [
+            {
+                "name": "Pascal Siakam",
+                "date_of_birth": "1994-04-02",
+                "height_cm": 206,
+                "weight_kg": 104,
+                "nationality": "Cameroonian",
+                "position": "Power Forward"
+            },
+            {
+                "name": "Fred VanVleet",
+                "date_of_birth": "1994-02-25",
+                "height_cm": 183,
+                "weight_kg": 88,
+                "nationality": "American",
+                "position": "Point Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Utah Jazz",
+        "players": [
+            {
+                "name": "Lauri Markkanen",
+                "date_of_birth": "1997-05-22",
+                "height_cm": 213,
+                "weight_kg": 109,
+                "nationality": "Finnish",
+                "position": "Power Forward"
+            },
+            {
+                "name": "Jordan Clarkson",
+                "date_of_birth": "1992-06-07",
+                "height_cm": 193,
+                "weight_kg": 88,
+                "nationality": "Filipino-American",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Washington Wizards",
+        "players": [
+            {
+                "name": "Bradley Beal",
+                "date_of_birth": "1993-06-28",
+                "height_cm": 193,
+                "weight_kg": 94,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Kyle Kuzma",
+                "date_of_birth": "1995-07-24",
+                "height_cm": 206,
+                "weight_kg": 100,
+                "nationality": "American",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Austin Spurs",
+        "players": [
+            {
+                "name": "Charles Bassey",
+                "date_of_birth": "2000-10-28",
+                "height_cm": 211,
+                "weight_kg": 107,
+                "nationality": "Nigerian",
+                "position": "Center"
+            },
+            {
+                "name": "Robert Woodard II",
+                "date_of_birth": "1999-09-22",
+                "height_cm": 198,
+                "weight_kg": 107,
+                "nationality": "American",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Birmingham Squadron",
+        "players": [
+            {
+                "name": "Jared Harper",
+                "date_of_birth": "1997-09-14",
+                "height_cm": 178,
+                "weight_kg": 79,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Zylan Cheatham",
+                "date_of_birth": "1995-11-17",
+                "height_cm": 196,
+                "weight_kg": 100,
+                "nationality": "American",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Capital City Go-Go",
+        "players": [
+            {
+                "name": "Jordan Goodwin",
+                "date_of_birth": "1998-10-23",
+                "height_cm": 191,
+                "weight_kg": 93,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Isaiah Todd",
+                "date_of_birth": "2001-10-17",
+                "height_cm": 208,
+                "weight_kg": 99,
+                "nationality": "American",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Capitanes de Ciudad de México",
+        "players": [
+            {
+                "name": "Gary Clark",
+                "date_of_birth": "1994-11-16",
+                "height_cm": 198,
+                "weight_kg": 102,
+                "nationality": "American",
+                "position": "Power Forward"
+            },
+            {
+                "name": "Alfonzo McKinnie",
+                "date_of_birth": "1992-09-17",
+                "height_cm": 201,
+                "weight_kg": 98,
+                "nationality": "American",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Cleveland Charge",
+        "players": [
+            {
+                "name": "Sharife Cooper",
+                "date_of_birth": "2001-06-11",
+                "height_cm": 185,
+                "weight_kg": 82,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Mamadou Gueye",
+                "date_of_birth": "1993-12-16",
+                "height_cm": 201,
+                "weight_kg": 100,
+                "nationality": "Senegalese",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "College Park Skyhawks",
+        "players": [
+            {
+                "name": "Cat Barber",
+                "date_of_birth": "1994-07-25",
+                "height_cm": 185,
+                "weight_kg": 79,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Justin Tillman",
+                "date_of_birth": "1996-02-02",
+                "height_cm": 203,
+                "weight_kg": 100,
+                "nationality": "American",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Delaware Blue Coats",
+        "players": [
+            {
+                "name": "Jaden Springer",
+                "date_of_birth": "2002-09-25",
+                "height_cm": 193,
+                "weight_kg": 93,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Myles Powell",
+                "date_of_birth": "1997-07-07",
+                "height_cm": 188,
+                "weight_kg": 88,
+                "nationality": "American",
+                "position": "Point Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Grand Rapids Gold",
+        "players": [
+            {
+                "name": "Lance Stephenson",
+                "date_of_birth": "1990-09-05",
+                "height_cm": 196,
+                "weight_kg": 104,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Nik Stauskas",
+                "date_of_birth": "1993-10-07",
+                "height_cm": 198,
+                "weight_kg": 93,
+                "nationality": "Canadian",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Greensboro Swarm",
+        "players": [
+            {
+                "name": "James Bouknight",
+                "date_of_birth": "2000-09-18",
+                "height_cm": 193,
+                "weight_kg": 86,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Kai Jones",
+                "date_of_birth": "2001-01-19",
+                "height_cm": 211,
+                "weight_kg": 100,
+                "nationality": "Bahamian",
+                "position": "Center"
+            }
+        ]
+    },
+    {
+        "team_name": "Indiana Mad Ants",
+        "players": [
+            {
+                "name": "Gabe York",
+                "date_of_birth": "1993-08-02",
+                "height_cm": 190,
+                "weight_kg": 84,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Justin Anderson",
+                "date_of_birth": "1993-11-19",
+                "height_cm": 196,
+                "weight_kg": 104,
+                "nationality": "American",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Iowa Wolves",
+        "players": [
+            {
+                "name": "Matt Lewis",
+                "date_of_birth": "1998-12-21",
+                "height_cm": 191,
+                "weight_kg": 84,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Brian Bowen II",
+                "date_of_birth": "1998-10-02",
+                "height_cm": 201,
+                "weight_kg": 86,
+                "nationality": "American",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Long Island Nets",
+        "players": [
+            {
+                "name": "David Duke Jr.",
+                "date_of_birth": "1999-10-13",
+                "height_cm": 196,
+                "weight_kg": 95,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Kaiser Gates",
+                "date_of_birth": "1996-11-08",
+                "height_cm": 201,
+                "weight_kg": 100,
+                "nationality": "American",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Maine Celtics",
+        "players": [
+            {
+                "name": "Luka Šamanić",
+                "date_of_birth": "2000-01-09",
+                "height_cm": 208,
+                "weight_kg": 102,
+                "nationality": "Croatian",
+                "position": "Power Forward"
+            },
+            {
+                "name": "Marial Shayok",
+                "date_of_birth": "1995-07-26",
+                "height_cm": 196,
+                "weight_kg": 91,
+                "nationality": "Canadian",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Memphis Hustle",
+        "players": [
+            {
+                "name": "Kenneth Lofton Jr.",
+                "date_of_birth": "2002-08-14",
+                "height_cm": 201,
+                "weight_kg": 127,
+                "nationality": "American",
+                "position": "Power Forward"
+            },
+            {
+                "name": "Dakota Mathias",
+                "date_of_birth": "1995-07-11",
+                "height_cm": 193,
+                "weight_kg": 91,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Motor City Cruise",
+        "players": [
+            {
+                "name": "Keon Ellis",
+                "date_of_birth": "2000-01-08",
+                "height_cm": 191,
+                "weight_kg": 81,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Cheick Diallo",
+                "date_of_birth": "1996-09-13",
+                "height_cm": 206,
+                "weight_kg": 104,
+                "nationality": "Malian",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Oklahoma City Blue",
+        "players": [
+            {
+                "name": "Jared Butler",
+                "date_of_birth": "2000-08-25",
+                "height_cm": 191,
+                "weight_kg": 87,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Ousmane Dieng",
+                "date_of_birth": "2003-05-21",
+                "height_cm": 206,
+                "weight_kg": 98,
+                "nationality": "French",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Osceola Magic",
+        "players": [
+            {
+                "name": "Jay Scrubb",
+                "date_of_birth": "2000-09-01",
+                "height_cm": 196,
+                "weight_kg": 93,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Admiral Schofield",
+                "date_of_birth": "1997-03-30",
+                "height_cm": 196,
+                "weight_kg": 109,
+                "nationality": "British-American",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Raptors 905",
+        "players": [
+            {
+                "name": "Jeff Dowtin",
+                "date_of_birth": "1997-05-10",
+                "height_cm": 191,
+                "weight_kg": 82,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Reggie Perry",
+                "date_of_birth": "2000-03-21",
+                "height_cm": 206,
+                "weight_kg": 113,
+                "nationality": "American",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Rio Grande Valley Vipers",
+        "players": [
+            {
+                "name": "TyTy Washington Jr.",
+                "date_of_birth": "2002-11-15",
+                "height_cm": 191,
+                "weight_kg": 88,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Trhae Mitchell",
+                "date_of_birth": "1997-04-28",
+                "height_cm": 201,
+                "weight_kg": 97,
+                "nationality": "American",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Rip City Remix",
+        "players": [
+            {
+                "name": "Jarred Vanderbilt",
+                "date_of_birth": "1999-04-03",
+                "height_cm": 206,
+                "weight_kg": 97,
+                "nationality": "American",
+                "position": "Power Forward"
+            },
+            {
+                "name": "Emanuel Terry",
+                "date_of_birth": "1996-08-21",
+                "height_cm": 206,
+                "weight_kg": 101,
+                "nationality": "American",
+                "position": "Center"
+            }
+        ]
+    },
+    {
+        "team_name": "Salt Lake City Stars",
+        "players": [
+            {
+                "name": "Micah Potter",
+                "date_of_birth": "1998-04-06",
+                "height_cm": 208,
+                "weight_kg": 111,
+                "nationality": "American",
+                "position": "Center"
+            },
+            {
+                "name": "Frank Jackson",
+                "date_of_birth": "1998-05-04",
+                "height_cm": 191,
+                "weight_kg": 93,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "San Diego Clippers",
+        "players": [
+            {
+                "name": "Keaton Wallace",
+                "date_of_birth": "1999-05-16",
+                "height_cm": 193,
+                "weight_kg": 84,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Xavier Moon",
+                "date_of_birth": "1995-01-02",
+                "height_cm": 188,
+                "weight_kg": 79,
+                "nationality": "American",
+                "position": "Point Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Santa Cruz Warriors",
+        "players": [
+            {
+                "name": "Trevor Hudgins",
+                "date_of_birth": "1999-03-23",
+                "height_cm": 180,
+                "weight_kg": 81,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Gui Santos",
+                "date_of_birth": "2002-06-22",
+                "height_cm": 201,
+                "weight_kg": 95,
+                "nationality": "Brazilian",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Sioux Falls Skyforce",
+        "players": [
+            {
+                "name": "Jamal Cain",
+                "date_of_birth": "1999-03-06",
+                "height_cm": 201,
+                "weight_kg": 92,
+                "nationality": "American",
+                "position": "Small Forward"
+            },
+            {
+                "name": "Dru Smith",
+                "date_of_birth": "1997-12-30",
+                "height_cm": 190,
+                "weight_kg": 86,
+                "nationality": "American",
+                "position": "Point Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "South Bay Lakers",
+        "players": [
+            {
+                "name": "Cole Swider",
+                "date_of_birth": "1999-05-08",
+                "height_cm": 206,
+                "weight_kg": 100,
+                "nationality": "American",
+                "position": "Small Forward"
+            },
+            {
+                "name": "Shaquille Harrison",
+                "date_of_birth": "1993-10-06",
+                "height_cm": 193,
+                "weight_kg": 86,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Stockton Kings",
+        "players": [
+            {
+                "name": "DJ Steward",
+                "date_of_birth": "2001-10-02",
+                "height_cm": 185,
+                "weight_kg": 80,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Neemias Queta",
+                "date_of_birth": "1999-07-13",
+                "height_cm": 213,
+                "weight_kg": 112,
+                "nationality": "Portuguese",
+                "position": "Center"
+            }
+        ]
+    },
+    {
+        "team_name": "Texas Legends",
+        "players": [
+            {
+                "name": "McKinley Wright IV",
+                "date_of_birth": "1998-10-25",
+                "height_cm": 183,
+                "weight_kg": 84,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Grant Riller",
+                "date_of_birth": "1997-02-08",
+                "height_cm": 190,
+                "weight_kg": 86,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Valley Suns",
+        "players": [
+            {
+                "name": "Louis King",
+                "date_of_birth": "1999-04-06",
+                "height_cm": 201,
+                "weight_kg": 93,
+                "nationality": "American",
+                "position": "Small Forward"
+            },
+            {
+                "name": "Devin Cambridge",
+                "date_of_birth": "2000-11-20",
+                "height_cm": 198,
+                "weight_kg": 88,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Westchester Knicks",
+        "players": [
+            {
+                "name": "Dylan Windler",
+                "date_of_birth": "1996-09-22",
+                "height_cm": 198,
+                "weight_kg": 92,
+                "nationality": "American",
+                "position": "Small Forward"
+            },
+            {
+                "name": "DaQuan Jeffries",
+                "date_of_birth": "1997-08-30",
+                "height_cm": 196,
+                "weight_kg": 102,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Windy City Bulls",
+        "players": [
+            {
+                "name": "Carlik Jones",
+                "date_of_birth": "1998-12-23",
+                "height_cm": 185,
+                "weight_kg": 83,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Marko Simonović",
+                "date_of_birth": "1999-10-15",
+                "height_cm": 211,
+                "weight_kg": 102,
+                "nationality": "Montenegrin",
+                "position": "Center"
+            }
+        ]
+    },
+    {
+        "team_name": "Wisconsin Herd",
+        "players": [
+            {
+                "name": "AJ Green",
+                "date_of_birth": "1999-09-27",
+                "height_cm": 193,
+                "weight_kg": 89,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Lindell Wigginton",
+                "date_of_birth": "1998-03-28",
+                "height_cm": 185,
+                "weight_kg": 86,
+                "nationality": "Canadian",
+                "position": "Point Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Baloncesto Malaga",
+        "players": [
+            {
+                "name": "Dario Brizuela",
+                "date_of_birth": "1994-11-08",
+                "height_cm": 193,
+                "weight_kg": 83,
+                "nationality": "Spanish",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Kendrick Perry",
+                "date_of_birth": "1992-12-23",
+                "height_cm": 183,
+                "weight_kg": 79,
+                "nationality": "American",
+                "position": "Point Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Basket Zaragoza",
+        "players": [
+            {
+                "name": "Dylan Ennis",
+                "date_of_birth": "1991-12-26",
+                "height_cm": 188,
+                "weight_kg": 88,
+                "nationality": "Canadian/Jamaican",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Christian Mekowulu",
+                "date_of_birth": "1995-10-08",
+                "height_cm": 205,
+                "weight_kg": 111,
+                "nationality": "Nigerian",
+                "position": "Center"
+            }
+        ]
+    },
+    {
+        "team_name": "Baskonia",
+        "players": [
+            {
+                "name": "Markus Howard",
+                "date_of_birth": "1999-03-03",
+                "height_cm": 180,
+                "weight_kg": 79,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Steven Enoch",
+                "date_of_birth": "1997-09-18",
+                "height_cm": 208,
+                "weight_kg": 113,
+                "nationality": "Armenian/American",
+                "position": "Center"
+            }
+        ]
+    },
+    {
+        "team_name": "Basquet Coruna",
+        "players": [
+            {
+                "name": "Gaizka Maiza",
+                "date_of_birth": "1996-07-28",
+                "height_cm": 191,
+                "weight_kg": 84,
+                "nationality": "Spanish",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Nick Ward",
+                "date_of_birth": "1997-12-06",
+                "height_cm": 203,
+                "weight_kg": 109,
+                "nationality": "American",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Basquet Girona",
+        "players": [
+            {
+                "name": "Marc Gasol",
+                "date_of_birth": "1985-01-29",
+                "height_cm": 211,
+                "weight_kg": 116,
+                "nationality": "Spanish",
+                "position": "Center"
+            },
+            {
+                "name": "Quino Colom",
+                "date_of_birth": "1988-11-01",
+                "height_cm": 188,
+                "weight_kg": 86,
+                "nationality": "Spanish",
+                "position": "Point Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Basquet Manresa",
+        "players": [
+            {
+                "name": "Jerrick Harding",
+                "date_of_birth": "1998-03-10",
+                "height_cm": 185,
+                "weight_kg": 81,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Marcus Lee",
+                "date_of_birth": "1994-09-14",
+                "height_cm": 208,
+                "weight_kg": 103,
+                "nationality": "American",
+                "position": "Center"
+            }
+        ]
+    },
+    {
+        "team_name": "Bilbao Basket",
+        "players": [
+            {
+                "name": "Gytis Masiulis",
+                "date_of_birth": "1998-04-10",
+                "height_cm": 206,
+                "weight_kg": 102,
+                "nationality": "Lithuanian",
+                "position": "Power Forward"
+            },
+            {
+                "name": "Francis Alonso",
+                "date_of_birth": "1996-10-25",
+                "height_cm": 191,
+                "weight_kg": 86,
+                "nationality": "Spanish",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "CB 1939 Canarias",
+        "players": [
+            {
+                "name": "Bruno Fitipaldo",
+                "date_of_birth": "1991-08-02",
+                "height_cm": 183,
+                "weight_kg": 79,
+                "nationality": "Uruguayan",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Sasu Salin",
+                "date_of_birth": "1991-06-11",
+                "height_cm": 191,
+                "weight_kg": 88,
+                "nationality": "Finnish",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "CB Breogan",
+        "players": [
+            {
+                "name": "Sergi Quintela",
+                "date_of_birth": "1996-10-14",
+                "height_cm": 186,
+                "weight_kg": 80,
+                "nationality": "Spanish",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Ethan Happ",
+                "date_of_birth": "1996-05-07",
+                "height_cm": 208,
+                "weight_kg": 108,
+                "nationality": "American",
+                "position": "Center"
+            }
+        ]
+    },
+    {
+        "team_name": "CB Gran Canaria",
+        "players": [
+            {
+                "name": "AJ Slaughter",
+                "date_of_birth": "1987-08-03",
+                "height_cm": 191,
+                "weight_kg": 80,
+                "nationality": "Polish/American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "John Shurna",
+                "date_of_birth": "1990-04-30",
+                "height_cm": 204,
+                "weight_kg": 100,
+                "nationality": "Lithuanian/American",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "CB Murcia",
+        "players": [
+            {
+                "name": "Jordan Davis",
+                "date_of_birth": "1997-06-07",
+                "height_cm": 188,
+                "weight_kg": 88,
+                "nationality": "Azerbaijani/American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "James Anderson",
+                "date_of_birth": "1989-03-25",
+                "height_cm": 198,
+                "weight_kg": 97,
+                "nationality": "American",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "FC Barcelona Basquet",
+        "players": [
+            {
+                "name": "Nikola Mirotic",
+                "date_of_birth": "1991-02-11",
+                "height_cm": 208,
+                "weight_kg": 113,
+                "nationality": "Montenegrin/Spanish",
+                "position": "Power Forward"
+            },
+            {
+                "name": "Cory Higgins",
+                "date_of_birth": "1989-06-14",
+                "height_cm": 196,
+                "weight_kg": 82,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Força Lleida CE",
+        "players": [
+            {
+                "name": "Mark Hughes",
+                "date_of_birth": "1997-03-06",
+                "height_cm": 193,
+                "weight_kg": 85,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Ramon Vila",
+                "date_of_birth": "1997-07-03",
+                "height_cm": 203,
+                "weight_kg": 104,
+                "nationality": "Spanish",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Fundacion CB Granada",
+        "players": [
+            {
+                "name": "Thomas Bropleh",
+                "date_of_birth": "1991-05-20",
+                "height_cm": 196,
+                "weight_kg": 91,
+                "nationality": "Liberian/American",
+                "position": "Small Forward"
+            },
+            {
+                "name": "Christian Díaz",
+                "date_of_birth": "1992-06-14",
+                "height_cm": 185,
+                "weight_kg": 77,
+                "nationality": "Spanish",
+                "position": "Point Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Joventut Badalona",
+        "players": [
+            {
+                "name": "Ante Tomic",
+                "date_of_birth": "1987-02-17",
+                "height_cm": 217,
+                "weight_kg": 110,
+                "nationality": "Croatian",
+                "position": "Center"
+            },
+            {
+                "name": "Joel Parra",
+                "date_of_birth": "2000-04-04",
+                "height_cm": 202,
+                "weight_kg": 100,
+                "nationality": "Spanish",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Real Madrid Baloncesto",
+        "players": [
+            {
+                "name": "Walter Tavares",
+                "date_of_birth": "1992-03-22",
+                "height_cm": 220,
+                "weight_kg": 125,
+                "nationality": "Cape Verdean",
+                "position": "Center"
+            },
+            {
+                "name": "Sergio Llull",
+                "date_of_birth": "1987-11-15",
+                "height_cm": 190,
+                "weight_kg": 87,
+                "nationality": "Spanish",
+                "position": "Point Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Valencia Basket",
+        "players": [
+            {
+                "name": "Sam Van Rossom",
+                "date_of_birth": "1986-06-03",
+                "height_cm": 188,
+                "weight_kg": 85,
+                "nationality": "Belgian",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Bojan Dubljevic",
+                "date_of_birth": "1991-10-24",
+                "height_cm": 205,
+                "weight_kg": 102,
+                "nationality": "Montenegrin",
+                "position": "Center"
+            }
+        ]
+    },
+    {
+        "team_name": "Alba Berlin",
+        "players": [
+            {
+                "name": "Marius Grigonis",
+                "date_of_birth": "1994-01-27",
+                "height_cm": 198,
+                "weight_kg": 99,
+                "nationality": "Lithuanian",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Marcus Eriksson",
+                "date_of_birth": "1992-12-06",
+                "height_cm": 201,
+                "weight_kg": 94,
+                "nationality": "Swedish",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Anadolu Efes SK",
+        "players": [
+            {
+                "name": "Vasilije Micić",
+                "date_of_birth": "1994-01-13",
+                "height_cm": 196,
+                "weight_kg": 94,
+                "nationality": "Serbian",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Shane Larkin",
+                "date_of_birth": "1992-10-02",
+                "height_cm": 180,
+                "weight_kg": 82,
+                "nationality": "American",
+                "position": "Point Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "AS Monaco Basket",
+        "players": [
+            {
+                "name": "Mike James",
+                "date_of_birth": "1990-08-18",
+                "height_cm": 185,
+                "weight_kg": 91,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Donatas Motiejūnas",
+                "date_of_birth": "1990-09-20",
+                "height_cm": 213,
+                "weight_kg": 118,
+                "nationality": "Lithuanian",
+                "position": "Center"
+            }
+        ]
+    },
+    {
+        "team_name": "Bayern Munich Basketball",
+        "players": [
+            {
+                "name": "Jalen Reynolds",
+                "date_of_birth": "1993-02-07",
+                "height_cm": 206,
+                "weight_kg": 104,
+                "nationality": "American",
+                "position": "Center"
+            },
+            {
+                "name": "Othello Hunter",
+                "date_of_birth": "1986-10-28",
+                "height_cm": 203,
+                "weight_kg": 107,
+                "nationality": "American",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "BC Zalgiris",
+        "players": [
+            {
+                "name": "Joffrey Lauvergne",
+                "date_of_birth": "1991-01-14",
+                "height_cm": 210,
+                "weight_kg": 115,
+                "nationality": "French",
+                "position": "Center"
+            },
+            {
+                "name": "Arturas Milaknis",
+                "date_of_birth": "1984-11-04",
+                "height_cm": 192,
+                "weight_kg": 88,
+                "nationality": "Lithuanian",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Fenerbahce Basketball",
+        "players": [
+            {
+                "name": "Jan Vesely",
+                "date_of_birth": "1990-04-24",
+                "height_cm": 211,
+                "weight_kg": 109,
+                "nationality": "Czech",
+                "position": "Power Forward"
+            },
+            {
+                "name": "Marko Guduric",
+                "date_of_birth": "1996-12-08",
+                "height_cm": 198,
+                "weight_kg": 90,
+                "nationality": "Serbian",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "KK Crvena Zvezda",
+        "players": [
+            {
+                "name": "Lorenzo Brown",
+                "date_of_birth": "1990-08-26",
+                "height_cm": 196,
+                "weight_kg": 92,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Ognjen Dobrić",
+                "date_of_birth": "1995-01-13",
+                "height_cm": 196,
+                "weight_kg": 90,
+                "nationality": "Serbian",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "KK Partizan",
+        "players": [
+            {
+                "name": "Kevin Punter",
+                "date_of_birth": "1993-08-11",
+                "height_cm": 191,
+                "weight_kg": 88,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Alen Smailagić",
+                "date_of_birth": "2000-04-04",
+                "height_cm": 208,
+                "weight_kg": 104,
+                "nationality": "Serbian",
+                "position": "Power Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Lyon-Villeurbanne",
+        "players": [
+            {
+                "name": "Elie Okobo",
+                "date_of_birth": "1997-10-23",
+                "height_cm": 191,
+                "weight_kg": 89,
+                "nationality": "French",
+                "position": "Point Guard"
+            },
+            {
+                "name": "David Lighty",
+                "date_of_birth": "1987-12-02",
+                "height_cm": 196,
+                "weight_kg": 95,
+                "nationality": "American",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Maccabi Tel Aviv BC",
+        "players": [
+            {
+                "name": "Scottie Wilbekin",
+                "date_of_birth": "1993-01-05",
+                "height_cm": 191,
+                "weight_kg": 85,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "James Nunnally",
+                "date_of_birth": "1990-02-14",
+                "height_cm": 201,
+                "weight_kg": 99,
+                "nationality": "American",
+                "position": "Small Forward"
+            }
+        ]
+    },
+    {
+        "team_name": "Olimpia Milano",
+        "players": [
+            {
+                "name": "Shavon Shields",
+                "date_of_birth": "1994-03-17",
+                "height_cm": 201,
+                "weight_kg": 99,
+                "nationality": "American",
+                "position": "Small Forward"
+            },
+            {
+                "name": "Kevin Punter",
+                "date_of_birth": "1993-08-11",
+                "height_cm": 191,
+                "weight_kg": 88,
+                "nationality": "American",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Olympiacos BC",
+        "players": [
+            {
+                "name": "Vassilis Spanoulis",
+                "date_of_birth": "1982-08-07",
+                "height_cm": 193,
+                "weight_kg": 96,
+                "nationality": "Greek",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Tyrese Rice",
+                "date_of_birth": "1987-05-15",
+                "height_cm": 183,
+                "weight_kg": 86,
+                "nationality": "American",
+                "position": "Point Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Panathinaikos BC",
+        "players": [
+            {
+                "name": "Nick Calathes",
+                "date_of_birth": "1989-03-07",
+                "height_cm": 198,
+                "weight_kg": 98,
+                "nationality": "American",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Nemanja Nedovic",
+                "date_of_birth": "1991-10-16",
+                "height_cm": 196,
+                "weight_kg": 91,
+                "nationality": "Serbian",
+                "position": "Shooting Guard"
+            }
+        ]
+    },
+    {
+        "team_name": "Paris Basketball",
+        "players": [
+            {
+                "name": "Matthew Strazel",
+                "date_of_birth": "1999-06-03",
+                "height_cm": 193,
+                "weight_kg": 88,
+                "nationality": "French",
+                "position": "Shooting Guard"
+            },
+            {
+                "name": "Youssoupha Fall",
+                "date_of_birth": "1995-01-17",
+                "height_cm": 221,
+                "weight_kg": 140,
+                "nationality": "Senegalese",
+                "position": "Center"
+            }
+        ]
+    },
+    {
+        "team_name": "Virtus Pallacanestro Bologna",
+        "players": [
+            {
+                "name": "Miloš Teodosić",
+                "date_of_birth": "1987-03-19",
+                "height_cm": 195,
+                "weight_kg": 96,
+                "nationality": "Serbian",
+                "position": "Point Guard"
+            },
+            {
+                "name": "Marco Belinelli",
+                "date_of_birth": "1986-03-25",
+                "height_cm": 196,
+                "weight_kg": 98,
+                "nationality": "Italian",
+                "position": "Shooting Guard"
+            }
+        ]
+    }
+]
