@@ -1,6 +1,8 @@
 import * as mysql from "mysql2";
+import * as fs from "fs/promises";
 import MYSQLPASSWORD from "./mysqlpassword.js";
 import { compare } from "bcrypt";
+import { json } from "stream/consumers";
 const connectionOptions: mysql.ConnectionOptions = {
     host: "localhost",
     user: "root",
@@ -15,6 +17,7 @@ async function main() {
     try {
         await populateCompetitions();
         await populateTeams();
+        await populateAthletes();
     }
     catch (err) {
         console.log("Error Populating: ", err);
@@ -69,11 +72,37 @@ async function populateTeams() {
     }
 }
 
+//* POPULATE ATHLETES
+//! Quando vai popular De'Aaron Fox, dá erro porque o nome tem ', por arranjar
+async function populateAthletes(){
+    const jsonData : string = await fs.readFile('dist/src/components/athlete/data/players.json', 'utf-8');
+    const athletes : Array<{
+        team_name : string, 
+        players : Array<{
+            name : string,
+            date_of_birth : string,
+            height_cm : number,
+            weight_kg : number,
+            nationality : string,
+            position: string
+        }>
+    }> = JSON.parse(jsonData);
+    try{
+        for (const teamAthletes of athletes) {
+            for (const athlete of teamAthletes.players) {
+                await populateQueryAthletes(teamAthletes.team_name,athlete.name,athlete.date_of_birth,athlete.height_cm,athlete.weight_kg,athlete.nationality,athlete.position)
+            }
+        }
+    }catch(error){
+        throw new Error(`Cannot populate table, error:${error}`)
+    }
+}
+
 
 //* POPULATE QUERIES
 function populateQueryCompetitions(competitionId: number, competitionName: String): Promise<void> {
     return new Promise((resolve,reject) =>{
-        connection.query<mysql.ResultSetHeader>((`INSERT INTO competitions (competition_id, competition_name) VALUES (${competitionId},'${competitionName}');`), (err, result) => {
+        connection.query<mysql.ResultSetHeader>((`INSERT IGNORE INTO competitions (competition_id, competition_name) VALUES (${competitionId},'${competitionName}');`), (err, result) => {
             if (err) {
                 console.log(err);
                 reject(err);
@@ -93,6 +122,19 @@ function populateQueryTeams(teamName: string, teamInitials: string, teamBadge: s
             }
         });
         console.log(`${teamName} added to table TEAMS!`);
+        resolve();
+    })
+}
+
+function populateQueryAthletes(team_name : string, name : string, date_of_birth : string, height_cm : number, weight_kg : number, nationality : string, position: string) : Promise<void>{
+    return new Promise((resolve,reject) =>{
+        connection.query<mysql.ResultSetHeader>((`INSERT IGNORE INTO athletes (athlete_name, athlete_birthDate, athlete_height, athlete_weight, athlete_nationality, athlete_position, athlete_team_name) VALUES ('${name}','${date_of_birth}','${height_cm}',${weight_kg},'${position}','${nationality}','${team_name}');`), (err, result) => {
+            if (err) {
+                console.log(err);
+                reject(err);
+            }
+        });
+        console.log(`${name} added to table Athletes!`);
         resolve();
     })
 }
