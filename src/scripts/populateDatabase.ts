@@ -1,5 +1,8 @@
 import * as mysql from "mysql2";
-import MYSQLPASSWORD from "./mysqlpassword";
+import * as fs from "fs/promises";
+import MYSQLPASSWORD from "./mysqlpassword.js";
+import { compare } from "bcrypt";
+import { json } from "stream/consumers";
 const connectionOptions: mysql.ConnectionOptions = {
     host: "localhost",
     user: "root",
@@ -8,110 +11,153 @@ const connectionOptions: mysql.ConnectionOptions = {
 }
 const connection: mysql.Connection = mysql.createConnection(connectionOptions);
 main();
+
+//* MAIN
 async function main() {
-    fetchCompetitions().then(() => {
-
-
-        populateTeams().then(() => {
-
-            connection.end((err) => {
-                if (err) {
-                    console.error("Error closing the connection:", err);
-                } else {
-                    console.log("connection closed.");
-                }
-            });
-        });
-    });
-}
-
-
-//* COMPETITIONS FETCH
-async function fetchCompetitions() {
-    return new Promise((resolve, reject) => {
-        connection.query<mysql.ResultSetHeader>((`INSERT INTO competitions (competition_id, competition_name) VALUES ('4546','EuroLeague Basketball');`), (err, result) => {
+    try {
+        await populateCompetitions();
+        await populateTeams();
+        await populateAthletes();
+    }
+    catch (err) {
+        console.log("Error Populating: ", err);
+    }
+    finally {
+        connection.end((err) => {
             if (err) {
-                console.log(err);
-            }
-            else {
-                console.log("COMPETITIONS TABLE populated!");
+                console.error("Error closing the connection:", err);
+            } else {
+                console.log("connection closed.");
             }
         });
-        fetch("https://www.thesportsdb.com/api/v1/json/3/all_leagues.php")
-            .then((res) => {
-                if (!res.ok) {
-                    throw new Error(`HTTP error! Status: ${res.status}`);
-                }
-                return res.json();
-            })
-            .then((data) => {
-                let basketballLeagues: Array<{ idLeague: Number, strLeagueAlternate: String, strSport: String }> = data.leagues;
-                basketballLeagues = basketballLeagues.filter((league: { idLeague: Number, strLeagueAlternate: String, strSport: String }) => league.strSport == "Basketball");
-                console.log(basketballLeagues);
-                basketballLeagues.forEach((league: { idLeague: Number, strLeagueAlternate: String, strSport: String }) => {
-                    connection.query<mysql.ResultSetHeader>((`INSERT INTO competitions (competition_id, competition_name) VALUES (${league.idLeague},'${league.strLeagueAlternate}');`), (err, result) => {
-                        if (err) {
-                            console.log(err);
-                        }
-                        else {
-                            resolve({});
-                            console.log("COMPETITIONS TABLE populated!");
-                        }
-                    });
-                });
-            })
-            .catch((error) => {
-                console.error("Unable to fetch data:", error);
-                reject();
-
-            })
-    })
+    }
 }
 
+//* POPULATE COMPETITIONS
+async function populateCompetitions() {
+    await populateQueryCompetitions(4546, 'EuroLeague Basketball');
+    try{
+        const res = await fetch("https://www.thesportsdb.com/api/v1/json/3/all_leagues.php");
+        if(!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+        const data = await res.json();
+        const basketballLeagues: Array<{ idLeague: number, strLeague: String, strSport: String }> = data.leagues.filter((league: { idLeague: number, strLeague: String, strSport: String }) => league.strSport == "Basketball");
+        
+        for (const competition of basketballLeagues) {
+                await populateQueryCompetitions(competition.idLeague, competition.strLeague);
+        }
+    }catch(error){
+        throw new Error(`Cannot fetch data, error:${error}`);
+    }
+}
+
+//* POPULATE TEAMS
+//! Quando vai popular BC Andorra, dá erro porque o estádio tem ' no nome, por arranjar
 async function populateTeams() {
-    return new Promise((resolve, reject) => {
-        let competitions: Array<String>;
-        competitions = [];
-        connection.query<mysql.RowDataPacket[]>((`SELECT competition_name FROM competitions;`), (err, rows, result) => {
+    try{
+        const competitions = await getCompetitionNames();
+        console.log(competitions);
+        for (const competition of competitions) {
+            const res = await fetch(`https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=${competition}`);
+            if(!res.ok) throw new Error(`HTTP error! Status: ${res.status}`)
+            const data = await res.json();
+            if(data.teams){
+                for (const team of data.teams) {
+                    await populateQueryTeams(team.strTeam, team.strTeamShort, team.strBadge, team.intFormedYear, team.strStadium, team.strCountry);
+                }
+            }
+
+        }
+    }catch(error){
+        throw new Error(`Cannot fetch data, error:${error}`)
+    }
+}
+
+//* POPULATE ATHLETES
+//! Quando vai popular De'Aaron Fox, dá erro porque o nome tem ', por arranjar
+async function populateAthletes(){
+    const jsonData : string = await fs.readFile('dist/src/components/athlete/data/players.json', 'utf-8');
+    const athletes : Array<{
+        team_name : string, 
+        players : Array<{
+            name : string,
+            date_of_birth : string,
+            height_cm : number,
+            weight_kg : number,
+            nationality : string,
+            position: string
+        }>
+    }> = JSON.parse(jsonData);
+    try{
+        for (const teamAthletes of athletes) {
+            for (const athlete of teamAthletes.players) {
+                await populateQueryAthletes(teamAthletes.team_name,athlete.name,athlete.date_of_birth,athlete.height_cm,athlete.weight_kg,athlete.nationality,athlete.position)
+            }
+        }
+    }catch(error){
+        throw new Error(`Cannot populate table, error:${error}`)
+    }
+}
+
+
+//* POPULATE QUERIES
+function populateQueryCompetitions(competitionId: number, competitionName: String): Promise<void> {
+    return new Promise((resolve,reject) =>{
+        connection.query<mysql.ResultSetHeader>((`INSERT IGNORE INTO competitions (competition_id, competition_name) VALUES (${competitionId},'${competitionName}');`), (err, result) => {
             if (err) {
                 console.log(err);
-            }
-            else {
-                rows.forEach(row => {
-                    competitions.push(row.toString());
-                    console.log(row);
-                });
-                console.log("COMPETITIONS TABLE populated!");
+                reject(err);
             }
         });
-        competitions.forEach(competition => {
-            fetch(`https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=${competition}`)
-                .then((res) => {
-                    if (!res.ok) {
-                        throw new Error(`HTTP error! Status: ${res.status}`);
-                    }
-                    return res.json();
-                })
-                .then((data) => {
-                    data.teams.forEach((team: { strTeam: string, strTeamShort: string, strBadge: string, intFormedYear: number, strStadium: string, strCountry: string; }) => {
-                        connection.query<mysql.ResultSetHeader>((`INSERT INTO teams (team_name, team_initials, team_badge, team_formedYear, team_stadium, team_country) VALUES ('${team.strTeam}','${team.strTeamShort}','${team.strBadge}',${team.intFormedYear},'${team.strStadium}','${team.strCountry}');`), (err, result) => {
-                            if (err) {
-                                console.log(err);
-                            }
-                            else {
-                                resolve({});
-                                console.log("TEAMS TABLE populated!");
-                            }
-                        });
-                    });
-                })
-                .catch((error) => {
-                    reject();
-                    console.error("Unable to fetch data:", error)
-                });
+        console.log(`${competitionName} added to table COMPETITIONS!`);
+        resolve();
+    })
+    
+}
+function populateQueryTeams(teamName: string, teamInitials: string, teamBadge: string, teamFormedYear: number, teamStadium: string, teamCountry: string) : Promise<void>{
+    return new Promise((resolve, reject) =>{
+        connection.query<mysql.ResultSetHeader>((`INSERT IGNORE INTO teams (team_name, team_initials, team_badge, team_formedYear, team_stadium, team_country) VALUES ('${teamName}','${teamInitials}','${teamBadge}',${teamFormedYear},'${teamStadium}','${teamCountry}');`), (err, result) => {
+            if (err) {
+                console.log(err);
+                reject(err);
+            }
         });
+        console.log(`${teamName} added to table TEAMS!`);
+        resolve();
     })
 }
 
-//TODO: TEAMS FETCH (USE THE COMPETITIONS DATABASE TO GET THE COMPETITIONS NAMES IN THE FETCH URL)
-//TODO: ASYNC
+function populateQueryAthletes(team_name : string, name : string, date_of_birth : string, height_cm : number, weight_kg : number, nationality : string, position: string) : Promise<void>{
+    return new Promise((resolve,reject) =>{
+        connection.query<mysql.ResultSetHeader>((`INSERT IGNORE INTO athletes (athlete_name, athlete_birthDate, athlete_height, athlete_weight, athlete_nationality, athlete_position, athlete_team_name) VALUES ('${name}','${date_of_birth}','${height_cm}',${weight_kg},'${position}','${nationality}','${team_name}');`), (err, result) => {
+            if (err) {
+                console.log(err);
+                reject(err);
+            }
+        });
+        console.log(`${name} added to table Athletes!`);
+        resolve();
+    })
+}
+
+//* GET DATA FROM DATABASE QUERIES
+function getCompetitionNames(): Promise<Array<String>> {
+    //Interface para query
+    interface CompetitionQueryResult extends mysql.RowDataPacket {
+        competition_id: number;
+        competition_name: string;
+    }
+    return new Promise((resolve,reject) =>{
+        connection.query<CompetitionQueryResult[]>((`SELECT competition_name FROM competitions;`), (err, rows, result) => {
+            if (err) {
+                console.log(err);
+                reject();
+            }
+            else {
+                const competitions : Array<String> = rows.map((row: { competition_name: string }) => row.competition_name);
+                console.log("rows: ", rows);
+                console.log("COMPETITIONS TABLE data transferred to array");
+                resolve(competitions);
+            }
+        });
+    })
+}

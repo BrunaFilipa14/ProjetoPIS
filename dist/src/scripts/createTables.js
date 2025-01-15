@@ -47,7 +47,7 @@ connection.query(("CREATE TABLE statistics (statistic_id INT PRIMARY KEY AUTO_IN
         console.log("STATISTICS TABLE created!");
     }
 });
-connection.query(("CREATE TABLE users (user_id INT PRIMARY KEY AUTO_INCREMENT,user_type VARCHAR(5),user_name VARCHAR (50),user_password VARCHAR(50));"), (err, result) => {
+connection.query(("CREATE TABLE users (user_id INT PRIMARY KEY AUTO_INCREMENT,user_type INT ,user_name VARCHAR (50),user_password VARCHAR(50));"), (err, result) => {
     if (err) {
         console.log(err);
     }
