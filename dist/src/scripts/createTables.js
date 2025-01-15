@@ -7,7 +7,7 @@ const connectionOptions = {
     database: "projeto"
 };
 const connection = mysql.createConnection(connectionOptions);
-connection.query(("CREATE TABLE competitions (competition_id INT PRIMARY KEY, competition_name VARCHAR(100));"), (err, result) => {
+connection.query(("CREATE TABLE competitions (competition_id INT PRIMARY KEY, competition_name VARCHAR(100), competition_description VARCHAR(1000));"), (err, result) => {
     if (err) {
         console.log(err);
     }

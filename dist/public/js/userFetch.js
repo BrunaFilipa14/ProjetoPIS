@@ -19,12 +19,12 @@ function login(event) {
         return response.json();
     })
     .then(data => {
-        console.log("error after");
         if (data.token) {
-            localStorage.setItem("token", data.token); // Save the token in localStorage
+            console.log(data.token);
+            document.cookie = `token=${data.token}`; // Save the token in localStorage
             alert("Login successful!");
-            fetchIndex();
-            console.log("error after after");
+
+            fetchIndex(data.token);
         } else {
             throw new Error(data.message || "Login failed!");
         }
@@ -35,10 +35,7 @@ function login(event) {
     });
 }
 
-function fetchIndex() {
-    const token = localStorage.getItem("token");
-    console.log(token);
-
+function fetchIndex(token) {
     fetch("/api/index", {
         method: "GET",
         headers: {

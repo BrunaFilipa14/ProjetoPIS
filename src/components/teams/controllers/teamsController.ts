@@ -33,28 +33,26 @@ const upload = multer({
     })
 });
 
-const getAllTeams = (req : Request, res : Response) => {
+const getAllTeams = (req : Request, res : Response, callback: (result:any) => void) => {
     connection.query("SELECT * FROM teams", (err, rows, fields) => {
         if (err)
             console.log(err);
         else{
-            res.status(200).json(rows);
+            callback(rows);
         }
     });
 };
 
-const getTeamByName = (req : Request, res : Response) => {
-    connection.query<mysql.ResultSetHeader[]>(`SELECT * FROM teams WHERE team_name = "${req.params.name}";`, (err, rows, fields) => {
+const getTeamByName = (req : Request, res : Response, callback: (result:any) => void) => {
+    connection.query<mysql.ResultSetHeader[]>(`SELECT * FROM teams WHERE team_name LIKE "%${req.params.name}%";`, (err, rows, fields) => {
         if(err){
             console.error("Error: " + err);
         }
         else if(rows.length > 0){
-            res.status(200).render('teams', {
-                teams: rows
-            });
+            callback(rows);
         }
         else{
-            res.status(404).send("A equipa não existe!")
+            res.status(404).send("The team doesn't exist!")
         }
     })
 };
@@ -230,9 +228,9 @@ const deleteAllTeams = (req : Request, res : Response) => {
 const getTeamPlayers = (req : Request, res : Response) => {
     const teamName : String = req.params.name;
 
-    const query = `SELECT athlete_name, athlete_birthDate, athlete_height, athlete_weight, athlete_nationality, athlete_position, athlete_team_name FROM athletes WHERE athlete_team_name = ?`;
+    const query = `SELECT athlete_name, athlete_birthDate, athlete_height, athlete_weight, athlete_nationality, athlete_position, athlete_team_name FROM athletes WHERE athlete_team_name LIKE ?`;
 
-    connection.query<mysql.RowDataPacket[]>(query, [teamName], (err, rows) => {
+    connection.query<mysql.RowDataPacket[]>(query, `%${teamName}%`, (err, rows) => {
         if (err) {
             console.error("Error fetching players:", err);
             return res.status(500).json({ error: "Failed to fetch players." });
@@ -240,6 +238,7 @@ const getTeamPlayers = (req : Request, res : Response) => {
         rows.forEach(row => {
             row.athlete_birthDate = row.athlete_birthDate.toISOString().split('T')[0]; // Remove time from Date
         });
+        console.log(rows);
         res.status(200).json(rows);
     });
 };

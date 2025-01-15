@@ -15,9 +15,9 @@ CREATE TABLE competitions (
 	competition_id INT PRIMARY KEY AUTO_INCREMENT,
     competition_name VARCHAR(100),
     competition_format VARCHAR(50),
-    competition_winner_team_id INT,
+    competition_winner_team_name VARCHAR(50),
     competition_season VARCHAR(50),
-    FOREIGN KEY(competition_winner_team_id) REFERENCES teams(team_id)
+    FOREIGN KEY(competition_winner_team_name) REFERENCES teams(team_name)
 );
 
 CREATE TABLE athletes (

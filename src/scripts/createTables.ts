@@ -9,7 +9,7 @@ const connectionOptions: mysql.ConnectionOptions = {
 }
 const connection: mysql.Connection = mysql.createConnection(connectionOptions);
 
-connection.query<mysql.ResultSetHeader>(("CREATE TABLE competitions (competition_id INT PRIMARY KEY, competition_name VARCHAR(100));"), (err, result) => {
+connection.query<mysql.ResultSetHeader>(("CREATE TABLE competitions (competition_id INT PRIMARY KEY, competition_name VARCHAR(100), competition_description VARCHAR(1000));"), (err, result) => {
     if (err) {
         console.log(err);
     }

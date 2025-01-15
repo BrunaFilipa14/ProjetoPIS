@@ -1,9 +1,10 @@
 import express from "express";
-import api from "./src/api.js";
+import apiRouter from "./src/apiRouter.js";
 import mustacheExpress from "mustache-express";
 import { fileURLToPath } from "url";
 import path from 'path';
-import fetch from 'node-fetch';
+// import cookieParser from 'cookie-parser';
+import viewsRouter from "./src/components/views/routes/viewsRouter.js";
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,30 +12,17 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded());
+// app.use(cookieParser());
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache'); //extensão dos ficheiros das views
 app.set('views', __dirname + '/src/views'); //indicação de qual a pasta que irá conter as views
-
-
-app.use("/api", api);
-app.use("/teams", async (req, res) => {
-    try {
-        const response = await fetch("http://localhost:8081/api/teams");
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const teamsData = await response.json();
-        res.render("teams", {
-            teams: teamsData,
-        });
-    }
-    catch (error) {
-        console.error("Error fetching teams data:", error);
-        res.status(500).send("Error loading teams");
-    }
-});
+app.use("/api", apiRouter);
+app.use("/view", viewsRouter);
 app.get("/sign_up", (req, res) => {
     res.render("sign_up");
+});
+app.get("/sign_in", (req, res) => {
+    res.render("sign_in");
 });
 // app.use("/athletes", athletesRouter);
 // app.use("/competitions", competitionsRouter);
@@ -44,7 +32,7 @@ app.get("/sign_up", (req, res) => {
 // app.use("/fav_teams", favTeamsRouter);
 //authentication
 app.get('/', (req, res) => {
-    res.render('sign_in');
+    res.render('index');
 });
 app.listen(8081, () => {
     console.log("Servidor aberto em http://localhost:8081");

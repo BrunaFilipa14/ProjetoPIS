@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 function verifyJWT(req, res, next) {
-    const token = req.headers['x-access-token'];
+    const token = req.cookies.token;
+    console.log(token);
     if (!token) {
         res.status(401).json({ auth: false, message: 'No token provided.' });
         return;

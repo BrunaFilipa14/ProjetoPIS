@@ -26,10 +26,11 @@ const login = (req:Request, res:Response) => {
             console.error("Error fetching user:", err);
             return res.status(500).json({ error: "Failed to fetch user." });
         }
-        console.log("Query result:", rows);
+
         if(rows.length === 0) {
            return res.status(401).json({message: 'Invalid Login.'});
         }
+
         const user = rows[0];
 
         const passwordMatch = await bcrypt.compare(password, user.user_password_hash);
@@ -43,8 +44,7 @@ const login = (req:Request, res:Response) => {
             expiresIn: 7200 // expira em 2horas (7200 segundos)
         });
         return res.json({ auth: true, token: token });
-        
-        
+      
     });
 };
 

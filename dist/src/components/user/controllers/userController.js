@@ -19,7 +19,6 @@ const login = (req, res) => {
             console.error("Error fetching user:", err);
             return res.status(500).json({ error: "Failed to fetch user." });
         }
-        console.log("Query result:", rows);
         if (rows.length === 0) {
             return res.status(401).json({ message: 'Invalid Login.' });
         }
