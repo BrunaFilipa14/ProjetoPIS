@@ -36,7 +36,7 @@ app.get("/oi", (req, res) => {
 // app.use("/fav_athletes", favAthletesRouter);
 // app.use("/fav_teams", favTeamsRouter);
 //authentication
-app.get('/', (req, res) => {
+app.use('/', (req, res) => {
     res.render('index');
 });
 app.listen(8081, () => {

@@ -48,7 +48,7 @@ app.get("/oi", (req,res) => {
 //authentication
 
 
-app.get('/', (req, res) => {
+app.use('/', (req, res) => {
     res.render('index');
 });
 

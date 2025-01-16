@@ -17,13 +17,25 @@
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Filter by
-        </button> <button type="button" class="btn btn-link">Reset</button>
+        </button>
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item" onclick="filter(`athlete`)">Athlete</a></li>
-            <li><a class="dropdown-item" onclick="filter('team')">Team</a></li>
-            <li><a class="dropdown-item" onclick="filter('competitions')">Competition</a></li>
+            <li><a class="dropdown-item" href="/search/{{input}}/athletes">Athletes</a></li>
+            <li><a class="dropdown-item" href="/search/{{input}}/teams">Teams</a></li>
+            <li><a class="dropdown-item" href="/search/{{input}}/competitions">Competitions</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/search/{{input}}/athletes/name">Athletes Name</a></li>
+            <li><a class="dropdown-item" href="/search/{{input}}/teams/name">Teams Name</a></li>
+            <li><a class="dropdown-item" href="/search/{{input}}/competitions/name">Competitions Name</a></li>
         </ul>
-    </div>
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Order by
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{url}}/asc">A-Z</a></li>
+            <li><a class="dropdown-item" href="{{url}}/desc">Z-A</a></li>
+        </ul>
+        <a class="h4" href="/search/{{input}}">Reset</a>
+</div>
     <br>
     <!-- Athletes -->
         <div id="athletes">
