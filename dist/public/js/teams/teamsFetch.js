@@ -4,7 +4,7 @@ function getId(id){
     teamId = id;
 }
 
-//? PUT - EDITAR EQUIPA
+//? PUT - Edit Team
 function editTeam(){
     
     const form = document.getElementById("editModalForm");
@@ -32,7 +32,7 @@ function editTeam(){
 
 }
 
-//* POST - CRIAR EQUIPA
+//* POST - Create Team
 function createTeam(){
     
     const form = document.getElementById("createModalForm");
@@ -60,7 +60,7 @@ function createTeam(){
     });
 }
 
-//! DELETE - Apagar Equipa
+//! DELETE - Delete Team
 function deleteTeam(){
     console.log(teamId);
     fetch(`/api/teams/${teamId}`, {
@@ -76,7 +76,7 @@ function deleteTeam(){
     location.reload();
 }
 
-//! DELETE - Apagar TODAS as equipas
+//! DELETE - Delete ALL Teams
 function deleteAllTeams(){
     console.log(teamId);
     fetch(`/api/teams/`, {

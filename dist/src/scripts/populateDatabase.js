@@ -112,7 +112,7 @@ function populateQueryTeams(teamName, teamInitials, teamBadge, teamFormedYear, t
 }
 function populateQueryAthletes(team_name, name, date_of_birth, height_cm, weight_kg, nationality, position) {
     return new Promise((resolve, reject) => {
-        connection.query((`INSERT IGNORE INTO athletes (athlete_name, athlete_birthDate, athlete_height, athlete_weight, athlete_nationality, athlete_position, athlete_team_name) VALUES ('${name}','${date_of_birth}','${height_cm}',${weight_kg},'${position}','${nationality}','${team_name}');`), (err, result) => {
+        connection.query((`INSERT IGNORE INTO athletes (athlete_name, athlete_birthDate, athlete_height, athlete_weight, athlete_nationality, athlete_position, athlete_team_name) VALUES ('${name}','${date_of_birth}','${height_cm}',${weight_kg},'${nationality}','${position}','${team_name}');`), (err, result) => {
             if (err) {
                 console.log(err);
                 reject(err);

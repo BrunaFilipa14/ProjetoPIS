@@ -36,7 +36,7 @@ const getCompetitionByName = (req, res, callback) => {
 };
 const createCompetition = (req, res) => {
     //TODO Verifications
-    connection.query(`INSERT INTO competitions (competition_name, competition_description) VALUES ("${req.body.name}", "${req.body.description}");`, (err, result) => {
+    connection.query(`INSERT INTO competitions (competition_name) VALUES ("${req.body.name}");`, (err, result) => {
         if (err) {
             console.log(err);
         }
@@ -46,3 +46,25 @@ const createCompetition = (req, res) => {
         }
     });
 };
+const editCompetition = (req, res) => {
+    if (req.body.name != null && req.body.name != "") {
+        //TODO Verifications
+        if (true) {
+            connection.query(`UPDATE competitions SET competition_name = "${req.body.name}" WHERE competition_id = ${req.params.id};`);
+            console.log("Competition NAME updated successfully");
+        }
+        else {
+            res.status(400).send("");
+        }
+    }
+    res.status(200).send("The team was edited successfully!");
+};
+const deleteCompetition = (req, res) => {
+    connection.query(`DELETE FROM competitions WHERE competition_id = "${req.params.id}";`);
+    res.status(200).send("Competition deleted successfully");
+};
+const deleteAllCompetitions = (req, res) => {
+    connection.query(`DELETE FROM competitions;`);
+    res.status(200).send("200");
+};
+export default { getAllCompetitions, getCompetitionByName, createCompetition, editCompetition, deleteCompetition, deleteAllCompetitions };

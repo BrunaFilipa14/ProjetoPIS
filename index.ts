@@ -6,6 +6,7 @@ import path from 'path';
 import fetch from 'node-fetch';
 // import cookieParser from 'cookie-parser';
 import viewsRouter from "./src/components/views/routes/viewsRouter.js";
+import searchRouter from "./src/components/search/routes/searchRouter.js";
 
 const app : express.Application = express();
 
@@ -24,14 +25,18 @@ app.set('views', __dirname + '/src/views'); //indicação de qual a pasta que ir
 
 
 app.use("/api", apiRouter);
-
 app.use("/view", viewsRouter);
+app.use("/search", searchRouter);
 
 app.get("/sign_up", (req,res) =>{
     res.render("sign_up");
 })
 app.get("/sign_in", (req,res) =>{
     res.render("sign_in");
+})
+
+app.get("/oi", (req,res) => {
+    res.render("searchResults");
 })
 
 // app.use("/athletes", athletesRouter);

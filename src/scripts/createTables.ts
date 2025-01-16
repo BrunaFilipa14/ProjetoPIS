@@ -9,7 +9,7 @@ const connectionOptions: mysql.ConnectionOptions = {
 }
 const connection: mysql.Connection = mysql.createConnection(connectionOptions);
 
-connection.query<mysql.ResultSetHeader>(("CREATE TABLE competitions (competition_id INT PRIMARY KEY, competition_name VARCHAR(100), competition_description VARCHAR(1000));"), (err, result) => {
+connection.query<mysql.ResultSetHeader>(("CREATE TABLE competitions (competition_id INT PRIMARY KEY AUTO_INCREMENT, competition_name VARCHAR(100), competition_description VARCHAR(1000));"), (err, result) => {
     if (err) {
         console.log(err);
     }
@@ -27,7 +27,7 @@ connection.query<mysql.ResultSetHeader>(("CREATE TABLE teams (team_id INT PRIMAR
     }
 });
 
-connection.query<mysql.ResultSetHeader>(("CREATE TABLE athletes (athlete_id INT PRIMARY KEY AUTO_INCREMENT, athlete_name VARCHAR(100) NOT NULL, athlete_birthDate DATE NOT NULL, athlete_height DECIMAL (3, 2), athlete_weight DECIMAL (5, 2), athlete_nationality VARCHAR (50) NOT NULL, athlete_position VARCHAR (50), athlete_team_name VARCHAR(50), FOREIGN KEY(athlete_team_name) REFERENCES teams(team_name));"), (err, result) => {
+connection.query<mysql.ResultSetHeader>(("CREATE TABLE athletes (athlete_id INT PRIMARY KEY AUTO_INCREMENT, athlete_name VARCHAR(100) NOT NULL, athlete_birthDate DATE NOT NULL, athlete_height INT, athlete_weight DECIMAL (5, 2), athlete_nationality VARCHAR (50) NOT NULL, athlete_position VARCHAR (50), athlete_team_name VARCHAR(50), FOREIGN KEY(athlete_team_name) REFERENCES teams(team_name));"), (err, result) => {
     if (err) {
         console.log(err);
     }

@@ -45,7 +45,7 @@ const getCompetitionByName = (req : Request, res : Response, callback: (result:a
 
 const createCompetition = (req : Request, res : Response) => {
         //TODO Verifications
-        connection.query<mysql.ResultSetHeader>(`INSERT INTO competitions (competition_name, competition_description) VALUES ("${req.body.name}", "${req.body.description}");`, (err : Error, result : any) => {
+        connection.query<mysql.ResultSetHeader>(`INSERT INTO competitions (competition_name) VALUES ("${req.body.name}");`, (err : Error, result : any) => {
             if (err){
                 console.log(err);
             }else{
@@ -53,6 +53,34 @@ const createCompetition = (req : Request, res : Response) => {
                 res.status(200).send(200);
             }
         });
-
-
 }
+
+const editCompetition = (req : Request, res : Response) => {
+    
+        if(req.body.name != null && req.body.name != ""){
+            //TODO Verifications
+            if(true){
+                connection.query<mysql.ResultSetHeader>(`UPDATE competitions SET competition_name = "${req.body.name}" WHERE competition_id = ${req.params.id};`)
+                console.log("Competition NAME updated successfully");
+            }
+            else{
+                res.status(400).send("");
+            }
+        }
+        res.status(200).send("The team was edited successfully!");
+}
+
+const deleteCompetition = (req : Request, res : Response) => {
+    connection.query<mysql.ResultSetHeader>(`DELETE FROM competitions WHERE competition_id = "${req.params.id}";`);
+
+    res.status(200).send("Competition deleted successfully");
+}
+
+const deleteAllCompetitions = (req : Request, res : Response) => {
+    connection.query(`DELETE FROM competitions;`);
+
+    res.status(200).send("200");
+}
+
+
+export default {getAllCompetitions, getCompetitionByName, createCompetition, editCompetition, deleteCompetition, deleteAllCompetitions};

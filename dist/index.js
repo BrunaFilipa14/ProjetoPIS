@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import path from 'path';
 // import cookieParser from 'cookie-parser';
 import viewsRouter from "./src/components/views/routes/viewsRouter.js";
+import searchRouter from "./src/components/search/routes/searchRouter.js";
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,18 +17,24 @@ app.use(express.urlencoded());
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache'); //extensão dos ficheiros das views
 app.set('views', __dirname + '/src/views'); //indicação de qual a pasta que irá conter as views
-
-
 app.use("/api", apiRouter);
 app.use("/view", viewsRouter);
-
+app.use("/search", searchRouter);
 app.get("/sign_up", (req, res) => {
     res.render("sign_up");
 });
 app.get("/sign_in", (req, res) => {
     res.render("sign_in");
 });
-
+app.get("/oi", (req, res) => {
+    res.render("searchResults");
+});
+// app.use("/athletes", athletesRouter);
+// app.use("/competitions", competitionsRouter);
+// app.use("/statistics", statisticsRouter);
+// app.use("/games", gamesRouter);
+// app.use("/fav_athletes", favAthletesRouter);
+// app.use("/fav_teams", favTeamsRouter);
 //authentication
 app.get('/', (req, res) => {
     res.render('index');

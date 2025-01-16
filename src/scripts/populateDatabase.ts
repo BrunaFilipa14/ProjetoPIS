@@ -128,7 +128,7 @@ function populateQueryTeams(teamName: string, teamInitials: string, teamBadge: s
 
 function populateQueryAthletes(team_name : string, name : string, date_of_birth : string, height_cm : number, weight_kg : number, nationality : string, position: string) : Promise<void>{
     return new Promise((resolve,reject) =>{
-        connection.query<mysql.ResultSetHeader>((`INSERT IGNORE INTO athletes (athlete_name, athlete_birthDate, athlete_height, athlete_weight, athlete_nationality, athlete_position, athlete_team_name) VALUES ('${name}','${date_of_birth}','${height_cm}',${weight_kg},'${position}','${nationality}','${team_name}');`), (err, result) => {
+        connection.query<mysql.ResultSetHeader>((`INSERT IGNORE INTO athletes (athlete_name, athlete_birthDate, athlete_height, athlete_weight, athlete_nationality, athlete_position, athlete_team_name) VALUES ('${name}','${date_of_birth}','${height_cm}',${weight_kg},'${nationality}','${position}','${team_name}');`), (err, result) => {
             if (err) {
                 console.log(err);
                 reject(err);

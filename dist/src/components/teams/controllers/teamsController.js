@@ -211,4 +211,17 @@ const getTeamPlayers = (req, res) => {
         res.status(200).json(rows);
     });
 };
-export default { getAllTeams, getTeamByName, createTeam, editTeam, deleteTeam, deleteAllTeams, getTeamPlayers };
+const getTeamByCountry = (req, res, callback) => {
+    connection.query(`SELECT * FROM teams WHERE team_country LIKE "%${req.params.name}%";`, (err, rows, fields) => {
+        if (err) {
+            console.error("Error: " + err);
+        }
+        else if (rows.length > 0) {
+            callback(rows);
+        }
+        else {
+            res.status(404).send("The team doesn't exist!");
+        }
+    });
+};
+export default { getAllTeams, getTeamByName, createTeam, editTeam, deleteTeam, deleteAllTeams, getTeamPlayers, getTeamByCountry };
