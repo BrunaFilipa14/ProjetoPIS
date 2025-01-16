@@ -1,19 +1,16 @@
 import jwt from "jsonwebtoken";
+const SIGN_KEY = process.env.SIGN_KEY || "password";
 function verifyJWT(req, res, next) {
     const token = req.cookies.token;
-    console.log(token);
     if (!token) {
-        res.status(401).json({ auth: false, message: 'No token provided.' });
-        return;
+        return res.redirect("/sign_in");
     }
-    jwt.verify(token, 'palavrasecreta', function (err, decoded) {
+    jwt.verify(token, SIGN_KEY, function (err, decoded) {
         if (err) {
-            res.status(500).json({ auth: false, message: 'Failed to authenticate token.' });
-            return;
+            return res.redirect("/sign_in");
         }
         if (decoded && typeof decoded !== 'string') {
             req.userId = decoded.id;
-            console.log("funcionou");
             next();
         }
         else {

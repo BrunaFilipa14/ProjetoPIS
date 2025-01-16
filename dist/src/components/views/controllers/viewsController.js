@@ -28,4 +28,7 @@ const showCompetition = (req, res) => {
         });
     });
 };
-export default { showAllTeams, showTeam, showAllCompetitions, showCompetition };
+const showIndex = (req, res) => {
+    res.render("index");
+};
+export default { showAllTeams, showTeam, showAllCompetitions, showCompetition, showIndex };

@@ -2,6 +2,8 @@ import * as mysql from 'mysql2';
 import MYSQLPASSWORD from "../../../scripts/mysqlpassword.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import notifier from "node-notifier";
+const SIGN_KEY = process.env.SIGN_KEY || "password";
 const connectionOptions = {
     host: "localhost",
     user: "root",
@@ -13,7 +15,7 @@ connection.connect();
 const login = (req, res) => {
     const { username, password } = req.body;
     console.log("Login attempt:", req.body.username, req.body.password);
-    const query = `SELECT * FROM users WHERE user_username = ?`;
+    const query = `SELECT * FROM users WHERE user_name = ?`;
     connection.query(query, [username], async (err, rows) => {
         if (err) {
             console.error("Error fetching user:", err);
@@ -23,35 +25,54 @@ const login = (req, res) => {
             return res.status(401).json({ message: 'Invalid Login.' });
         }
         const user = rows[0];
-        const passwordMatch = await bcrypt.compare(password, user.user_password_hash);
+        const passwordMatch = await bcrypt.compare(password, user.user_password);
         if (!passwordMatch) {
             return res.status(401).json({ message: 'Invalid Login.' });
         }
         //auth ok
         const id = user.user_id; //id retornado da base de dados
-        const token = jwt.sign({ id }, 'palavrasecreta', {
-            expiresIn: 7200 // expira em 2horas (7200 segundos)
+        const token = jwt.sign({ id }, SIGN_KEY, {
+            expiresIn: 1200 // expira em 20min (1200 segundos)
         });
-        return res.json({ auth: true, token: token });
+        res.cookie('token', token, { httpOnly: true });
+        res.json({ auth: true, token: token });
     });
 };
-const signUp = (req, res) => {
-};
 // Hash and save the password
-const saveEncryptedPassword = async (username, plainPassword) => {
+const signUp = async (req, res) => {
     try {
+        const { username, password } = req.body;
         // Generate a salt and hash the password
         const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        const checkUsername = new Promise((resolve, reject) => {
+            connection.query(`SELECT * FROM users WHERE user_name = ?`, username, async (err, rows) => {
+                if (err) {
+                    console.error("Error saving user:", err);
+                    return reject(err);
+                }
+                if (rows.length > 0) {
+                    notifier.notify({
+                        message: "Username already in use! Please choose a different one."
+                    });
+                    return;
+                }
+                resolve(rows || []);
+            });
+        });
+        const results = await Promise.all([
+            checkUsername
+        ]);
         // Insert the user into the database
-        const query = `INSERT INTO users (user_username, user_password_hash, user_type) VALUES (?, ?, ?)`;
-        const values = [username, hashedPassword, "user"]; // Assuming a default user type of "user"
+        const query = `INSERT INTO users (user_name, user_password, user_type) VALUES (?, ?, ?)`;
+        const values = [username, hashedPassword, 1]; // user 1 - admin 0
         connection.query(query, values, (err, result) => {
             if (err) {
                 console.error("Error saving user:", err);
                 return;
             }
             console.log("User saved successfully with ID");
+            res.status(201).json({ success: true });
         });
     }
     catch (error) {

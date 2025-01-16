@@ -54,7 +54,7 @@ connection.query<mysql.ResultSetHeader>(("CREATE TABLE statistics (statistic_id 
     }
 });
 
-connection.query<mysql.ResultSetHeader>(("CREATE TABLE users (user_id INT PRIMARY KEY AUTO_INCREMENT,user_type INT ,user_name VARCHAR (50),user_password VARCHAR(50));"), (err, result) => {
+connection.query<mysql.ResultSetHeader>("CREATE TABLE users (user_id INT PRIMARY KEY AUTO_INCREMENT,user_type INT ,user_name VARCHAR (50) UNIQUE NOT NULL,user_password VARCHAR(225) UNIQUE NOT NULL)", (err, result) => {
     if (err) {
         console.log(err);
     } 

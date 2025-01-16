@@ -8,8 +8,6 @@ form.addEventListener('submit', (evt) => {
     const inputValue = input.value;
     if (!inputValue) return;
     
-    // Build the dynamic URL based on the filter
-    const relativeURL = `/search/${inputValue}`;
-    window.location.href = relativeURL; // Redirect to the URL
+    window.location.href = `/search/${inputValue}`;
 });
 

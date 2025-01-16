@@ -39,4 +39,8 @@ const showCompetition = (req: any, res: any) => {
     })
 }
 
-export default { showAllTeams, showTeam, showAllCompetitions, showCompetition};
+const showIndex = (req: any, res: any) => {
+    res.render("index");
+}
+
+export default { showAllTeams, showTeam, showAllCompetitions, showCompetition, showIndex};
