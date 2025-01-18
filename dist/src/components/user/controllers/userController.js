@@ -31,18 +31,17 @@ const login = (req, res) => {
         }
         //auth ok
         const id = user.user_id; //id retornado da base de dados
-        const token = jwt.sign({ id }, SIGN_KEY, {
+        const type = user.user_type;
+        const token = jwt.sign({ id, type }, SIGN_KEY, {
             expiresIn: 1200 // expira em 20min (1200 segundos)
         });
         res.cookie('token', token, { httpOnly: true });
         res.json({ auth: true, token: token });
     });
 };
-// Hash and save the password
 const signUp = async (req, res) => {
     try {
         const { username, password } = req.body;
-        // Generate a salt and hash the password
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const checkUsername = new Promise((resolve, reject) => {
@@ -63,9 +62,8 @@ const signUp = async (req, res) => {
         const results = await Promise.all([
             checkUsername
         ]);
-        // Insert the user into the database
         const query = `INSERT INTO users (user_name, user_password, user_type) VALUES (?, ?, ?)`;
-        const values = [username, hashedPassword, 1]; // user 1 - admin 0
+        const values = [username, hashedPassword, 0]; // user 0 - admin 1
         connection.query(query, values, (err, result) => {
             if (err) {
                 console.error("Error saving user:", err);
@@ -79,5 +77,22 @@ const signUp = async (req, res) => {
         console.error("Error hashing password:", error);
     }
 };
-// Example: Add a test user
-export default { login, signUp };
+function authorize(requiredUserType) {
+    return (req, res, next) => {
+        const token = req.cookies.token;
+        if (!token) {
+            return res.status(403).json({ error: "No token provided" });
+        }
+        jwt.verify(token, SIGN_KEY, (err, decoded) => {
+            if (err) {
+                return res.status(401).json({ error: "Invalid token" });
+            }
+            if (decoded.type !== requiredUserType) {
+                return res.status(403).json({ error: "Forbidden access" });
+            }
+            req.user = decoded;
+            next();
+        });
+    };
+}
+export default { login, signUp, authorize };

@@ -65,14 +65,8 @@ const createTeam = (req : Request, res : Response) => {
             return res.status(500).send("Failed to upload file.");
         }
 
-        //console.log("Uploaded file:", req.file); // Log the uploaded file
-        console.log("Request body:", req.body); // Log the rest of the form data
-        console.log("req file: " + req.file?.filename);
-
         const { name, initials, formedYear, stadium, country } = req.body;
         const badgePath = req.file ? `/images/teams/${req.file.filename}` : null;
-        console.log(__dirname);
-        console.log(badgePath);
 
         //TODO Verifications
         connection.query<mysql.ResultSetHeader>(`INSERT INTO teams (team_name, team_initials, team_badge, team_formedYear, team_stadium, team_country) VALUES ("${name}", "${initials}", "${badgePath}", "${formedYear}", "${stadium}", "${country}");`, (err : Error, result : any) => {
@@ -95,14 +89,9 @@ const editTeam = (req : Request, res : Response) => {
             return res.status(500).send("Failed to upload file.");
         }
 
-        console.log("body:");
-        console.log(req.body);
 
         const { nameEdit, initialsEdit, formedYearEdit, stadiumEdit, countryEdit } = req.body;
         const badgePathEdit = req.file ? `/images/teams/${req.file.filename}` : null;
-        console.log(badgePathEdit);
-
-
 
 
         if(nameEdit != null && nameEdit != ""){
@@ -238,7 +227,6 @@ const getTeamPlayers = (req : Request, res : Response) => {
         rows.forEach(row => {
             row.athlete_birthDate = row.athlete_birthDate.toISOString().split('T')[0]; // Remove time from Date
         });
-        console.log(rows);
         res.status(200).json(rows);
     });
 };

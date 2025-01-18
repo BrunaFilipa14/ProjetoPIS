@@ -10,40 +10,38 @@
 </head>
 
 <body>
-    <!-- 
-        Não adicionei nada para o "View Team Players", não sei se queres sequer manter esse botão.
-        Pensei em fazer outro ficheiro mustache para mostrar os jogadores da equipa, mas vai ser bués views probably.
-        Podemos também fazer um modal, mas não sei como vai ficar
 
+    {{>header}}
 
-        Adicionei o código para o mustache mas não o testei (ainda falta adicionar o url do badge à base de dados)
-    -->
-    <!-- Tabela de Backoffice -->
     <div class="container">
-        <h1>Backoffice</h1>
+        <h1>Athletes</h1>
         <br>
-        <table>
+        <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Birth Date</th>
-                    <th scope="col">Height</th>
-                    <th scope="col">Weight</th>
+                    <th scope="col">Height(cm)</th>
+                    <th scope="col">Weight(Kg)</th>
                     <th scope="col">Nationality</th>
                     <th scope="col">Position</th>
                     <th scope="col">Team</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
             {{#athletes}}
                 <tr class="align-middle">
-                    <td>{{name}}</td>
-                    <td>{{birthDate}}</td>
-                    <td>{{height}}</td>
-                    <td>{{weight}}</td>
-                    <td>{{nationality}}</td>
-                    <td>{{position}}</td>
-                    <td>{{team}}</td>
+                    <td>{{athlete_name}}</td>
+                    <td>{{athlete_birthDate}}</td>
+                    <td>{{athlete_height}}</td>
+                    <td>{{athlete_weight}}</td>
+                    <td>{{athlete_nationality}}</td>
+                    <td>{{athlete_position}}</td>
+                    <td>{{athlete_team_name}}</td>
+                    <td>
+                        <button type="button" class="btn" id="athlete-{{athlete_id}}" onclick="favouriteActionAthlete({{athlete_id}})" data-athlete-id="{{athlete_id}}" style="color:#fff;">🩶</button>
+                    </td>
                 </tr>
             {{/athletes}}
             </tbody>
@@ -51,6 +49,7 @@
     </div>
 
     
-    <script src="/js/teams/fetch.js"> </script>
+    <script src="/js/athletes/athletesFetch.js"> </script>
+    <script src="/js/favourites/favouriteAthletesFetch.js"> </script>
 </body>
 </html>

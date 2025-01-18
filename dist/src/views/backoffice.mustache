@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Competitions</title>
+</head>
+
+<body>
+
+    {{> header}}
+    
+
+    <div class="container">
+        <h1>Backoffice</h1>
+    </div>
+
+    <!-- Tabela de Backoffice dos ATHLETES-->
+    <div class="container">
+        <h3>Athletes</h3>
+        <br>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createAthletesModal">Create New</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAllAthletesModal">Delete All</button>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Birth Date</th>
+                    <th scope="col">Badge</th>
+                    <th scope="col">Formed Year</th>
+                    <th scope="col">Stadium</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#athletes}}
+                <tr class="align-middle">
+                    <td>{{athlete_name}}</td>
+                    <td>{{athlete_birthDate}}</td>
+                    <td>{{athlete_height}}</td>
+                    <td>{{athlete_weight}}</td>
+                    <td>{{athlete_nationality}}</td>
+                    <td>{{athlete_position}}</td>
+                    <td>{{athlete_team}}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="getId({{athlete_id}})" data-bs-toggle="modal" data-bs-target="#deleteAthletesModal">Delete</button>
+                        <button type="button" onclick="getId({{athlete_id}})" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editAthletesModal" style="color:#fff;">Edit</button>
+                    </td>
+                </tr>
+            {{/athletes}}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteAthletesModal" tabindex="-1" aria-labelledby="deleteAthletesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #e03444; color:#fff;">
+                    <h5 class="modal-title" id="deleteAthletesModalLabel">Delete Athlete</h5>
+                    <!--TODO: O botão não fica branco e já está tarde para eu arranjar isso, arranjamos depois :)-->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this athlete?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="deleteAthlete()" class="btn btn-danger" id="btnDeleteConfirm{{athlete_id}}" data-bs-dismiss="modal">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editAthletesModal" tabindex="-1" aria-labelledby="editAthletesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #ffcc2c; color:#fff;">
+                    <h5 class="modal-title" id="editAthletesModalLabel">Edit Athlete</h5>
+                    <!--TODO: O botão não fica branco e já está tarde para eu arranjar isso, arranjamos depois :)-->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editAthletesModalForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="inputAthletesNameEdit" class="form-label">Name</label>
+                            <input type="text" name="nameEdit" class="form-control" id="inputAthletesNameEdit">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputAthletesBirthDateEdit" class="form-label">Birth Date</label>
+                            <input type="number" name="birthDateEdit" class="form-control" id="inputAthletesInitialsEdit">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputAthleteHeightEdit" class="form-label">Height(cm)</label>
+                            <input type="number" name="heightEdit" class="form-control" id="inputAthleteHeightEdit">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputAthleteWeightEdit" class="form-label">Weight(Kg)</label>
+                            <input type="number" name="weightEdit" class="form-control" id="inputAthleteWeightEdit">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputAthleteNationalityEdit" class="form-label">Nationality</label>
+                            <input type="text" name="nationalityEdit" class="form-control" id="inputAthleteNationalityEdit">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputAthletePositionEdit" class="form-label">Position</label>
+                            <input type="text" name="athletePositionEdit" class="form-control" id="inputAthletePositionEdit">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputAthleteTeamEdit" class="form-label">Team</label>
+                            <input type="text" name="athleteTeamEdit" class="form-control" id="inputAthleteTeamEdit">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="editAthlete()" class="btn btn-warning" id="btnEditConfirm{{athlete_id}}" data-bs-dismiss="modal" form="editModalForm">Confirm Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Modal -->
+    <div class="modal fade" id="createAthletesModal" tabindex="-1" aria-labelledby="createAthletesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #198754; color: #ffffff;">
+                    <h5 class="modal-title" id="createAthletesModalLabel">Create Athlete</h5>
+                    <!--TODO: O botão não fica branco-->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createAthletesModalForm" enctype="multipart/form-data">
+                         <div class="mb-3">
+                            <label for="inputAthletesNameCreate" class="form-label">Name</label>
+                            <input type="text" name="nameCreate" class="form-control" id="inputAthletesNameCreate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputAthletesBirthDateCreate" class="form-label">Birth Date</label>
+                            <input type="number" name="birthDateCreate" class="form-control" id="inputAthletesInitialsCreate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputAthleteHeightCreate" class="form-label">Height(cm)</label>
+                            <input type="number" name="heightCreate" class="form-control" id="inputAthleteHeightCreate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputAthleteWeightCreate" class="form-label">Weight(Kg)</label>
+                            <input type="number" name="weightCreate" class="form-control" id="inputAthleteWeightCreate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputAthleteNationalityCreate" class="form-label">Nationality</label>
+                            <input type="text" name="nationalityCreate" class="form-control" id="inputAthleteNationalityCreate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputAthletePositionCreate" class="form-label">Position</label>
+                            <input type="text" name="athletePositionCreate" class="form-control" id="inputAthletePositionCreate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputAthleteTeamCreate" class="form-label">Team</label>
+                            <input type="text" name="athleteTeamCreate" class="form-control" id="inputAthleteTeamCreate">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="createAthlete()" class="btn btn-warning" id="btnCreateConfirm" data-bs-dismiss="modal" form="createModalForm">Confirm Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete All Modal -->
+    <div class="modal fade" id="deleteAllAthletesModal" tabindex="-1" aria-labelledby="deleteAllAthletesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #e03444; color:#fff;">
+                    <h5 class="modal-title" id="deleteAllAthletesModalLabel">Delete ALL Athletes</h5>
+                    <!--TODO: O botão não fica branco e já está tarde para eu arranjar isso, arranjamos depois :)-->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete all the athletes? This is irreversible!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="deleteAllAthletes()" class="btn btn-danger" id="btnDeleteAllConfirm" data-bs-dismiss="modal">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabela de Backoffice das TEAMS-->
+    <div class="container">
+        <h3>Teams</h3>
+        <br>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createTeamsModal">Create New</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAllTeamsModal">Delete All</button>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Initials</th>
+                    <th scope="col">Badge</th>
+                    <th scope="col">Formed Year</th>
+                    <th scope="col">Stadium</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#teams}}
+                <tr class="align-middle">
+                    <td>{{team_name}}</td>
+                    <td>{{team_initials}}</td>
+                    <td><img src={{team_badge}} style="max-width:100px; max-height:100px;"></td>
+                    <td>{{team_formedYear}}</td>
+                    <td>{{team_stadium}}</td>
+                    <td>{{team_country}}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" onclick="getTeamPlayers('{{team_name}}')" data-bs-toggle="modal" data-bs-target="#teamPlayersModal">View Players</button>
+                        <button type="button" class="btn btn-danger" onclick="getId({{team_id}})" data-bs-toggle="modal" data-bs-target="#deleteTeamsModal">Delete</button>
+                        <button type="button" onclick="getId({{team_id}})" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editTeamsModal" style="color:#fff;">Edit</button>
+                    </td>
+                </tr>
+            {{/teams}}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteTeamsModal" tabindex="-1" aria-labelledby="deleteTeamsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #e03444; color:#fff;">
+                    <h5 class="modal-title" id="deleteTeamsModalLabel">Delete Team</h5>
+                    <!--TODO: O botão não fica branco e já está tarde para eu arranjar isso, arranjamos depois :)-->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this team?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="deleteTeam()" class="btn btn-danger" id="btnDeleteConfirm{{team_id}}" data-bs-dismiss="modal">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editTeamsModal" tabindex="-1" aria-labelledby="editTeamsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #ffcc2c; color:#fff;">
+                    <h5 class="modal-title" id="editTeamsModalLabel">Edit Team</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editTeamsModalForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="inputTeamNameEdit" class="form-label">Name</label>
+                            <input type="text" name="nameEdit" class="form-control" id="inputTeamNameEdit">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputTeamInitialsEdit" class="form-label">Initials</label>
+                            <input type="text" name="initialsEdit" class="form-control" id="inputTeamInitialsEdit">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputTeamBadgeEdit" class="form-label">Badge</label>
+                            <input class="form-control" name="teamBadgeEdit" type="file" accept="image/jpeg, image/png, image/jpg" id="inputTeamBadgeEdit">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputTeamFormedYearEdit" class="form-label">Formed Year</label>
+                            <input type="number" name="formedYearEdit" class="form-control" id="inputTeamFormedYearEdit">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputTeamStadiumEdit" class="form-label">Stadium</label>
+                            <input type="text" name="stadiumEdit" class="form-control" id="inputTeamStadiumEdit">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputTeamCountryEdit" class="form-label">Country</label>
+                            <input type="text" name="countryEdit" class="form-control" id="inputTeamCountryEdit">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modalTeams">Close</button>
+                    <button type="button" onclick="editTeam()" class="btn btn-warning" id="btnEditConfirm{{team_id}}" data-bs-dismiss="modal" form="editModalTeamsForm">Confirm Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Modal -->
+    <div class="modal fade" id="createTeamsModal" tabindex="-1" aria-labelledby="createTeamsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #198754; color: #ffffff;">
+                    <h5 class="modal-title" id="createTeamsModalLabel">Create Team</h5>
+                    <!--TODO: O botão não fica branco-->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createTeamsModalForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="inputTeamNameCreate" class="form-label">Name</label>
+                            <input type="text" name="name" class="form-control" id="inputTeamNameCreate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputTeamInitialsCreate" class="form-label">Initials</label>
+                            <input type="text" name="initials" class="form-control" id="inputTeamInitialsCreate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputTeamBadgeCreate" class="form-label">Badge</label>
+                            <input class="form-control" type="file" accept="image/jpeg, image/png, image/jpg" id="inputTeamBadgeCreate" name="teamBadge">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputTeamFormedYearCreate" class="form-label">Formed Year</label>
+                            <input type="number" name="formedYear" class="form-control" id="inputTeamFormedYearCreate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputTeamStadiumCreate" class="form-label">Stadium</label>
+                            <input type="text" name="stadium" class="form-control" id="inputTeamStadiumCreate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputTeamCountryCreate" class="form-label">Country</label>
+                            <input type="text" name="country" class="form-control" id="inputTeamCountryCreate">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="createTeam()" class="btn btn-warning" id="btnCreateConfirm" data-bs-dismiss="modal" form="createTeamsModalForm">Confirm Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete All Modal -->
+    <div class="modal fade" id="deleteAllTeamsModal" tabindex="-1" aria-labelledby="deleteAllTeamsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #e03444; color:#fff;">
+                    <h5 class="modal-title" id="deleteAllTeamsModalLabel">Delete ALL Teams</h5>
+                    <!--TODO: O botão não fica branco e já está tarde para eu arranjar isso, arranjamos depois :)-->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete all the teams? This is irreversible!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="deleteAllTeams()" class="btn btn-danger" id="btnDeleteAllConfirm" data-bs-dismiss="modal">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Team Players Modal -->
+    <div class="modal fade" id="teamPlayersModal" tabindex="-1" aria-labelledby="teamPlayersModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #007bff; color: #ffffff;">
+                    <h5 class="modal-title" id="teamPlayersModalLabel">Players</h5>
+                    <!--TODO: O botão não fica branco-->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h2 id="teamName"></h2>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Birth Date</th>
+                                <th scope="col">Height(cm)</th>
+                                <th scope="col">Weight(kg)</th>
+                                <th scope="col">Nationality</th>
+                                <th scope="col">Position</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Tabela de Backoffice dos GAMES-->
+    <div class="container">
+        <h3>Games</h3>
+        <br>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createGamesModal">Create New</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAllGamesModal">Delete All</button>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Home Team</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">Away Team</th>
+                    <th scorpe="col">Date</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#games}}
+                <tr class="align-middle">
+                    <td>{{game_house_team_id}}</td>
+                    <td>{{game_result}}</td>
+                    <td>{{game_visiting_team_id}}</td>
+                    <td>{{game_date}}</td>
+                    <!-- TODO: PEGAR O NOME DAS TEAMS, TORNAR AS TEAMS EM BUTTONS-->
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="getId({{competition_id}})" data-bs-toggle="modal" data-bs-target="#deleteGamesModal">Delete</button>
+                        <button type="button" onclick="getId({{competition_id}})" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editGamesModal" style="color:#fff;">Edit</button>
+                    </td>
+                </tr>
+            {{/games}}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteGamesModal" tabindex="-1" aria-labelledby="deleteGamesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #e03444; color:#fff;">
+                    <h5 class="modal-title" id="deleteGamesModalLabel">Delete Game</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this game?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="deleteGame()" class="btn btn-danger" id="btnDeleteConfirm{{game_id}}" data-bs-dismiss="modal">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editGamesModal" tabindex="-1" aria-labelledby="editGamesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #ffcc2c; color:#fff;">
+                    <h5 class="modal-title" id="editGamesModalLabel">Edit Game</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editGamesModalForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                        <!-- TODO: ALTERAR PARAMETROS -->
+                            <label for="inputTeamNameEdit" class="form-label">Name</label>
+                            <input type="text" name="nameEdit" class="form-control" id="inputCompetitionNameEdit">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="editGame()" class="btn btn-warning" id="btnEditConfirm{{game_id}}" data-bs-dismiss="modal" form="editModalForm">Confirm Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Modal -->
+    <div class="modal fade" id="createGamesModal" tabindex="-1" aria-labelledby="createGamesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #198754; color: #ffffff;">
+                    <h5 class="modal-title" id="createGamesModalLabel">Create Game</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createGamesModalForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <!-- TODO: ALTERAR PARAMETROS -->
+                            <label for="inputTeamNameCreate" class="form-label">Name</label>
+                            <input type="text" name="name" class="form-control" id="inputCompetitionNameCreate">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="createGame()" class="btn btn-warning" id="btnCreateConfirm" data-bs-dismiss="modal" form="createModalForm">Confirm Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete All Modal -->
+    <div class="modal fade" id="deleteAllGamesModal" tabindex="-1" aria-labelledby="deleteAllGamesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #e03444; color:#fff;">
+                    <h5 class="modal-title" id="deleteAllGamesModalLabel">Delete ALL Teams</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete all the games? This is irreversible!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="deleteAllGames()" class="btn btn-danger" id="btnDeleteAllConfirm" data-bs-dismiss="modal">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap Bundle w/ Popper-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="/js/competitions/competitionsFetch.js"> </script>
+    <script src="/js/teams/teamsFetch.js"> </script>
+    <script src="/js/athletes/athletesFetch.js"> </script>
+</body>
+</html>

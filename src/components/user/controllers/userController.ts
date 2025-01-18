@@ -17,7 +17,7 @@ connection.connect();
 
 
 
-const login = (req:Request, res:Response) => {
+const login = (req: any, res: any) => {
     const { username, password } = req.body;
 
     console.log("Login attempt:", req.body.username, req.body.password);
@@ -42,7 +42,8 @@ const login = (req:Request, res:Response) => {
 
         //auth ok
         const id = user.user_id; //id retornado da base de dados
-        const token = jwt.sign({ id }, SIGN_KEY, {
+        const type = user.user_type;
+        const token = jwt.sign({ id, type }, SIGN_KEY, {
             expiresIn: 1200 // expira em 20min (1200 segundos)
         });
         res.cookie('token', token, { httpOnly: true });
@@ -51,12 +52,10 @@ const login = (req:Request, res:Response) => {
 };
 
 
-// Hash and save the password
 const signUp = async (req:Request, res:Response) => {
     try {
       const {username, password} = req.body;
 
-      // Generate a salt and hash the password
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(password, saltRounds);
     
@@ -80,9 +79,8 @@ const signUp = async (req:Request, res:Response) => {
         checkUsername
       ]);
   
-      // Insert the user into the database
       const query = `INSERT INTO users (user_name, user_password, user_type) VALUES (?, ?, ?)`;
-      const values = [username, hashedPassword, 1]; // user 1 - admin 0
+      const values = [username, hashedPassword, 0]; // user 0 - admin 1
   
       connection.query(query, values, (err, result) => {
         if (err) {
@@ -97,8 +95,29 @@ const signUp = async (req:Request, res:Response) => {
     }
   };
 
-  // Example: Add a test user
+  function authorize(requiredUserType : Number) {
+    return (req : any, res:any, next:any) => {
+        const token = req.cookies.token;
+
+        if (!token) {
+            return res.status(403).json({ error: "No token provided" });
+        }
+
+        jwt.verify(token, SIGN_KEY, (err : any, decoded : any) => {
+          if (err) {
+              return res.status(401).json({ error: "Invalid token" });
+          }
+
+          if (decoded.type !== requiredUserType) {
+              return res.status(403).json({ error: "Forbidden access" });
+          }
+
+          req.user = decoded;
+          next();
+        });
+    };
+}
 
 
 
-export default {login, signUp};
+export default {login, signUp, authorize};

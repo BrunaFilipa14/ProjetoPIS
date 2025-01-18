@@ -7,7 +7,7 @@ function getId(id){
 //? PUT - Edit Team
 function editTeam(){
     
-    const form = document.getElementById("editModalForm");
+    const form = document.getElementById("editTeamsModalForm");
     const formData = new FormData(form);
 
     fetch(`/api/teams/${teamId}`, {
@@ -35,7 +35,7 @@ function editTeam(){
 //* POST - Create Team
 function createTeam(){
     
-    const form = document.getElementById("createModalForm");
+    const form = document.getElementById("createTeamsModalForm");
     const formData = new FormData(form); // Automatically includes file input
 
 

@@ -8,6 +8,7 @@ import viewsRouter from "./src/components/views/routes/viewsRouter.js";
 import searchRouter from "./src/components/search/routes/searchRouter.js";
 import userRouter from "./src/components/user/routes/userRouter.js";
 import verifyJWT from "./src/common/middlewares/verifyJWT.js";
+import roles from "./src/components/user/controllers/userController.js";
 const port = process.env.PORT || 8081;
 
 
@@ -39,7 +40,9 @@ app.get("/sign_in", (req,res) =>{
     res.render("sign_in");
 })
 
-
+app.use("/backoffice", (req,res) => {
+    res.render("backoffice");
+})
 
 app.use('/', verifyJWT, (req, res) => {
     res.render('index');

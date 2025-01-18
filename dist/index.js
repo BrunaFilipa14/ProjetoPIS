@@ -30,6 +30,9 @@ app.get("/sign_up", (req, res) => {
 app.get("/sign_in", (req, res) => {
     res.render("sign_in");
 });
+app.use("/backoffice", (req, res) => {
+    res.render("backoffice");
+});
 app.use('/', verifyJWT, (req, res) => {
     res.render('index');
 });
