@@ -1,5 +1,4 @@
 import express from "express";
-import apiRouter from "./src/apiRouter.js";
 import mustacheExpress from "mustache-express";
 import { fileURLToPath } from "url";
 import path from 'path';
@@ -7,8 +6,10 @@ import cookieParser from 'cookie-parser';
 import viewsRouter from "./src/components/views/routes/viewsRouter.js";
 import searchRouter from "./src/components/search/routes/searchRouter.js";
 import userRouter from "./src/components/user/routes/userRouter.js";
+import backofficeRouter from "./src/components/backoffice/routes/backofficeRouter.js";
 import verifyJWT from "./src/common/middlewares/verifyJWT.js";
 import roles from "./src/components/user/controllers/userController.js";
+import apiRouter from "./src/components/api/routes/apiRouter.js"
 const port = process.env.PORT || 8081;
 
 
@@ -31,7 +32,9 @@ app.set('views', __dirname + '/src/views'); //indicação de qual a pasta que ir
 app.use("/api", verifyJWT, apiRouter);
 app.use("/view", verifyJWT, viewsRouter);
 app.use("/search", verifyJWT, searchRouter);
+app.use("/backoffice", verifyJWT, roles.authorize(1), backofficeRouter);
 app.use("/auth", userRouter);
+
 
 app.get("/sign_up", (req,res) =>{
     res.render("sign_up");
@@ -40,9 +43,6 @@ app.get("/sign_in", (req,res) =>{
     res.render("sign_in");
 })
 
-app.use("/backoffice", (req,res) => {
-    res.render("backoffice");
-})
 
 app.use('/', verifyJWT, (req, res) => {
     res.render('index');

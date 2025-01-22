@@ -245,7 +245,7 @@ const showAllFavourites = async (req: any, res: any) => {
     let teamResults = await Promise.all([favouriteTeams]);
 
     teams = teamResults.flat().filter((team:any) => team && team.team_name);
-
+    
     res.render("favourites", {
         teams: teams,
         athletes: athletes

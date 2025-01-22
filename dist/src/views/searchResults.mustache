@@ -50,6 +50,7 @@
                             <th scope="col">Nationality</th>
                             <th scope="col">Position</th>
                             <th scope="col">Team</th>
+                            <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,6 +63,9 @@
                             <td>{{athlete_nationality}}</td>
                             <td>{{athlete_position}}</td>
                             <td>{{athlete_team_name}}</td>
+                            <td>
+                                <button type="button" class="btn" id="athlete-{{athlete_id}}" onclick="favouriteActionAthlete({{athlete_id}})" data-athlete-id="{{athlete_id}}" style="color:#fff;">🩶</button>
+                            </td>
                         </tr>
                     {{/athletes}}
                     </tbody>
@@ -79,6 +83,7 @@
                             <th scope="col">Formed Year</th>
                             <th scope="col">Stadium</th>
                             <th scope="col">Country</th>
+                            <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -90,6 +95,10 @@
                             <td>{{team_formedYear}}</td>
                             <td>{{team_stadium}}</td>
                             <td>{{team_country}}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary" onclick="getTeamPlayers('{{team_name}}')" data-bs-toggle="modal" data-bs-target="#teamPlayersModal">View Players</button>
+                                <button type="button" class="btn" id="team-{{team_id}}" onclick="favouriteActionTeam({{team_id}})" data-team-id="{{team_id}}" style="color:#fff;">🩶</button>
+                            </td>
                         </tr>
                     {{/teams}}
                     </tbody>
@@ -115,6 +124,9 @@
         </div>
     </div>
             
-    <script src="/js/teams/fetch.js"> </script>
+    <script src="/js/teams/teamsFetch.js"> </script>
+    <script src="/js/favourites/favouriteTeamsFetch.js"> </script>
+    <script src="/js/athletes/athletesFetch.js"> </script>
+    <script src="/js/favourites/favouriteAthletesFetch.js"> </script>
 </body>
 </html>

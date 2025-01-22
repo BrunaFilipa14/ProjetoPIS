@@ -4,94 +4,6 @@ function getId(id){
     teamId = id;
 }
 
-//? PUT - Edit Team
-function editTeam(){
-    
-    const form = document.getElementById("editTeamsModalForm");
-    const formData = new FormData(form);
-
-    fetch(`/api/teams/${teamId}`, {
-        method: "PUT",
-        body: formData // Send the form data as multipart/form-data
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.text();
-    })
-    .then(data => {
-        console.log("Success:", data);
-        alert("Team edited successfully!");
-        location.reload();
-    })
-    .catch(error => {
-        console.error("Error in fetch:", error);
-        alert("An error occurred: " + error.message);
-    });
-
-}
-
-//* POST - Create Team
-function createTeam(){
-    
-    const form = document.getElementById("createTeamsModalForm");
-    const formData = new FormData(form); // Automatically includes file input
-
-
-    fetch("/api/teams", {
-        method: "POST",
-        body: formData // Send the form data as multipart/form-data
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.text();
-    })
-    .then(data => {
-        console.log("Success:", data);
-        alert("Team created successfully!");
-        location.reload();
-    })
-    .catch(error => {
-        console.error("Error in fetch:", error);
-        alert("An error occurred: " + error.message);
-    });
-}
-
-//! DELETE - Delete Team
-function deleteTeam(){
-    console.log(teamId);
-    fetch(`/api/teams/${teamId}`, {
-        method: "Delete",
-        headers:  {
-            "Content-Type": "application/json"
-        }
-    })
-    .then((response) => console.log(response))
-    .catch((err) => console.error("Error:", err));
-
-    //refresh page
-    location.reload();
-}
-
-//! DELETE - Delete ALL Teams
-function deleteAllTeams(){
-    console.log(teamId);
-    fetch(`/api/teams/`, {
-        method: "Delete",
-        headers:  {
-            "Content-Type": "application/json"
-        }
-    })
-    .then((response) => console.log(response))
-    .catch((err) => console.error("Error:", err));
-
-    //refresh page
-    location.reload();
-}
-
 function getTeamPlayers(name){
     const modalBody = document.querySelector('#teamPlayersModal .modal-body tbody');
     modalBody.innerHTML = `<tr><td colspan="6" class="text-center">Loading...</td></tr>`;
@@ -124,4 +36,83 @@ function getTeamPlayers(name){
         }
     })
     .catch(err => console.error(err));
+}
+
+
+// FAVOURITE TEAMS
+document.addEventListener("DOMContentLoaded", () => {
+
+    fetch(`/api/favourite/teams`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        const teams = document.querySelectorAll('button[data-team-id]');
+        
+        teams.forEach(button => {
+            let teamId = button.getAttribute('data-team-id');
+
+            let isFavourite = data.favouriteTeams.includes(parseInt(teamId));
+            if (isFavourite) {
+                button.innerHTML = "❤️";
+            } else {
+                button.innerHTML = "🩶";
+            }
+        });
+    })
+    .catch(error => {
+        console.error("Error in fetch:", error);
+        alert("An error occurred: " + error.message);
+    });
+});
+
+function favouriteActionTeam(teamId){
+    const button = document.getElementById(`team-${teamId}`);
+
+    if(button.innerHTML == "❤️"){
+        fetch(`/api/favourite/team`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: teamId
+            })
+        })
+        .then(response => {
+            response.status === 200 ? console.log("Favourite Team removed!") : null;
+            const button = document.getElementById(`team-${teamId}`);
+            console.log(button);
+            button.innerHTML = "🩶";
+        })
+        .catch(error => console.error("Error:", error));
+    }
+    else if(button.innerHTML == "🩶"){
+        fetch(`/api/favourite/team`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: teamId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Favourite Team added!");
+            const button = document.getElementById(`team-${teamId}`);
+            button.innerHTML = "❤️";
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    }
 }

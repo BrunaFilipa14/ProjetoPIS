@@ -27,7 +27,7 @@ connection.query<mysql.ResultSetHeader>(("CREATE TABLE teams (team_id INT PRIMAR
     }
 });
 
-connection.query<mysql.ResultSetHeader>(("CREATE TABLE athletes (athlete_id INT PRIMARY KEY AUTO_INCREMENT, athlete_name VARCHAR(100) NOT NULL, athlete_birthDate DATE NOT NULL, athlete_height INT, athlete_weight DECIMAL (5, 2), athlete_nationality VARCHAR (50) NOT NULL, athlete_position VARCHAR (50), athlete_team_name VARCHAR(50), FOREIGN KEY(athlete_team_name) REFERENCES teams(team_name));"), (err, result) => {
+connection.query<mysql.ResultSetHeader>(("CREATE TABLE athletes (athlete_id INT PRIMARY KEY AUTO_INCREMENT, athlete_name VARCHAR(100) NOT NULL, athlete_birthDate DATE NOT NULL, athlete_height INT, athlete_weight DECIMAL (5, 2), athlete_nationality VARCHAR (50) NOT NULL, athlete_position VARCHAR (50), athlete_team_name VARCHAR(50), FOREIGN KEY(athlete_team_name) REFERENCES teams(team_name) ON DELETE CASCADE ON UPDATE CASCADE);"), (err, result) => {
     if (err) {
         console.log(err);
     }
@@ -36,7 +36,7 @@ connection.query<mysql.ResultSetHeader>(("CREATE TABLE athletes (athlete_id INT 
     }
 });
 
-connection.query<mysql.ResultSetHeader>(("CREATE TABLE games (game_id INT PRIMARY KEY AUTO_INCREMENT, game_house_team_id INT, game_visiting_team_id INT, game_result VARCHAR (10),game_date DATE,game_competition_id INT,FOREIGN KEY (game_house_team_id) REFERENCES teams(team_id),FOREIGN KEY (game_visiting_team_id) REFERENCES teams(team_id),FOREIGN KEY (game_competition_id) REFERENCES competitions(competition_id));"), (err, result) => {
+connection.query<mysql.ResultSetHeader>(("CREATE TABLE games (game_id INT PRIMARY KEY AUTO_INCREMENT, game_house_team_id INT, game_visiting_team_id INT, game_result VARCHAR (10),game_date DATE,game_competition_id INT,FOREIGN KEY (game_house_team_id) REFERENCES teams(team_id),FOREIGN KEY (game_visiting_team_id) REFERENCES teams(team_id),FOREIGN KEY (game_competition_id) REFERENCES competitions(competition_id) ON DELETE CASCADE ON UPDATE CASCADE);"), (err, result) => {
     if (err) {
         console.log(err);
     }
@@ -45,7 +45,7 @@ connection.query<mysql.ResultSetHeader>(("CREATE TABLE games (game_id INT PRIMAR
     }
 });
 
-connection.query<mysql.ResultSetHeader>(("CREATE TABLE statistics (statistic_id INT PRIMARY KEY AUTO_INCREMENT,statistic_athlete_id INT,statistic_game_id INT,statistic_points INT,statistic_rebounds INT,statistic_assists INT,statistic_blocks INT,statistic_steals INT,statistic_turnovers INT,statistic_three_pointers_made INT,statistic_free_throws_made INT, FOREIGN KEY(statistic_athlete_id) REFERENCES athletes(athlete_id), FOREIGN KEY(statistic_game_id) REFERENCES games(game_id));"), (err, result) => {
+connection.query<mysql.ResultSetHeader>(("CREATE TABLE statistics (statistic_id INT PRIMARY KEY AUTO_INCREMENT,statistic_athlete_id INT,statistic_game_id INT,statistic_points INT,statistic_rebounds INT,statistic_assists INT,statistic_blocks INT,statistic_steals INT,statistic_turnovers INT,statistic_three_pointers_made INT,statistic_free_throws_made INT, FOREIGN KEY(statistic_athlete_id) REFERENCES athletes(athlete_id), FOREIGN KEY(statistic_game_id) REFERENCES games(game_id) ON DELETE CASCADE ON UPDATE CASCADE);"), (err, result) => {
     if (err) {
         console.log(err);
     }
@@ -64,7 +64,7 @@ connection.query<mysql.ResultSetHeader>("CREATE TABLE users (user_id INT PRIMARY
 });
 
 
-connection.query<mysql.ResultSetHeader>(("CREATE TABLE fav_athletes (fav_athlete_id INT PRIMARY KEY AUTO_INCREMENT,fav_athlete_user_id INT,fav_athlete_athlete_id INT,FOREIGN KEY(fav_athlete_user_id) REFERENCES users(user_id),FOREIGN KEY(fav_athlete_athlete_id) REFERENCES athletes(athlete_id));"), (err, result) => {
+connection.query<mysql.ResultSetHeader>(("CREATE TABLE fav_athletes (fav_athlete_id INT PRIMARY KEY AUTO_INCREMENT,fav_athlete_user_id INT,fav_athlete_athlete_id INT,FOREIGN KEY(fav_athlete_user_id) REFERENCES users(user_id),FOREIGN KEY(fav_athlete_athlete_id) REFERENCES athletes(athlete_id)ON DELETE CASCADE ON UPDATE CASCADE);"), (err, result) => {
     if (err) {
         console.log(err);
     }
@@ -74,7 +74,7 @@ connection.query<mysql.ResultSetHeader>(("CREATE TABLE fav_athletes (fav_athlete
 });
 
 
-connection.query<mysql.ResultSetHeader>(("CREATE TABLE fav_teams (fav_team_id INT PRIMARY KEY AUTO_INCREMENT,fav_team_user_id INT,fav_team_team_id INT,FOREIGN KEY(fav_team_user_id) REFERENCES users(user_id),FOREIGN KEY(fav_team_team_id) REFERENCES teams(team_id));"), (err, result) => {
+connection.query<mysql.ResultSetHeader>(("CREATE TABLE fav_teams (fav_team_id INT PRIMARY KEY AUTO_INCREMENT,fav_team_user_id INT,fav_team_team_id INT,FOREIGN KEY(fav_team_user_id) REFERENCES users(user_id),FOREIGN KEY(fav_team_team_id) REFERENCES teams(team_id) ON DELETE CASCADE ON UPDATE CASCADE);"), (err, result) => {
     if (err) {
         console.log(err);
     }

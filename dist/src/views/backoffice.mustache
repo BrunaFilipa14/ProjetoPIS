@@ -16,10 +16,17 @@
 
     <div class="container">
         <h1>Backoffice</h1>
+        <button type="button" class="btn btn-primary"" onclick="showAthletes()" style="color:#fff;">Show Athletes</button>
+        <button type="button" class="btn btn-primary"" onclick="showTeams()" style="color:#fff;">Show Teams</button>
+        <button type="button" class="btn btn-primary"" onclick="showGames()" style="color:#fff;">Show Games</button>
+        <button type="button" class="btn btn-primary"" onclick="showAll()" style="color:#fff;">Show All</button>
+        <br>
+        <br>
+    
     </div>
 
     <!-- Tabela de Backoffice dos ATHLETES-->
-    <div class="container">
+    <div class="container" id="athletes">
         <h3>Athletes</h3>
         <br>
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createAthletesModal">Create New</button>
@@ -195,7 +202,7 @@
     </div>
 
     <!-- Tabela de Backoffice das TEAMS-->
-    <div class="container">
+    <div class="container" id="teams">
         <h3>Teams</h3>
         <br>
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createTeamsModal">Create New</button>
@@ -398,7 +405,7 @@
 
 
     <!-- Tabela de Backoffice dos GAMES-->
-    <div class="container">
+    <div class="container" id="games">
         <h3>Games</h3>
         <br>
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createGamesModal">Create New</button>
@@ -523,8 +530,6 @@
     <!-- Bootstrap Bundle w/ Popper-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-    <script src="/js/competitions/competitionsFetch.js"> </script>
-    <script src="/js/teams/teamsFetch.js"> </script>
-    <script src="/js/athletes/athletesFetch.js"> </script>
+    <script src="/js/backoffice/backofficeFetch.js"></script>
 </body>
 </html>

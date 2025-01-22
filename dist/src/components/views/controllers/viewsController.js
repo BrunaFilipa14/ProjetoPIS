@@ -12,7 +12,7 @@ const showAllTeams = (req, res) => {
 };
 const showTeam = (req, res) => {
     teamsController.getTeamByName(req, res, (result) => {
-        res.render("backofficeTeams", {
+        res.render("teams", {
             teams: result,
         });
     });
