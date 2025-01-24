@@ -10,6 +10,7 @@ import backofficeRouter from "./src/components/backoffice/routes/backofficeRoute
 import verifyJWT from "./src/common/middlewares/verifyJWT.js";
 import roles from "./src/components/user/controllers/userController.js";
 import apiRouter from "./src/components/api/routes/apiRouter.js"
+import logs from "./src/components/api/middlewares/apiMiddlewares.js";
 const port = process.env.PORT || 8081;
 
 
@@ -29,7 +30,7 @@ app.set('view engine', 'mustache'); //extensão dos ficheiros das views
 app.set('views', __dirname + '/src/views'); //indicação de qual a pasta que irá conter as views
 
 
-app.use("/api", verifyJWT, apiRouter);
+app.use("/api", verifyJWT, logs, apiRouter);
 app.use("/view", verifyJWT, viewsRouter);
 app.use("/search", verifyJWT, searchRouter);
 app.use("/backoffice", verifyJWT, roles.authorize(1), backofficeRouter);
