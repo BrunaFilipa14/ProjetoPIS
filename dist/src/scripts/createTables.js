@@ -47,7 +47,7 @@ connection.query(("CREATE TABLE games (game_id INT PRIMARY KEY AUTO_INCREMENT, g
         console.log("GAMES TABLE created!");
     }
 });
-connection.query(("CREATE TABLE statistics (statistic_id INT PRIMARY KEY AUTO_INCREMENT,statistic_athlete_id INT,statistic_game_id INT,statistic_points INT,statistic_rebounds INT,statistic_assists INT,statistic_blocks INT,statistic_steals INT,statistic_turnovers INT,statistic_three_pointers_made INT,statistic_free_throws_made INT, FOREIGN KEY(statistic_athlete_id) REFERENCES athletes(athlete_id), FOREIGN KEY(statistic_game_id) REFERENCES games(game_id) ON DELETE CASCADE ON UPDATE CASCADE);"), (err, result) => {
+connection.query(("CREATE TABLE statistics_athletes (statistic_id INT PRIMARY KEY AUTO_INCREMENT,statistic_athlete_id INT,statistic_game_id INT,statistic_points INT,statistic_rebounds INT,statistic_assists INT,statistic_blocks INT,statistic_steals INT,statistic_turnovers INT,statistic_three_pointers_made INT,statistic_free_throws_made INT, FOREIGN KEY(statistic_athlete_id) REFERENCES athletes(athlete_id), FOREIGN KEY(statistic_game_id) REFERENCES games(game_id) ON DELETE CASCADE ON UPDATE CASCADE);"), (err, result) => {
     if (err) {
         console.log(err);
     }
