@@ -116,3 +116,16 @@ function favouriteActionTeam(teamId){
         });
     }
 }
+
+// Search Team
+let teamSearchForm = document.getElementById('form_search_team');
+let teamSearchInput = document.getElementById('input_search_team');
+
+teamSearchForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const inputValue = teamSearchInput.value;
+    if (!inputValue) return;
+    
+    window.location.href = `/view/teams/${inputValue}`;
+});

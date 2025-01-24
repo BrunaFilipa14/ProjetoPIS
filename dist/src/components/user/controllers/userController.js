@@ -14,7 +14,6 @@ const connection = mysql.createConnection(connectionOptions);
 connection.connect();
 const login = (req, res) => {
     const { username, password } = req.body;
-    console.log("Login attempt:", req.body.username, req.body.password);
     const query = `SELECT * FROM users WHERE user_name = ?`;
     connection.query(query, [username], async (err, rows) => {
         if (err) {
@@ -88,7 +87,7 @@ function authorize(requiredUserType) {
                 return res.status(401).json({ error: "Invalid token" });
             }
             if (decoded.type !== requiredUserType) {
-                return res.status(403).json({ error: "Forbidden access" });
+                return res.status(403).redirect("/");
             }
             req.user = decoded;
             next();

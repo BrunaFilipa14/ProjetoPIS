@@ -19,28 +19,46 @@ const connection : mysql.Connection = mysql.createConnection(connectionOptions);
 connection.connect();
 
 
-const getAllAthletes = (req : Request, res : Response, callback: (result:any) => void) => {
-    connection.query<mysql.RowDataPacket[]>("SELECT * FROM athletes", (err, rows, fields) => {
+const getAllGames = (req : Request, res : Response, callback: (result:any) => void) => {
+    connection.query<mysql.RowDataPacket[]>("SELECT c.competition_name, c.competition_season, g.game_id, ht.team_name AS house_team, vt.team_name AS visiting_team,g.game_result,g.game_date FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id JOIN competitions c ON g.game_competition_id = c.competition_id ORDER BY c.competition_name,g.game_date DESC; ", (err, rows, fields) => {
         if (err)
             console.log(err);
         else{
             rows.forEach(row => {
-                row.athlete_birthDate = row.athlete_birthDate.toISOString().split('T')[0]; // Remove time from Date
+                row.game_date = row.game_date.toISOString().split('T')[0];
             });
             callback(rows);
         }
     });
 };
 
-const getAthleteByName = (req : Request, res : Response, callback: (result:any) => void) => {
-    connection.query<mysql.ResultSetHeader[]>(`SELECT * FROM athletes WHERE athlete_name LIKE "%${req.params.name}%";`, (err, rows, fields) => {
-        if(err){
-            console.error("Error: " + err);
-        }
-        else{
-            callback(rows);
-        }
-    })
+const getGameByDate = (req : Request, res : Response, callback: (result:any) => void) => {
+     connection.query<mysql.RowDataPacket[]>(
+                    `SELECT * FROM games WHERE game_date LIKE ?`, [req.params.date], (err, rows) => {
+                        if (err)
+                            console.log(err);
+                        else{
+                            rows.forEach(row => {
+                                row.game_date = row.game_date.toISOString().split('T')[0];
+                            });
+                            callback(rows);
+                        }
+                    }
+        );
+}
+
+const getGameByCompetition = (req : Request, res : Response, callback: (result:any) => void) => {
+
+    connection.query<mysql.RowDataPacket[]>("SELECT c.competition_name, g.game_id, ht.team_name AS house_team, vt.team_name AS visiting_team, g.game_result, g.game_date FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id JOIN competitions c ON g.game_competition_id = c.competition_id WHERE g.game_competition_id = ? ORDER BY g.game_date;", [req.body.competitionId], (err, rows) => {
+         if (err) {
+             console.error("Error fetching games:", err); 
+        } else {
+            rows.forEach(row => { row.game_date = row.game_date.toISOString().split("T")[0]; 
+        }); 
+        callback(rows); 
+    } 
+    }); 
+
 };
  
 const createAthlete = async (req : Request, res : Response) => {
@@ -171,4 +189,4 @@ const deleteAllAthletes = (req : Request, res : Response) => {
 }
 
 
-export default {getAllAthletes, getAthleteByName, createAthlete, editAthlete, deleteAthlete, deleteAllAthletes};
+export default {getAllGames, getGameByCompetition, getGameByDate, editAthlete, deleteAthlete, deleteAllAthletes};

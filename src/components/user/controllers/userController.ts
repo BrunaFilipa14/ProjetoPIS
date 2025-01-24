@@ -20,8 +20,6 @@ connection.connect();
 const login = (req: any, res: any) => {
     const { username, password } = req.body;
 
-    console.log("Login attempt:", req.body.username, req.body.password);
-
     const query = `SELECT * FROM users WHERE user_name = ?`;
     connection.query<mysql.RowDataPacket[]>(query, [username], async (err, rows) => {
         if (err) {
@@ -47,7 +45,7 @@ const login = (req: any, res: any) => {
             expiresIn: 1200 // expira em 20min (1200 segundos)
         });
         res.cookie('token', token, { httpOnly: true });
-        res.json({ auth: true, token: token });
+        res.json({ auth: true, token: token});
     });
 };
 
@@ -109,7 +107,7 @@ const signUp = async (req:Request, res:Response) => {
           }
 
           if (decoded.type !== requiredUserType) {
-              return res.status(403).json({ error: "Forbidden access" });
+              return res.status(403).redirect("/");
           }
 
           req.user = decoded;
