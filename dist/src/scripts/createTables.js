@@ -52,7 +52,15 @@ connection.query(("CREATE TABLE statistics_athletes (statistic_id INT PRIMARY KE
         console.log(err);
     }
     else {
-        console.log("STATISTICS TABLE created!");
+        console.log("STATISTICS_ATHLETES TABLE created!");
+    }
+});
+connection.query(("CREATE TABLE statistics_team (statistic_team_id INT PRIMARY KEY AUTO_INCREMENT, statistic_team_name VARCHAR(50) NOT NULL, total_points INT NOT NULL, total_rebounds INT NOT NULL, total_assists INT NOT NULL, total_blocks INT NOT NULL, total_steals INT NOT NULL, total_turnovers INT NOT NULL, total_three_pointers_made INT NOT NULL, total_free_throws_made INT NOT NULL, FOREIGN KEY(statistic_team_name) REFERENCES teams(team_name) ON DELETE CASCADE ON UPDATE CASCADE);"), (err, result) => {
+    if (err) {
+        console.log(err);
+    }
+    else {
+        console.log("STATISTICS_TEAM TABLE created!");
     }
 });
 connection.query("CREATE TABLE users (user_id INT PRIMARY KEY AUTO_INCREMENT,user_type INT ,user_name VARCHAR (50) UNIQUE NOT NULL,user_password VARCHAR(225) UNIQUE NOT NULL)", (err, result) => {

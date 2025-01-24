@@ -23,6 +23,7 @@ async function main() {
         await populateGames();
         await populateAdmins();
         await populateStatisticsPlayers();
+        await populateStatisticsTeams();
     }
     catch (err) {
         console.log("Error Populating: ", err);
@@ -169,6 +170,39 @@ async function populateStatisticsPlayers() {
         for (const statistic of statistics) {
             await populateQueryStatisticsPlayers(statistic.athleteId,statistic.gameId,statistic.points,statistic.rebounds,statistic.assists,statistic.blocks,statistic.steals,statistic.turnovers,statistic.three_pointers_made,statistic.free_throws_made);
         }
+    } catch (error) {
+        throw new Error(`Cannot populate table, error:${error}`)
+    }
+}
+
+async function populateStatisticsTeams(){
+    let query =`INSERT INTO statistics_team (statistic_team_name, total_points, total_rebounds, total_assists, total_blocks, total_steals, total_turnovers, total_three_pointers_made, total_free_throws_made)
+    SELECT 
+    a.athlete_team_name AS statistic_team_name,
+    SUM(sa.statistic_points) AS total_points,
+    SUM(sa.statistic_rebounds) AS total_rebounds,
+    SUM(sa.statistic_assists) AS total_assists,
+    SUM(sa.statistic_blocks) AS total_blocks,
+    SUM(sa.statistic_steals) AS total_steals,
+    SUM(sa.statistic_turnovers) AS total_turnovers,
+    SUM(sa.statistic_three_pointers_made) AS total_three_pointers_made,
+    SUM(sa.statistic_free_throws_made) AS total_free_throws_made
+    FROM 
+    statistics_athletes sa
+    JOIN 
+    athletes a
+    ON 
+    sa.statistic_athlete_id = a.athlete_id
+    GROUP BY 
+    a.athlete_team_name;`;
+
+    try {
+        connection.query<mysql.ResultSetHeader>((query), (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+        });
+        console.log(`Populated teams' statistics`);
     } catch (error) {
         throw new Error(`Cannot populate table, error:${error}`)
     }
