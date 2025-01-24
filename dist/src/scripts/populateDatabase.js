@@ -1,6 +1,7 @@
 import * as mysql from "mysql2";
 import * as fs from "fs/promises";
 import MYSQLPASSWORD from "./mysqlpassword.js";
+import * as bcrypt from "bcrypt";
 const connectionOptions = {
     host: "localhost",
     user: "root",
@@ -16,6 +17,8 @@ async function main() {
         await populateTeams();
         await populateAthletes();
         await populateGames();
+        await populateAdmins();
+        await populateStatisticsPlayers();
     }
     catch (err) {
         console.log("Error Populating: ", err);
@@ -132,6 +135,30 @@ async function populateGames() {
     await populateQueryGames(252, 253, "119-114", "2024-01-25", 12);
     await populateQueryGames(238, 240, "105-100", "2024-03-30", 12);
 }
+//* POPULATE STATISTICS
+async function populateStatisticsPlayers() {
+    const jsonData = await fs.readFile('src/components/statistics/data/statisticsPlayers.json', 'utf-8');
+    const statistics = JSON.parse(jsonData);
+    try {
+        for (const statistic of statistics) {
+            await populateQueryStatisticsPlayers(statistic.athleteId, statistic.gameId, statistic.points, statistic.rebounds, statistic.assists, statistic.blocks, statistic.steals, statistic.turnovers, statistic.three_pointers_made, statistic.free_throws_made);
+        }
+    }
+    catch (error) {
+        throw new Error(`Cannot populate table, error:${error}`);
+    }
+}
+//* POPULATE USERS (ADMIN)
+async function populateAdmins() {
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash("admin123", saltRounds);
+    connection.query((`INSERT IGNORE INTO users (user_type, user_name, user_password) VALUES (1,'Admin','${hashedPassword}');`), (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+    });
+    console.log(`USER created!`);
+}
 //* POPULATE QUERIES
 function populateQueryCompetitions(competitionName, competitionSeason) {
     return new Promise((resolve, reject) => {
@@ -190,6 +217,18 @@ function populateQueryGames(houseTeamId, visitTeamId, result, gameDate, competit
             }
         });
         console.log(`Game has been made!`);
+        resolve();
+    });
+}
+function populateQueryStatisticsPlayers(athlete_id, game_id, points, rebounds, assists, blocks, steals, turnovers, three_pointers, free_throws) {
+    return new Promise((resolve, reject) => {
+        connection.query((`INSERT IGNORE INTO statistics_athletes (statistic_athlete_id,statistic_game_id,statistic_points,statistic_rebounds,statistic_assists,statistic_blocks,statistic_steals,statistic_turnovers,statistic_three_pointers_made,statistic_free_throws_made) VALUES (${athlete_id},${game_id},${points},${rebounds},${assists},${blocks},${steals},${turnovers},${three_pointers},${free_throws});`), (err, result) => {
+            if (err) {
+                console.log(err);
+                reject(err);
+            }
+        });
+        console.log(`Statistics added!`);
         resolve();
     });
 }
