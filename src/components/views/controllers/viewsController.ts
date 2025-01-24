@@ -28,7 +28,7 @@ const showTeam = (req: any, res: any) => {
 const showAllCompetitions = (req: any, res: any) => {
 
     competitionsController.getAllCompetitions(req, res, (result) => {
-        res.render("backofficeCompetitions", {
+        res.render("competitions", {
             competitions: result,
         });
     });
@@ -37,7 +37,7 @@ const showAllCompetitions = (req: any, res: any) => {
 const showCompetition = (req: any, res: any) => {
 
     teamsController.getTeamByName(req, res, (result) => {
-        res.render("backofficeCompetitions", {
+        res.render("competitions", {
             competitions: result,
         });
     })
@@ -65,22 +65,21 @@ const showAthlete = (req: any, res: any) => {
 }
 
 //GAMES 
-const showAllGames = (req:any, res:any) => {
-    gamesController.getAllGames(req, res, (result) => {
+const showAllGamesByDate = (req:any, res:any) => {
+    gamesController.getAllGamesByDate(req, res, (result) => {
         res.render("games", {
             games: result,
         });
     })
 }
 
-const showGameByDate = (req:any, res:any) => {
-    gamesController.getGameByDate(req, res, (result) => {
+const showAllGamesByCompetitition = (req:any, res:any) => {
+    gamesController.getAllGamesByCompetition(req, res, (result) => {
         res.render("games", {
             games: result,
         });
     })
 }
-
 
 // INDEX
 const showIndex = (req: any, res: any) => {
@@ -95,6 +94,6 @@ const showFavourites = (req: any, res: any) => {
 export default { showAllTeams, showTeam, 
                 showAllCompetitions, showCompetition, 
                 showAllAthletes, showAthlete,
-                showAllGames, showGameByDate,
+                showAllGamesByDate, showAllGamesByCompetitition,
                 showIndex, 
                 showFavourites};
