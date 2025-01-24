@@ -9,7 +9,7 @@ const connectionOptions: mysql.ConnectionOptions = {
 }
 const connection: mysql.Connection = mysql.createConnection(connectionOptions);
 
-connection.query<mysql.ResultSetHeader>(("CREATE TABLE competitions (competition_id INT PRIMARY KEY AUTO_INCREMENT, competition_name VARCHAR(100), competition_description VARCHAR(1000));"), (err, result) => {
+connection.query<mysql.ResultSetHeader>(("CREATE TABLE competitions (competition_id INT PRIMARY KEY AUTO_INCREMENT, competition_name VARCHAR(100), competition_season VARCHAR(10));"), (err, result) => {
     if (err) {
         console.log(err);
     }
@@ -24,6 +24,14 @@ connection.query<mysql.ResultSetHeader>(("CREATE TABLE teams (team_id INT PRIMAR
     }
     else {
         console.log("TEAMS TABLE created!");
+    }
+});
+
+connection.query<mysql.ResultSetHeader>(("CREATE TABLE competitions_teams (competition_team_id INT PRIMARY KEY AUTO_INCREMENT, competition_id INT, team_id INT, FOREIGN KEY(competition_id) REFERENCES competitions(competition_id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY(team_id) REFERENCES teams(team_id) ON DELETE CASCADE ON UPDATE CASCADE)"),(err,result) =>{
+    if (err){
+        console.log(err);
+    }else{
+        console.log("COMPETITIONS_TEAMS TABLE created!");
     }
 });
 

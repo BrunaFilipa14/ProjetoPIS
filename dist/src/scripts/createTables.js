@@ -7,7 +7,7 @@ const connectionOptions = {
     database: "projeto"
 };
 const connection = mysql.createConnection(connectionOptions);
-connection.query(("CREATE TABLE competitions (competition_id INT PRIMARY KEY AUTO_INCREMENT, competition_name VARCHAR(100), competition_description VARCHAR(1000));"), (err, result) => {
+connection.query(("CREATE TABLE competitions (competition_id INT PRIMARY KEY AUTO_INCREMENT, competition_name VARCHAR(100), competition_season VARCHAR(10));"), (err, result) => {
     if (err) {
         console.log(err);
     }
@@ -21,6 +21,14 @@ connection.query(("CREATE TABLE teams (team_id INT PRIMARY KEY AUTO_INCREMENT, t
     }
     else {
         console.log("TEAMS TABLE created!");
+    }
+});
+connection.query(("CREATE TABLE competitions_teams (competition_team_id INT PRIMARY KEY AUTO_INCREMENT, competition_id INT, team_id INT, FOREIGN KEY(competition_id) REFERENCES competitions(competition_id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY(team_id) REFERENCES teams(team_id) ON DELETE CASCADE ON UPDATE CASCADE)"), (err, result) => {
+    if (err) {
+        console.log(err);
+    }
+    else {
+        console.log("COMPETITIONS_TEAMS TABLE created!");
     }
 });
 connection.query(("CREATE TABLE athletes (athlete_id INT PRIMARY KEY AUTO_INCREMENT, athlete_name VARCHAR(100) NOT NULL, athlete_birthDate DATE NOT NULL, athlete_height INT, athlete_weight DECIMAL (5, 2), athlete_nationality VARCHAR (50) NOT NULL, athlete_position VARCHAR (50), athlete_team_name VARCHAR(50), FOREIGN KEY(athlete_team_name) REFERENCES teams(team_name) ON DELETE CASCADE ON UPDATE CASCADE);"), (err, result) => {
