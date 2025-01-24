@@ -19,8 +19,8 @@ const connection : mysql.Connection = mysql.createConnection(connectionOptions);
 connection.connect();
 
 
-const getAllGames = (req : Request, res : Response, callback: (result:any) => void) => {
-    connection.query<mysql.RowDataPacket[]>("SELECT c.competition_name, c.competition_season, g.game_id, ht.team_name AS house_team, vt.team_name AS visiting_team,g.game_result,g.game_date FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id JOIN competitions c ON g.game_competition_id = c.competition_id ORDER BY c.competition_name,g.game_date DESC; ", (err, rows, fields) => {
+const getAllGamesByDate = (req : Request, res : Response, callback: (result:any) => void) => {
+    connection.query<mysql.RowDataPacket[]>("SELECT c.competition_name, c.competition_season, g.game_id, ht.team_name AS house_team, vt.team_name AS visiting_team,g.game_result,g.game_date FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id JOIN competitions c ON g.game_competition_id = c.competition_id ORDER BY g.game_date DESC; ", (err, rows, fields) => {
         if (err)
             console.log(err);
         else{
@@ -32,20 +32,18 @@ const getAllGames = (req : Request, res : Response, callback: (result:any) => vo
     });
 };
 
-const getGameByDate = (req : Request, res : Response, callback: (result:any) => void) => {
-     connection.query<mysql.RowDataPacket[]>(
-                    `SELECT * FROM games WHERE game_date LIKE ?`, [req.params.date], (err, rows) => {
-                        if (err)
-                            console.log(err);
-                        else{
-                            rows.forEach(row => {
-                                row.game_date = row.game_date.toISOString().split('T')[0];
-                            });
-                            callback(rows);
-                        }
-                    }
-        );
-}
+const getAllGamesByCompetition = (req : Request, res : Response, callback: (result:any) => void) => {
+    connection.query<mysql.RowDataPacket[]>("SELECT c.competition_name, c.competition_season, g.game_id, ht.team_name AS house_team, vt.team_name AS visiting_team,g.game_result,g.game_date FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id JOIN competitions c ON g.game_competition_id = c.competition_id ORDER BY c.competition_name,g.game_date DESC; ", (err, rows, fields) => {
+        if (err)
+            console.log(err);
+        else{
+            rows.forEach(row => {
+                row.game_date = row.game_date.toISOString().split('T')[0];
+            });
+            callback(rows);
+        }
+    });
+};
 
 const getGameByCompetition = (req : Request, res : Response, callback: (result:any) => void) => {
 
@@ -188,5 +186,50 @@ const deleteAllAthletes = (req : Request, res : Response) => {
     res.status(200).send("200");
 }
 
+const playerStatisticInGame = (req: Request, res: Response) => {
+    const gameId = req.params.id;
 
-export default {getAllGames, getGameByCompetition, getGameByDate, editAthlete, deleteAthlete, deleteAllAthletes};
+    const query = `
+        SELECT 
+            g.game_id,
+            a.athlete_id,
+            a.athlete_name,
+            a.athlete_team_name AS player_team_name,
+            sa.statistic_points,
+            sa.statistic_rebounds,
+            sa.statistic_assists,
+            sa.statistic_blocks,
+            sa.statistic_steals,
+            sa.statistic_turnovers,
+            sa.statistic_three_pointers_made,
+            sa.statistic_free_throws_made
+        FROM 
+            games g
+        JOIN 
+            statistics_athletes sa ON g.game_id = sa.statistic_game_id
+        JOIN 
+            athletes a ON sa.statistic_athlete_id = a.athlete_id
+        WHERE 
+            g.game_id = ?
+            AND (a.athlete_team_name = (
+                SELECT team_name FROM teams WHERE team_id = g.game_house_team_id
+            ) OR a.athlete_team_name = (
+                SELECT team_name FROM teams WHERE team_id = g.game_visiting_team_id
+            ))
+        ORDER BY 
+            a.athlete_team_name, a.athlete_name;
+    `;
+
+    connection.query<mysql.RowDataPacket[]>(query, [gameId], (err, rows) => {
+        if (err) {
+            console.error("Error fetching player statistics:", err);
+            res.status(500).send("Error fetching player statistics");
+            return;
+        }
+        res.json(rows);
+    });
+};
+
+
+
+export default {getAllGamesByDate, getAllGamesByCompetition, getGameByCompetition, playerStatisticInGame};

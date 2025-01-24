@@ -21,14 +21,14 @@ const showTeam = (req, res) => {
 // COMPETITIONS
 const showAllCompetitions = (req, res) => {
     competitionsController.getAllCompetitions(req, res, (result) => {
-        res.render("backofficeCompetitions", {
+        res.render("competitions", {
             competitions: result,
         });
     });
 };
 const showCompetition = (req, res) => {
     teamsController.getTeamByName(req, res, (result) => {
-        res.render("backofficeCompetitions", {
+        res.render("competitions", {
             competitions: result,
         });
     });
@@ -49,15 +49,15 @@ const showAthlete = (req, res) => {
     });
 };
 //GAMES 
-const showAllGames = (req, res) => {
-    gamesController.getAllGames(req, res, (result) => {
+const showAllGamesByDate = (req, res) => {
+    gamesController.getAllGamesByDate(req, res, (result) => {
         res.render("games", {
             games: result,
         });
     });
 };
-const showGameByDate = (req, res) => {
-    gamesController.getGameByDate(req, res, (result) => {
+const showAllGamesByCompetitition = (req, res) => {
+    gamesController.getAllGamesByCompetition(req, res, (result) => {
         res.render("games", {
             games: result,
         });
@@ -74,6 +74,6 @@ const showFavourites = (req, res) => {
 export default { showAllTeams, showTeam,
     showAllCompetitions, showCompetition,
     showAllAthletes, showAthlete,
-    showAllGames, showGameByDate,
+    showAllGamesByDate, showAllGamesByCompetitition,
     showIndex,
     showFavourites };
