@@ -2,6 +2,7 @@ import teamsController from "../../teams/controllers/teamsController.js";
 import competitionsController from "../../competitions/controllers/competitionsController.js";
 import athletesController from "../../athletes/controllers/athletesController.js";
 import favouritesController from "../../favourites/controllers/favouritesController.js";
+import gamesController from "../../games/controllers/gamesController.js";
 
 // TEAMS
 const showAllTeams = (req: any, res: any) => {
@@ -63,6 +64,23 @@ const showAthlete = (req: any, res: any) => {
     })
 }
 
+//GAMES 
+const showAllGames = (req:any, res:any) => {
+    gamesController.getAllGames(req, res, (result) => {
+        res.render("games", {
+            games: result,
+        });
+    })
+}
+
+const showGameByDate = (req:any, res:any) => {
+    gamesController.getGameByDate(req, res, (result) => {
+        res.render("games", {
+            games: result,
+        });
+    })
+}
+
 
 // INDEX
 const showIndex = (req: any, res: any) => {
@@ -77,5 +95,6 @@ const showFavourites = (req: any, res: any) => {
 export default { showAllTeams, showTeam, 
                 showAllCompetitions, showCompetition, 
                 showAllAthletes, showAthlete,
+                showAllGames, showGameByDate,
                 showIndex, 
                 showFavourites};

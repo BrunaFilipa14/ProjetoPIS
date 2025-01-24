@@ -22,6 +22,7 @@
             <thead>
                 <tr>
                     <th scope="col">Name</th>
+                    <th scope="col">Season</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -29,8 +30,10 @@
             {{#competitions}}
                 <tr class="align-middle">
                     <td>{{competition_name}}</td>
+                    <td>{{competition_season}}</td>
                     <td>
                         <button type="button" class="btn btn-primary" onclick="getCompetitionTeams(`{{competition_name}}`)" data-bs-toggle="modal" data-bs-target="#competitionTeamsModal">View Teams</button>
+                        <button type="button" class="btn btn-primary" onclick="getCompetitionTeams(`{{competition_name}}`)" data-bs-toggle="modal" data-bs-target="#competitionTeamsModal">View Games</button>
                         <button type="button" class="btn btn-danger" onclick="getId({{competition_id}})" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                         <button type="button" onclick="getId({{competition_id}})" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal" style="color:#fff;">Edit</button>
                     </td>

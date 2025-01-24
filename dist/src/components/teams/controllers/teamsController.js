@@ -41,11 +41,8 @@ const getTeamByName = (req, res, callback) => {
         if (err) {
             console.error("Error: " + err);
         }
-        else if (rows.length > 0) {
-            callback(rows);
-        }
         else {
-            res.status(404).send("The team doesn't exist!");
+            callback(rows);
         }
     });
 };

@@ -12,14 +12,17 @@ function login(event) {
         body: JSON.stringify({ username, password }),
     })
     .then(response => {
-        if (!response.ok) {
+        if(response.status == 401){
+            document.getElementById("invalidCredentialsMsg").innerHTML = "*** Invalid credentials!";
+        }
+        else if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.json();
     })
     .then(data => {
         if (data.auth) {
-            window.location.href = "/view/index"; // Redirect on success
+            window.location.href = "/home";
         }
     })
     .catch(error => {
@@ -82,7 +85,7 @@ function logout(event) {
     .then(response => {
         if (response.ok) {
             console.log("Logging out");
-            window.location.href = '/sign_in'; // Redirect to login page
+            window.location.href = '/sign_in';
         } else {
             throw new Error('Failed to log out');
         }
