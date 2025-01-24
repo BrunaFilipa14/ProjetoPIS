@@ -79,6 +79,14 @@ connection.query(("CREATE TABLE fav_teams (fav_team_id INT PRIMARY KEY AUTO_INCR
         console.log("FAV_TEAMS TABLE created!");
     }
 });
+connection.query(("CREATE TABLE logs (log_id INT PRIMARY KEY AUTO_INCREMENT, log_origin_address VARCHAR(1024) NOT NULL, log_timestamp TIMESTAMP NOT NULL, log_url VARCHAR(1024) NOT NULL);"), (err, result) => {
+    if (err) {
+        console.log(err);
+    }
+    else {
+        console.log("LOGS TABLE created!");
+    }
+});
 connection.end((err) => {
     if (err) {
         console.error("Error closing the connection:", err);
