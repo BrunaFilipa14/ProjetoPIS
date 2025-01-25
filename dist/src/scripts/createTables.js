@@ -15,7 +15,7 @@ connection.query(("CREATE TABLE competitions (competition_id INT PRIMARY KEY AUT
         console.log("COMPETITIONS TABLE created!");
     }
 });
-connection.query(("CREATE TABLE teams (team_id INT PRIMARY KEY AUTO_INCREMENT, team_name VARCHAR(50) UNIQUE, team_initials VARCHAR (5), team_badge VARCHAR (1024), team_formedYear INT, team_stadium VARCHAR(100), team_country VARCHAR(50));"), (err, result) => {
+connection.query(("CREATE TABLE teams (team_id INT PRIMARY KEY AUTO_INCREMENT, team_name VARCHAR(50) UNIQUE, team_badge VARCHAR (1024), team_formedYear INT, team_stadium VARCHAR(100), team_country VARCHAR(50));"), (err, result) => {
     if (err) {
         console.log(err);
     }

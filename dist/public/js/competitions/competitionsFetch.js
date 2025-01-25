@@ -99,11 +99,10 @@ function deleteAllCompetitions(){
     location.reload();
 }
 
-function showCompetitionGames(compId){
+function showCompetitionGames(competitionId){
     const modalBody = document.querySelector('#competitionGamesModal .modal-body tbody');
     modalBody.innerHTML = `<tr><td colspan="6" class="text-center">Loading...</td></tr>`;
-
-    fetch('api/competitions/${compId}/games')
+    fetch(`/api/competitions/${competitionId}/games`)
     .then(response =>{
         if(!response.ok){
             throw new Error("Failed to fetch competition games.");
