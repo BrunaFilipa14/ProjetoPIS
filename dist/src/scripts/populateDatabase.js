@@ -99,42 +99,42 @@ async function populateAthletes() {
 }
 //* POPULATE GAMES
 async function populateGames() {
-    await populateQueryGames(1, 2, "87-92", "2021-12-15", 1);
-    await populateQueryGames(3, 4, "102-98", "2022-01-20", 1);
-    await populateQueryGames(5, 6, "79-85", "2022-03-05", 1);
-    await populateQueryGames(7, 8, "110-115", "2022-11-12", 2);
-    await populateQueryGames(9, 10, "95-88", "2023-01-18", 2);
-    await populateQueryGames(11, 12, "103-97", "2023-04-01", 2);
-    await populateQueryGames(13, 14, "89-92", "2023-10-10", 3);
-    await populateQueryGames(15, 16, "120-118", "2024-01-15", 3);
-    await populateQueryGames(17, 18, "97-100", "2024-03-20", 3);
-    await populateQueryGames(55, 56, "98-92", "2021-11-10", 4);
-    await populateQueryGames(57, 58, "104-99", "2022-01-25", 4);
-    await populateQueryGames(59, 60, "91-87", "2022-03-18", 4);
-    await populateQueryGames(61, 62, "113-108", "2022-10-15", 5);
-    await populateQueryGames(63, 64, "97-102", "2023-02-05", 5);
-    await populateQueryGames(65, 66, "110-104", "2023-04-12", 5);
-    await populateQueryGames(67, 68, "89-94", "2023-11-20", 6);
-    await populateQueryGames(69, 70, "121-118", "2024-01-28", 6);
-    await populateQueryGames(71, 72, "106-103", "2024-03-15", 6);
-    await populateQueryGames(145, 146, "101-96", "2021-12-05", 7);
-    await populateQueryGames(147, 148, "89-93", "2022-01-12", 7);
-    await populateQueryGames(149, 150, "112-108", "2022-03-22", 7);
-    await populateQueryGames(151, 152, "97-91", "2022-11-08", 8);
-    await populateQueryGames(153, 154, "118-120", "2023-02-14", 8);
-    await populateQueryGames(155, 156, "106-101", "2023-04-25", 8);
-    await populateQueryGames(157, 158, "109-112", "2023-11-05", 9);
-    await populateQueryGames(159, 160, "125-119", "2024-01-18", 9);
-    await populateQueryGames(161, 162, "98-95", "2024-03-27", 9);
-    await populateQueryGames(238, 239, "102-97", "2021-11-22", 10);
-    await populateQueryGames(240, 241, "94-89", "2022-01-30", 10);
-    await populateQueryGames(242, 243, "115-110", "2022-03-10", 10);
-    await populateQueryGames(244, 245, "108-112", "2022-12-05", 11);
-    await populateQueryGames(246, 247, "121-118", "2023-02-22", 11);
-    await populateQueryGames(248, 249, "103-99", "2023-04-15", 11);
-    await populateQueryGames(250, 251, "96-92", "2023-11-12", 12);
-    await populateQueryGames(252, 253, "119-114", "2024-01-25", 12);
-    await populateQueryGames(238, 240, "105-100", "2024-03-30", 12);
+    await populateQueryGames(1, 2, "87-92", "2021-12-15", "09:00", 1);
+    await populateQueryGames(3, 4, "102-98", "2022-01-20", "09:30", 1);
+    await populateQueryGames(5, 6, "79-85", "2022-03-05", "10:00", 1);
+    await populateQueryGames(7, 8, "110-115", "2022-11-12", "10:30", 2);
+    await populateQueryGames(9, 10, "95-88", "2023-01-18", "11:00", 2);
+    await populateQueryGames(11, 12, "103-97", "2023-04-01", "11:30", 2);
+    await populateQueryGames(13, 14, "89-92", "2023-10-10", "12:00", 3);
+    await populateQueryGames(15, 16, "120-118", "2024-01-15", "12:30", 3);
+    await populateQueryGames(17, 18, "97-100", "2024-03-20", "13:00", 3);
+    await populateQueryGames(55, 56, "98-92", "2021-11-10", "13:30", 4);
+    await populateQueryGames(57, 58, "104-99", "2022-01-25", "14:00", 4);
+    await populateQueryGames(59, 60, "91-87", "2022-03-18", "14:30", 4);
+    await populateQueryGames(61, 62, "113-108", "2022-10-15", "15:00", 5);
+    await populateQueryGames(63, 64, "97-102", "2023-02-05", "15:30", 5);
+    await populateQueryGames(65, 66, "110-104", "2023-04-12", "16:00", 5);
+    await populateQueryGames(67, 68, "89-94", "2023-11-20", "16:30", 6);
+    await populateQueryGames(69, 70, "121-118", "2024-01-28", "17:00", 6);
+    await populateQueryGames(71, 72, "106-103", "2024-03-15", "17:30", 6);
+    await populateQueryGames(145, 146, "101-96", "2021-12-05", "18:00", 7);
+    await populateQueryGames(147, 148, "89-93", "2022-01-12", "18:30", 7);
+    await populateQueryGames(149, 150, "112-108", "2022-03-22", "19:00", 7);
+    await populateQueryGames(151, 152, "97-91", "2022-11-08", "19:30", 8);
+    await populateQueryGames(153, 154, "118-120", "2023-02-14", "20:00", 8);
+    await populateQueryGames(155, 156, "106-101", "2023-04-25", "20:30", 8);
+    await populateQueryGames(157, 158, "109-112", "2023-11-05", "21:00", 9);
+    await populateQueryGames(159, 160, "125-119", "2024-01-18", "09:00", 9);
+    await populateQueryGames(161, 162, "98-95", "2024-03-27", "09:30", 9);
+    await populateQueryGames(238, 239, "102-97", "2021-11-22", "10:00", 10);
+    await populateQueryGames(240, 241, "94-89", "2022-01-30", "10:30", 10);
+    await populateQueryGames(242, 243, "115-110", "2022-03-10", "11:00", 10);
+    await populateQueryGames(244, 245, "108-112", "2022-12-05", "11:30", 11);
+    await populateQueryGames(246, 247, "121-118", "2023-02-22", "12:00", 11);
+    await populateQueryGames(248, 249, "103-99", "2023-04-15", "12:30", 11);
+    await populateQueryGames(250, 251, "96-92", "2023-11-12", "13:00", 12);
+    await populateQueryGames(252, 253, "119-114", "2024-01-25", "13:30", 12);
+    await populateQueryGames(238, 240, "105-100", "2024-03-30", "14:00", 12);
 }
 //* POPULATE STATISTICS
 async function populateStatisticsPlayers() {
@@ -241,9 +241,9 @@ function populateQueryCompTeam(competition_id, team_id) {
         resolve();
     });
 }
-function populateQueryGames(houseTeamId, visitTeamId, result, gameDate, competitionId) {
+function populateQueryGames(houseTeamId, visitTeamId, result, gameDate, time, competitionId) {
     return new Promise((resolve, reject) => {
-        connection.query((`INSERT IGNORE INTO games (game_house_team_id, game_visiting_team_id, game_result, game_date, game_competition_id) VALUES (${houseTeamId},${visitTeamId},'${result}','${gameDate}',${competitionId});`), (err, result) => {
+        connection.query((`INSERT IGNORE INTO games (game_house_team_id, game_visiting_team_id, game_result, game_date, game_competition_id, game_time) VALUES (${houseTeamId},${visitTeamId},'${result}','${gameDate}',${competitionId}, '${time}');`), (err, result) => {
             if (err) {
                 console.log(err);
                 reject(err);

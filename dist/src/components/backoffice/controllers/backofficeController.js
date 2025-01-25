@@ -38,7 +38,6 @@ const showBackoffice = async (req, res) => {
             return reject();
         }));
     });
-    console.log(games);
     res.render("backoffice", {
         athletes: athletes,
         teams: teams,

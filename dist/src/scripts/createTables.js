@@ -39,7 +39,7 @@ connection.query(("CREATE TABLE athletes (athlete_id INT PRIMARY KEY AUTO_INCREM
         console.log("ATHLETES TABLE created!");
     }
 });
-connection.query(("CREATE TABLE games (game_id INT PRIMARY KEY AUTO_INCREMENT, game_house_team_id INT, game_visiting_team_id INT, game_result VARCHAR (10),game_date DATE,game_competition_id INT,FOREIGN KEY (game_house_team_id) REFERENCES teams(team_id),FOREIGN KEY (game_visiting_team_id) REFERENCES teams(team_id),FOREIGN KEY (game_competition_id) REFERENCES competitions(competition_id) ON DELETE CASCADE ON UPDATE CASCADE);"), (err, result) => {
+connection.query(("CREATE TABLE games (game_id INT PRIMARY KEY AUTO_INCREMENT, game_house_team_id INT, game_visiting_team_id INT, game_result VARCHAR (10),game_date DATE,game_competition_id INT, game_time VARCHAR(5),FOREIGN KEY (game_house_team_id) REFERENCES teams(team_id),FOREIGN KEY (game_visiting_team_id) REFERENCES teams(team_id),FOREIGN KEY (game_competition_id) REFERENCES competitions(competition_id) ON DELETE CASCADE ON UPDATE CASCADE);"), (err, result) => {
     if (err) {
         console.log(err);
     }
