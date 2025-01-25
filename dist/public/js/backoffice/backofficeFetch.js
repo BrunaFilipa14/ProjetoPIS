@@ -352,6 +352,8 @@ function editGame(){
     const score = document.getElementById("inputGameScoreEdit").value;
     const awayTeam = document.getElementById("inputGameAwayTeamEdit").value;
     const date = document.getElementById("inputGameDateEdit").value;
+    const time = document.getElementById("inputGameTimeEdit").value;
+    const editError = document.getElementById("editError");
 
     fetch(`/api/games/${gameId}`, {
         method: "PUT",
@@ -365,17 +367,19 @@ function editGame(){
             "score" : score,
             "awayTeam" : awayTeam,
             "date" : date,
+            "time": time
         })
     })
-    .then(response => {
+    .then(async (response) => {
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            const errorText = await response.text();
+            editError.innerHTML = "***" + errorText || "An error occurred.";
+            throw new Error(errorText);
         }
         return response.text();
     })
-    .then(data => {
-        console.log("Success:", data);
-        alert("Game edited successfully!");
+    .then((data) => {
+        alert(data);
         location.reload();
     })
     .catch(error => {
@@ -386,52 +390,55 @@ function editGame(){
 }
 
 //* POST - Create Athlete
-function createAthlete(){
+function createGame(){
     
-    const name = document.getElementById("inputAthleteNameCreate").value;
-    const birthDate = document.getElementById("inputAthleteBirthDateCreate").value;
-    const height = document.getElementById("inputAthleteHeightCreate").value;
-    const weight = document.getElementById("inputAthleteWeightCreate").value;
-    const nationality = document.getElementById("inputAthleteNationalityCreate").value;
-    const position = document.getElementById("inputAthletePositionCreate").value;
-    const team = document.getElementById("inputAthleteTeamCreate").value;
+    const competition = document.getElementById("inputGameCompetitionCreate").value;
+    const season = document.getElementById("inputGameSeasonCreate").value;
+    const homeTeam = document.getElementById("inputGameHomeTeamCreate").value;
+    const score = document.getElementById("inputGameScoreCreate").value;
+    const awayTeam = document.getElementById("inputGameAwayTeamCreate").value;
+    const date = document.getElementById("inputGameDateCreate").value;
+    const time = document.getElementById("inputGameTimeCreate").value;
+    const createError = document.getElementById("createError");
 
-    fetch(`/api/athletes/`, {
+    fetch(`/api/games/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            "name": name,
-            "birthDate": birthDate,
-            "height" : height,
-            "weight" : weight,
-            "nationality" : nationality,
-            "position" : position,
-            "team" : team
+            "competition": competition,
+            "season": season,
+            "homeTeam" : homeTeam,
+            "score" : score,
+            "awayTeam" : awayTeam,
+            "date" : date,
+            "time": time
         })
     })
-    .then(response => {
+    .then(async (response) => {
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            const errorText = await response.text();
+            createError.innerHTML = "***" + errorText || "An error occurred.";
+            throw new Error(errorText);
         }
         return response.text();
     })
-    .then(data => {
-        console.log("Success:", data);
-        alert("Athlete created successfully!");
+    .then((data) => {
+        alert(data);
         location.reload();
     })
     .catch(error => {
         console.error("Error in fetch:", error);
         alert("An error occurred: " + error.message);
     });
+
 }
 
-//! DELETE - Delete Athlete
-function deleteAthlete(){
-    console.log(athleteId);
-    fetch(`/api/athletes/${athleteId}`, {
+//! DELETE - Delete Game
+function deleteGame(){
+    console.log(gameId);
+    fetch(`/api/games/${gameId}`, {
         method: "Delete",
         headers:  {
             "Content-Type": "application/json"
@@ -443,10 +450,10 @@ function deleteAthlete(){
     location.reload();
 }
 
-//! DELETE - Delete ALL Athletes
-function deleteAllAthletes(){
-    console.log(athleteId);
-    fetch(`/api/athletes/`, {
+//! DELETE - Delete ALL Games
+function deleteAllGames(){
+    console.log(gameId);
+    fetch(`/api/games/`, {
         method: "Delete",
         headers:  {
             "Content-Type": "application/json"

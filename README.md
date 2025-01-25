@@ -1,14 +1,23 @@
 # ProjetoPIS
 Projeto da cadeira de PIS, realizado por Bruna Magarreiro e Rúben Dantas.
 
+FIRST USE:
+    To start write your mysql password in the file src/scripts/mysqlpassword.ts
 
-When you're first starting the server, you should run the following command in your terminal:
-    npm run firststart
-When you want to start your server after the initial start, run the following command:
-    npm start
+    And run these four commands in order in the terminal:
+        npm run build //to save the changes
+        npm run initDatabase //to create the database
+        npm run populateDatabase //to populate the database
+        npm start
 
 
+To start the server again:
+    If no changes were made:
+        npm start
 
-    npm run build
-    npm run initDatabase
-    
+    If any changes were made in the .ts files:
+        npm run build
+        npm start
+
+ATTENTION
+ALL the .js inside the div/src file are not to be edited directly, but instead in the corresponding .ts file in /src 
