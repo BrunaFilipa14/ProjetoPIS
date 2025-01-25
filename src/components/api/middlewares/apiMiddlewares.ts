@@ -23,6 +23,8 @@ function logs (req : Request, res : Response, next : NextFunction) : void{
                 console.log(err);
             }
         });
+
+    next();
 }
 
 export default logs;

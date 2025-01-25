@@ -1,5 +1,5 @@
 import express from "express";
 import gamesController from "../../games/controllers/gamesController.js";
 const router = express.Router();
-router.get("/:id/statistics", gamesController.playerStatisticInGame);
+router.get("/:id/stats", gamesController.playerStatisticInGame);
 export default router;

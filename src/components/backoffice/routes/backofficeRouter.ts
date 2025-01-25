@@ -1,6 +1,3 @@
-
-// roles.authorize(1)
-
 import express from "express";
 const router = express.Router();
 import backofficeController from "../controllers/backofficeController.js";

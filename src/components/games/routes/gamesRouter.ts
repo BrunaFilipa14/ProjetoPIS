@@ -3,8 +3,7 @@ import gamesController from "../../games/controllers/gamesController.js";
 const router = express.Router();
 
 
-router.get("/", gamesController.getAllGamesByDate);
-router.get("/:id/statistics", gamesController.playerStatisticInGame);
+router.get("/:id/stats", gamesController.playerStatisticInGame);
 
 
 export default router;

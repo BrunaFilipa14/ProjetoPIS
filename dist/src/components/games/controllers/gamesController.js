@@ -49,13 +49,13 @@ const getGameByCompetition = (req, res, callback) => {
         }
     });
 };
-const createAthlete = async (req, res) => {
+const createGame = async (req, res) => {
     const checkTeamName = new Promise((resolve, reject) => {
         connection.query(`SELECT * FROM teams 
-                        WHERE team_name LIKE ?`, [`%${req.params.search}%`], (err, rows) => {
+                        WHERE team_name LIKE ?`, [`%${req.body.house_team}%`], (err, rows) => {
             if (err)
                 return reject(err);
-            resolve(rows || []); // Ensure rows is always an array
+            resolve(rows || []);
         });
     });
     const results = await Promise.all([checkTeamName]);
@@ -166,43 +166,14 @@ const deleteAllAthletes = (req, res) => {
     res.status(200).send("200");
 };
 const playerStatisticInGame = (req, res) => {
-    const gameId = req.params.id;
-    const query = `
-        SELECT 
-            g.game_id,
-            a.athlete_id,
-            a.athlete_name,
-            a.athlete_team_name AS player_team_name,
-            sa.statistic_points,
-            sa.statistic_rebounds,
-            sa.statistic_assists,
-            sa.statistic_blocks,
-            sa.statistic_steals,
-            sa.statistic_turnovers,
-            sa.statistic_three_pointers_made,
-            sa.statistic_free_throws_made
-        FROM 
-            games g
-        JOIN 
-            statistics_athletes sa ON g.game_id = sa.statistic_game_id
-        JOIN 
-            athletes a ON sa.statistic_athlete_id = a.athlete_id
-        WHERE 
-            g.game_id = ?
-            AND (a.athlete_team_name = (
-                SELECT team_name FROM teams WHERE team_id = g.game_house_team_id
-            ) OR a.athlete_team_name = (
-                SELECT team_name FROM teams WHERE team_id = g.game_visiting_team_id
-            ))
-        ORDER BY 
-            a.athlete_team_name, a.athlete_name;
-    `;
-    connection.query(query, [gameId], (err, rows) => {
+    console.log("Received game ID:", req.params.id);
+    connection.query("SELECT a.athlete_id, a.athlete_name, a.athlete_team_name AS team_name, sa.statistic_points, sa.statistic_rebounds, sa.statistic_assists,sa.statistic_blocks, sa.statistic_steals, sa.statistic_turnovers, sa.statistic_three_pointers_made, sa.statistic_free_throws_made FROM athletes a JOIN statistics_athletes sa ON statistic_athlete_id = athlete_id WHERE sa.statistic_game_id  = ? ORDER BY athlete_team_name, athlete_name;", [req.params.id], (err, rows) => {
         if (err) {
             console.error("Error fetching player statistics:", err);
             res.status(500).send("Error fetching player statistics");
             return;
         }
+        console.log(rows);
         res.json(rows);
     });
 };

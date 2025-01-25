@@ -413,6 +413,8 @@
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
+                    <th scorpe="col">Competition</th>
+                    <th scorpe="col">Season</th>
                     <th scope="col">Home Team</th>
                     <th scope="col">Score</th>
                     <th scope="col">Away Team</th>
@@ -423,12 +425,14 @@
             <tbody>
             {{#games}}
                 <tr class="align-middle">
-                    <td>{{game_house_team_id}}</td>
+                    <td>{{competition_name}}</td>
+                    <td>{{competition_season}}</td>
+                    <td>{{house_team}}</td>
                     <td>{{game_result}}</td>
-                    <td>{{game_visiting_team_id}}</td>
+                    <td>{{visiting_team}}</td>
                     <td>{{game_date}}</td>
-                    <!-- TODO: PEGAR O NOME DAS TEAMS, TORNAR AS TEAMS EM BUTTONS-->
                     <td>
+                        <button type="button" class="btn btn-primary" onclick="showAthleteStats({{game_id}})" data-bs-toggle="modal" data-bs-target="#gamePlayersModal">Athlete Stats</button>
                         <button type="button" class="btn btn-danger" onclick="getCompetitionId({{competition_id}})" data-bs-toggle="modal" data-bs-target="#deleteGamesModal">Delete</button>
                         <button type="button" onclick="getCompetitionId({{competition_id}})" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editGamesModal" style="color:#fff;">Edit</button>
                     </td>
@@ -468,9 +472,18 @@
                 <div class="modal-body">
                     <form id="editGamesModalForm" enctype="multipart/form-data">
                         <div class="mb-3">
-                        <!-- TODO: ALTERAR PARAMETROS -->
-                            <label for="inputTeamNameEdit" class="form-label">Name</label>
-                            <input type="text" name="nameEdit" class="form-control" id="inputCompetitionNameEdit">
+                            <label for="inputGameCompetitionEdit" class="form-label">Competition</label>
+                            <input type="text" class="form-control" id="inputGameCompetitionEdit">
+                            <label for="inputGameSeasonEdit" class="form-label">Season</label>
+                            <input type="text" class="form-control" id="inputGameSeasonEdit">
+                            <label for="inputGameHomeTeamEdit" class="form-label">Home Team</label>
+                            <input type="text" class="form-control" id="inputGameHomeTeamEdit">
+                            <label for="inputGameScoreEdit" class="form-label">Score</label>
+                            <input type="text" class="form-control" id="inputGameScoreEdit">
+                            <label for="inputGameAwayTeamEdit" class="form-label">Away Team</label>
+                            <input type="text" class="form-control" id="inputGameAwayTeamEdit">
+                            <label for="inputGameDateEdit" class="form-label">Date</label>
+                            <input type="text" class="form-control" id="inputGameDateEdit">
                         </div>
                     </form>
                 </div>
@@ -521,6 +534,42 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                     <button type="button" onclick="deleteAllGames()" class="btn btn-danger" id="btnDeleteAllConfirm" data-bs-dismiss="modal">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Players Modal -->
+    <div class="modal fade" id="gamePlayersModal" tabindex="-1" aria-labelledby="gamePlayersModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #007bff; color: #ffffff;">
+                    <h5 class="modal-title" id="gamePlayersModalLabel">Athletes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Team</th>
+                                <th scope="col">Points</th>
+                                <th scope="col">Rebounds</th>
+                                <th scope="col">Assists</th>
+                                <th scope="col">Blocks</th>
+                                <th scope="col">Steals</th>
+                                <th scope="col">Turnovers</th>
+                                <th scope="col">3-Pointers Made</th>
+                                <th scope="col">Free Throws Made</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gamesAthletesTable">
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
