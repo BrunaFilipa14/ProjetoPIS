@@ -322,3 +322,125 @@ function showAthleteStats(id){
     })
     .catch(err => console.error(err));
 }
+
+// Games
+let gameId = null;
+
+function getGameId(id){
+    gameId = id;
+}
+
+//? PUT - Edit Game
+function editGame(){
+    
+    const competition = document.getElementById("inputGameCompetitionEdit").value;
+    const season = document.getElementById("inputGameSeasonEdit").value;
+    const homeTeam = document.getElementById("inputGameHomeTeamEdit").value;
+    const score = document.getElementById("inputGameScoreEdit").value;
+    const awayTeam = document.getElementById("inputGameAwayTeamEdit").value;
+    const date = document.getElementById("inputGameDateEdit").value;
+
+    fetch(`/api/games/${gameId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            "competition": competition,
+            "season": season,
+            "homeTeam" : homeTeam,
+            "score" : score,
+            "awayTeam" : awayTeam,
+            "date" : date,
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+    })
+    .then(data => {
+        console.log("Success:", data);
+        alert("Game edited successfully!");
+        location.reload();
+    })
+    .catch(error => {
+        console.error("Error in fetch:", error);
+        alert("An error occurred: " + error.message);
+    });
+
+}
+
+//* POST - Create Athlete
+function createAthlete(){
+    
+    const name = document.getElementById("inputAthleteNameCreate").value;
+    const birthDate = document.getElementById("inputAthleteBirthDateCreate").value;
+    const height = document.getElementById("inputAthleteHeightCreate").value;
+    const weight = document.getElementById("inputAthleteWeightCreate").value;
+    const nationality = document.getElementById("inputAthleteNationalityCreate").value;
+    const position = document.getElementById("inputAthletePositionCreate").value;
+    const team = document.getElementById("inputAthleteTeamCreate").value;
+
+    fetch(`/api/athletes/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            "name": name,
+            "birthDate": birthDate,
+            "height" : height,
+            "weight" : weight,
+            "nationality" : nationality,
+            "position" : position,
+            "team" : team
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+    })
+    .then(data => {
+        console.log("Success:", data);
+        alert("Athlete created successfully!");
+        location.reload();
+    })
+    .catch(error => {
+        console.error("Error in fetch:", error);
+        alert("An error occurred: " + error.message);
+    });
+}
+
+//! DELETE - Delete Athlete
+function deleteAthlete(){
+    console.log(athleteId);
+    fetch(`/api/athletes/${athleteId}`, {
+        method: "Delete",
+        headers:  {
+            "Content-Type": "application/json"
+        }
+    })
+    .then((response) => console.log(response))
+    .catch((err) => console.error("Error:", err));
+
+    location.reload();
+}
+
+//! DELETE - Delete ALL Athletes
+function deleteAllAthletes(){
+    console.log(athleteId);
+    fetch(`/api/athletes/`, {
+        method: "Delete",
+        headers:  {
+            "Content-Type": "application/json"
+        }
+    })
+    .then((response) => console.log(response))
+    .catch((err) => console.error("Error:", err));
+
+    location.reload();
+}

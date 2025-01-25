@@ -20,7 +20,7 @@ connection.connect();
 
 
 const getAllGamesByDate = (req : Request, res : Response, callback: (result:any) => void) => {
-    connection.query<mysql.RowDataPacket[]>("SELECT c.competition_name, c.competition_season, g.game_id, ht.team_name AS house_team, vt.team_name AS visiting_team,g.game_result,g.game_date FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id JOIN competitions c ON g.game_competition_id = c.competition_id ORDER BY g.game_date DESC; ", (err, rows, fields) => {
+    connection.query<mysql.RowDataPacket[]>("SELECT c.competition_name, c.competition_season, g.game_id, g.game_time, ht.team_name AS house_team, vt.team_name AS visiting_team,g.game_result,g.game_date FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id JOIN competitions c ON g.game_competition_id = c.competition_id ORDER BY g.game_date DESC, g.game_time DESC; ", (err, rows, fields) => {
         if (err)
             console.log(err);
         else{
@@ -33,7 +33,7 @@ const getAllGamesByDate = (req : Request, res : Response, callback: (result:any)
 };
 
 const getAllGamesByCompetition = (req : Request, res : Response, callback: (result:any) => void) => {
-    connection.query<mysql.RowDataPacket[]>("SELECT c.competition_name, c.competition_season, g.game_id, ht.team_name AS house_team, vt.team_name AS visiting_team,g.game_result,g.game_date FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id JOIN competitions c ON g.game_competition_id = c.competition_id ORDER BY c.competition_name,g.game_date DESC; ", (err, rows, fields) => {
+    connection.query<mysql.RowDataPacket[]>("SELECT c.competition_name, c.competition_season, g.game_id, g.game_time, ht.team_name AS house_team, vt.team_name AS visiting_team,g.game_result,g.game_date FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id JOIN competitions c ON g.game_competition_id = c.competition_id ORDER BY c.competition_name,g.game_date DESC, g.game_time DESC; ", (err, rows, fields) => {
         if (err)
             console.log(err);
         else{
@@ -47,7 +47,7 @@ const getAllGamesByCompetition = (req : Request, res : Response, callback: (resu
 
 const getGameByCompetition = (req : Request, res : Response, callback: (result:any) => void) => {
 
-    connection.query<mysql.RowDataPacket[]>("SELECT c.competition_name, g.game_id, ht.team_name AS house_team, vt.team_name AS visiting_team, g.game_result, g.game_date FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id JOIN competitions c ON g.game_competition_id = c.competition_id WHERE g.game_competition_id = ? ORDER BY g.game_date;", [req.body.competitionId], (err, rows) => {
+    connection.query<mysql.RowDataPacket[]>("SELECT c.competition_name, g.game_id, g.game_time, ht.team_name AS house_team, vt.team_name AS visiting_team, g.game_result, g.game_date FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id JOIN competitions c ON g.game_competition_id = c.competition_id WHERE g.game_competition_id = ? ORDER BY g.game_date, g.game_time DESC;", [req.body.competitionId], (err, rows) => {
          if (err) {
              console.error("Error fetching games:", err); 
         } else {
@@ -87,86 +87,69 @@ const createGame = async (req : Request, res : Response) => {
         });
 }
 
-const editAthlete = (req : Request, res : Response) => {
+const editGame = async (req : Request, res : Response) => {
 
     let edit = 0;
     console.log(req.body);
-        if(req.body.name != null && req.body.name != ""){
-            //TODO Verifications
-            if(true){
-                connection.query<mysql.ResultSetHeader>(`UPDATE athletes SET athlete_name = "${req.body.name}" WHERE athlete_id = ${req.params.id};`)
-                console.log("Athlete NAME updated successfully");
+        if(req.body.competition != null && req.body.competition != ""){
+            const queryCompetition = new Promise((resolve, reject) => {
+                        connection.query<mysql.RowDataPacket[]>(
+                            `SELECT * FROM competitions 
+                                WHERE competition_name LIKE ?`,
+                            [`%${req.body.competition}%`],
+                            (err, rows) => {
+                                if (err) return reject(err);
+                                resolve(rows || []); // Ensure rows is always an array
+                            }
+                        );
+            });
+            
+            const results = await Promise.all([queryCompetition]);
+
+            if(results.length>0){
+                connection.query<mysql.ResultSetHeader>(`UPDATE games SET game_competition = "${req.body.competition}" WHERE game_id = ${req.params.id};`)
+                console.log("Game COMPETITION updated successfully");
                 edit += 1;
             }
             else{
                 res.status(400).send("");
             }
         }
-        if(req.body.birthDate != null && req.body.birthDate != ""){
-            //TODO Verifications
-            if(true){
-                connection.query<mysql.ResultSetHeader>(`UPDATE athletes SET athlete_birthDate = "${req.body.birthDate}" WHERE athlete_id = ${req.params.id};`)
-                console.log("Athlete BIRTH DATE updated successfully");
-                edit += 1;
-            }
-            else{
-                res.status(400).send("Numero invalido!");
-            }
-        }
-        if(req.body.height != null && req.body.height != ""){
-            //TODO Verifications
-            if(true){
-                connection.query<mysql.ResultSetHeader>(`UPDATE athletes SET athlete_height = "${req.body.height}" WHERE athlete_id = ${req.params.id};`)
-                console.log("Athlete HEIGHT updated successfully");
+        if(req.body.season != null && req.body.season != ""){
+            if(isValidSeasonFormat(req.body.season)){
+                connection.query<mysql.ResultSetHeader>(`UPDATE games SET game_competition = "${req.body.competition}" WHERE game_id = ${req.params.id};`)
+                console.log("Game COMPETITION updated successfully");
                 edit += 1;
             }
             else{
                 res.status(400).send("");
             }
         }
-        if(req.body.weight != null && req.body.weight != ""){
-            //TODO Verifications
-            if(true){
-                connection.query<mysql.ResultSetHeader>(`UPDATE athletes SET athlete_weight = "${req.body.weight}" WHERE athlete_id = ${req.params.id};`)
-                console.log("Athlete WEIGHT updated successfully");
+        if(req.body.homeTeam != null && req.body.homeTeam != ""){
+            const queryHomeTeam = new Promise((resolve, reject) => {
+                        connection.query<mysql.RowDataPacket[]>(
+                            `SELECT * FROM teams 
+                                WHERE team_name LIKE ?`,
+                            [`%${req.body.homeTeam}%`],
+                            (err, rows) => {
+                                if (err) return reject(err);
+                                resolve(rows || []); // Ensure rows is always an array
+                            }
+                        );
+            });
+            
+            const results = await Promise.all([queryHomeTeam]);
+            if(results.length>0){
+                connection.query<mysql.ResultSetHeader>(`UPDATE games SET game_competition = "${req.body.competition}" WHERE game_id = ${req.params.id};`)
+                console.log("Game COMPETITION updated successfully");
                 edit += 1;
             }
             else{
                 res.status(400).send("");
             }
         }
-        if(req.body.nationality != null && req.body.nationality != ""){
-            //TODO Verifications
-            if(true){
-                connection.query<mysql.ResultSetHeader>(`UPDATE athletes SET athlete_nationality = "${req.body.height}" WHERE athlete_id = ${req.params.id};`)
-                console.log("Athlete NATIONALITY updated successfully");
-                edit += 1;
-            }
-            else{
-                res.status(400).send("");
-            }
-        }
-        if(req.body.position != null && req.body.position != ""){
-            //TODO Verifications
-            if(true){
-                connection.query<mysql.ResultSetHeader>(`UPDATE athletes SET athlete_position = "${req.body.position}" WHERE athlete_id = ${req.params.id};`)
-                console.log("Athlete POSITION updated successfully");
-                edit += 1;
-            }
-            else{
-                res.status(400).send("");
-            }
-        }
-        if(req.body.team != null && req.body.team != ""){
-            //TODO Verifications
-            if(true){
-                connection.query<mysql.ResultSetHeader>(`UPDATE athletes SET athlete_team_name = "${req.body.team}" WHERE athlete_id = ${req.params.id};`)
-                console.log("Athlete TEAM updated successfully");
-                edit += 1;
-            }
-            else{
-                res.status(400).send("");
-            }
+        else{
+            res.status(400).send("");
         }
         if(edit > 0){
             res.status(200).send("The Athlete was edited successfully!");
@@ -174,6 +157,21 @@ const editAthlete = (req : Request, res : Response) => {
             res.status(400).send("The Athlete was not edited!");
         }
 }
+
+function isValidSeasonFormat(input : any) {
+    const pattern = /^\d{4}\/\d{4}$/;
+
+    if (pattern.test(input)) {
+        const years = input.split("/");
+        const startYear = parseInt(years[0], 10);
+        const endYear = parseInt(years[1], 10);
+
+        return endYear === startYear + 1;
+    }
+
+    return false;
+}
+
 
 const deleteAthlete = (req : Request, res : Response) => {
     connection.query<mysql.ResultSetHeader>(`DELETE FROM athletes WHERE athlete_id = "${req.params.id}";`);
@@ -204,4 +202,4 @@ const playerStatisticInGame = (req: Request, res: Response) => {
 
 
 
-export default {getAllGamesByDate, getAllGamesByCompetition, getGameByCompetition, playerStatisticInGame};
+export default {getAllGamesByDate, getAllGamesByCompetition, getGameByCompetition, playerStatisticInGame, editGame};
