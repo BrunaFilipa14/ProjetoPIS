@@ -23,7 +23,7 @@ connection.query(("CREATE TABLE teams (team_id INT PRIMARY KEY AUTO_INCREMENT, t
         console.log("TEAMS TABLE created!");
     }
 });
-connection.query(("CREATE TABLE competitions_teams (competition_team_id INT PRIMARY KEY AUTO_INCREMENT, competition_id INT, team_id INT, FOREIGN KEY(competition_id) REFERENCES competitions(competition_id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY(team_id) REFERENCES teams(team_id) ON DELETE CASCADE ON UPDATE CASCADE)"), (err, result) => {
+connection.query(("CREATE TABLE competitions_teams (competition_team_id INT PRIMARY KEY AUTO_INCREMENT, competition_id INT, team_id INT, FOREIGN KEY(competition_id) REFERENCES competitions(competition_id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY(team_id) REFERENCES teams(team_id) ON DELETE CASCADE ON UPDATE CASCADE);"), (err, result) => {
     if (err) {
         console.log(err);
     }

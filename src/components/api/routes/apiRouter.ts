@@ -6,6 +6,7 @@ import favouritesRouter from "../../favourites/routes/favouritesRouter.js";
 import athletesRouter from "../../athletes/routes/athletesRouter.js";
 import statisticsRouter from "../../statistics/routes/statisticsRouter.js";
 import user from "../../user/controllers/userController.js";
+import searchRouter from "../../search/routes/searchRouter.js";
 const router = express.Router();
 
 
@@ -18,5 +19,6 @@ router.use("/competitions", competitionsRouter);
 router.use("/games", gamesRouter);
 router.use("/statistics", statisticsRouter);
 router.use("/favourite", favouritesRouter);
+router.use("/search", searchRouter)
 
 export default router;

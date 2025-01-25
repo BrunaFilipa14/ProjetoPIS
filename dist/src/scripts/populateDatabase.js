@@ -68,17 +68,16 @@ async function populateTeams() {
                 throw new Error(`HTTP error! Status: ${res.status}`);
             const data = await res.json();
             if (data.teams) {
-                let counter = 0;
                 for (const team of data.teams) {
-                    await populateQueryTeams(team.strTeam, team.strBadge, team.intFormedYear, team.strStadium, team.strCountry);
-                    counter++;
-                    await populateQueryCompTeam(competition.competitionId, counter);
+                    const team_id = await populateQueryTeams(team.strTeam, team.strBadge, team.intFormedYear, team.strStadium, team.strCountry);
+                    await populateQueryCompTeam(competition.competitionId, team_id);
                 }
             }
         }
     }
     catch (error) {
-        throw new Error(`Cannot fetch data, error:${error}`);
+        console.error(`Cannot fetch data, error: ${error}`);
+        throw new Error(`Error populating teams: ${error.message}`);
     }
 }
 //* POPULATE ATHLETES
@@ -205,16 +204,19 @@ function populateQueryCompetitions(competitionName, competitionSeason) {
         resolve();
     });
 }
-function populateQueryTeams(teamName, teamBadge, teamFormedYear, teamStadium, teamCountry) {
+function populateQueryTeams(team_name, team_badge, team_formedYear, team_stadium, team_country) {
     return new Promise((resolve, reject) => {
-        connection.query((`INSERT IGNORE INTO teams (team_name, team_badge, team_formedYear, team_stadium, team_country) VALUES ('${teamName}','${teamBadge}',${teamFormedYear},'${teamStadium}','${teamCountry}');`), (err, result) => {
+        connection.query(`INSERT INTO teams (team_name, team_badge, team_formedYear, team_stadium, team_country)
+             VALUES (?, ?, ?, ?, ?)
+             ON DUPLICATE KEY UPDATE team_id=LAST_INSERT_ID(team_id);`, [team_name, team_badge, team_formedYear, team_stadium, team_country], (err, result) => {
             if (err) {
-                console.log(err);
-                reject(err);
+                console.error(`Error inserting/updating team ${team_name}:`, err);
+                return reject(err);
             }
+            const team_id = result.insertId;
+            console.log(`Inserted/Updated team: ${team_name}, team_id: ${team_id}`);
+            resolve(team_id);
         });
-        console.log(`${teamName} added to table TEAMS!`);
-        resolve();
     });
 }
 function populateQueryAthletes(team_name, name, date_of_birth, height_cm, weight_kg, nationality, position) {
@@ -231,14 +233,14 @@ function populateQueryAthletes(team_name, name, date_of_birth, height_cm, weight
 }
 function populateQueryCompTeam(competition_id, team_id) {
     return new Promise((resolve, reject) => {
-        connection.query((`INSERT IGNORE INTO competitions_teams (competition_id, team_id) VALUES (${competition_id},${team_id});`), (err, result) => {
+        connection.query(`INSERT IGNORE INTO competitions_teams (competition_id, team_id) VALUES (?, ?);`, [competition_id, team_id], (err, result) => {
             if (err) {
-                console.log(err);
-                reject(err);
+                console.error(`Error linking team_id: ${team_id} with competition_id: ${competition_id}:`, err);
+                return reject(err);
             }
+            console.log(`Link created: competition_id ${competition_id}, team_id ${team_id}`);
+            resolve();
         });
-        console.log(`Link between team and competition has been made!`);
-        resolve();
     });
 }
 function populateQueryGames(houseTeamId, visitTeamId, result, gameDate, time, competitionId) {

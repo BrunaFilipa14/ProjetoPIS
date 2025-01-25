@@ -131,3 +131,35 @@ function showCompetitionGames(competitionId){
     .catch(err => console.error(err));
 }
 
+
+function showCompetitionTeams(competitionId){
+    const modalBody = document.querySelector('#competitionTeamsModal .modal-body tbody');
+    modalBody.innerHTML = `<tr><td colspan="6" class="text-center">Loading...</td></tr>`;
+
+    fetch(`/api/competitions/${competitionId}/teams`)
+    .then(response =>{
+        if(!response.ok){
+            throw new Error("Failed to fetch competition teams.");
+        }
+        return response.json();
+    })
+    .then(data =>{
+        modalBody.innerHTML = "";
+        if(data.length > 0 ){
+            data.forEach(data => {
+                const row = `
+                    <tr class="align-middle">
+                        <td>${data.team_name}</td>
+                        <td>${data.team_formedYear}</td>
+                        <td>${data.team_stadium}</td>
+                        <td>${data.team_country}</td>
+                    </tr>
+                `;
+                modalBody.innerHTML += row;
+            });
+        } else {
+            modalBody.innerHTML = `<tr><td colspan="6" class="text-center">No games found for this competition.</td></tr>`;
+        }
+    })
+    .catch(err => console.error(err));
+}

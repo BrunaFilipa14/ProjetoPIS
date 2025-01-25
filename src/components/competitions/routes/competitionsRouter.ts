@@ -8,7 +8,7 @@ router.get("/:name", (req, res) => competitionsController.getCompetitionByName(r
 }));
 
 router.get("/:competitionId/games", competitionsController.getCompetitionGames);
-//router.get("/:name/teams", competitionsController.getCompetitionTeams);
+router.get("/:id/teams", competitionsController.getTeamsbyCompetitionId);
 router.get("/:competitionId/players", competitionsController.getCompetitionGames);
 
 router.get("/",  (req, res) => {competitionsController.getAllCompetitions(req, res, (result) => {

@@ -19,7 +19,6 @@ connection.connect();
 
 
 // TEAMS
-
 const addFavouriteTeam = (req: Request, res: any) => {
     if (!req.userId || !req.body.id) {
         return res.status(400).json({ error: "User ID and Team ID are required" });
@@ -99,8 +98,6 @@ const showFavouriteTeams = (req: any, res: any) => {
 
 
 // ATHLETES
-
-
 const addFavouriteAthlete = (req: Request, res: any) => {
     if (!req.userId || !req.body.id) {
         return res.status(400).json({ error: "User ID and Athlete ID are required" });
@@ -179,7 +176,6 @@ const showFavouriteAthletes = (req: any, res: any) => {
     });
 };
 
-
 const showAllFavourites = async (req: any, res: any) => {
     const userId = req.userId;
     let athletes;
@@ -205,7 +201,7 @@ const showAllFavourites = async (req: any, res: any) => {
                         return reject(err);
                     } else {
                         rows.forEach(row => {
-                            row.athlete_birthDate = row.athlete_birthDate.toISOString().split('T')[0]; // Remove time from date
+                            row.athlete_birthDate = row.athlete_birthDate.toISOString().split('T')[0];
                         });
                         resolve(rows || []);
                     }
@@ -249,7 +245,6 @@ const showAllFavourites = async (req: any, res: any) => {
         athletes: athletes
     })
 };
-
 
 
 export default {checkFavouriteTeams, addFavouriteTeam, removeFavouriteTeam, showFavouriteTeams,

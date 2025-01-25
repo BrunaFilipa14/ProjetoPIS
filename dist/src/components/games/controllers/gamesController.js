@@ -89,7 +89,7 @@ const createGame = async (req, res) => {
                             WHERE team_name LIKE ?`, [`%${req.body.homeTeam}%`], (err, rows) => {
             if (err)
                 return reject(err);
-            resolve(rows || []); // Ensure rows is always an array
+            resolve(rows || []);
         });
     });
     if (queryHomeTeam.length <= 0) {
@@ -101,7 +101,7 @@ const createGame = async (req, res) => {
                             WHERE team_name LIKE ?`, [`%${req.body.awayTeam}%`], (err, rows) => {
             if (err)
                 return reject(err);
-            resolve(rows || []); // Ensure rows is always an array
+            resolve(rows || []);
         });
     });
     if (queryAwayTeam.length <= 0) {
@@ -174,7 +174,7 @@ const editGame = async (req, res) => {
                                 WHERE team_name LIKE ?`, [`%${req.body.homeTeam}%`], (err, rows) => {
                 if (err)
                     return reject(err);
-                resolve(rows || []); // Ensure rows is always an array
+                resolve(rows || []);
             });
         });
         if (queryHomeTeam.length > 0) {
@@ -193,7 +193,7 @@ const editGame = async (req, res) => {
                                 WHERE team_name LIKE ?`, [`%${req.body.awayTeam}%`], (err, rows) => {
                 if (err)
                     return reject(err);
-                resolve(rows || []); // Ensure rows is always an array
+                resolve(rows || []);
             });
         });
         if (queryAwayTeam.length > 0) {

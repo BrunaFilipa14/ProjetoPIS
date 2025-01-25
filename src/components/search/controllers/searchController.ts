@@ -38,7 +38,7 @@ const getResultsTeams = async (req : Request, res : Response) => {
                 [`%${req.params.search}%`, `%${req.params.search}%`, `%${req.params.search}%`, `%${req.params.search}%`],
                 (err, rows) => {
                     if (err) return reject(err);
-                    resolve(rows || []); // Ensure rows is always an array
+                    resolve(rows || []);
                 }
             );
         });
@@ -72,7 +72,6 @@ const getResultsAthletes = async (req: Request, res: Response) => {
     try {
         let athletes: any[] = [];
 
-        // Create promises for all queries
         const queryAthlete = new Promise((resolve, reject) => {
             connection.query<mysql.RowDataPacket[]>(
                 `SELECT * FROM athletes 
@@ -86,7 +85,7 @@ const getResultsAthletes = async (req: Request, res: Response) => {
                 [`%${req.params.search}%`, `%${req.params.search}%`, `%${req.params.search}%`, `%${req.params.search}%`, `%${req.params.search}%`, `%${req.params.search}%`, `%${req.params.search}%`],
                 (err, rows) => {
                     if (err) return reject(err);
-                    resolve(rows || []); // Ensure rows is always an array
+                    resolve(rows || []);
                 }
             );
         });
@@ -94,10 +93,8 @@ const getResultsAthletes = async (req: Request, res: Response) => {
 
         const results = await Promise.all([queryAthlete]);
 
-        // Flatten the nested arrays of results and filter out invalid entries
         athletes = results.flat().filter((athlete:any) => athlete && athlete.athlete_name);
 
-        //Remove duplicates
         const seen = new Set();
         athletes = athletes.filter((athlete: any) => {
             if (seen.has(athlete.athlete_name)) {
@@ -107,7 +104,6 @@ const getResultsAthletes = async (req: Request, res: Response) => {
             return true;
         });
 
-        //Format date format
         athletes = athletes.map((athlete) => ({
             ...athlete,
             athlete_birthDate: athlete.athlete_birthDate
@@ -128,25 +124,22 @@ const getResultsCompetitions = async (req: Request, res: Response) => {
     try {
         let competitions: any[] = [];
 
-        // Create promises for all queries
         const queryCompetitionName = new Promise((resolve, reject) => {
             connection.query<mysql.RowDataPacket[]>(
                 `SELECT * FROM competitions WHERE competition_name LIKE ?`,
                 [`%${req.params.search}%`],
                 (err, rows) => {
                     if (err) return reject(err);
-                    resolve(rows || []); // Ensure rows is always an array
+                    resolve(rows || []); 
                 }
             );
         });
 
 
-        // Wait for all queries and combine results
         const results = await Promise.all([
             queryCompetitionName
         ]);
 
-        // Flatten the nested arrays of results and filter out invalid entries
         competitions = results.flat().filter((competition:any) => competition && competition.competition_name);
 
         const seen = new Set();
@@ -169,14 +162,12 @@ const getResultsCompetitions = async (req: Request, res: Response) => {
 //SHOW ALL RESULTS
 const showResultsAll = async (req: Request, res: Response) => {
     try {
-        // Await the results of asynchronous functions
         const competitions = await getResultsCompetitions(req, res);
         const athletes = await getResultsAthletes(req, res);
         const teams = await getResultsTeams(req, res);
 
         const url = await getUrl(req, res);
 
-        // Render the results
         res.render("searchResults", {
             athletes: athletes,
             teams: teams,
@@ -197,7 +188,6 @@ const showAthletesResults = async (req: Request, res: Response) => {
 
         const url = await getUrl(req, res);
 
-        // Render the results
         res.render("searchResults", {
             athletes: athletes,
             input: req.params.search,
@@ -216,7 +206,6 @@ const showTeamsResults = async (req: Request, res: Response) => {
 
         const url = await getUrl(req, res);
 
-        // Render the results
         res.render("searchResults", {
             teams: teams,
             input: req.params.search,
@@ -235,7 +224,6 @@ const showCompetitionsResults = async (req: Request, res: Response) => {
 
         const url = await getUrl(req, res);
 
-        // Render the results
         res.render("searchResults", {
             competitions: competitions,
             input: req.params.search,
@@ -261,7 +249,6 @@ const showAthletesResultsOrdered = async (req: Request, res: Response) => {
 
         const url = await getUrl(req, res);
 
-        // Render the results
         res.render("searchResults", {
             athletes: athletes,
             input: req.params.search,
@@ -288,7 +275,6 @@ const showTeamsResultsOrdered = async (req: Request, res: Response) => {
 
         const url = await getUrl(req, res);
 
-        // Render the results
         res.render("searchResults", {
             teams: teams,
             input: req.params.search,
@@ -317,7 +303,6 @@ const showCompetitionsResultsOrdered = async (req: Request, res: Response) => {
         const url = await getUrl(req, res);
         
 
-        // Render the results
         res.render("searchResults", {
             competitions: competitions,
             input: req.params.search,
@@ -364,7 +349,6 @@ const showAllResultsOrdered = async (req: Request, res: Response) => {
 
         const url = await getUrl(req, res);
 
-        // Render the results
         res.render("searchResults", {
             competitions: competitions,
             teams: teams,
@@ -392,17 +376,15 @@ const getResultsTeamsByName = async (req : Request, res : Response) => {
                 [`%${req.params.search}%`],
                 (err, rows) => {
                     if (err) return reject(err);
-                    resolve(rows || []); // Ensure rows is always an array
+                    resolve(rows || []); 
                 }
             );
         });
 
          const results = await Promise.all([queryTeam]);
 
-        // Flatten the nested arrays of results and filter out invalid entries
         teams = results.flat().filter((team:any) => team && team.team_name);
 
-        //Remove duplicates
         const seen = new Set();
         teams = teams.filter((team: any) => {
             if (seen.has(team.team_name)) {
@@ -426,7 +408,6 @@ const getResultsAthletesByName = async (req: Request, res: Response) => {
     try {
         let athletes: any[] = [];
 
-        // Create promises for all queries
         const queryAthlete = new Promise((resolve, reject) => {
             connection.query<mysql.RowDataPacket[]>(
                 `SELECT * FROM athletes 
@@ -434,7 +415,7 @@ const getResultsAthletesByName = async (req: Request, res: Response) => {
                 [`%${req.params.search}%`],
                 (err, rows) => {
                     if (err) return reject(err);
-                    resolve(rows || []); // Ensure rows is always an array
+                    resolve(rows || []);
                 }
             );
         });
@@ -442,10 +423,8 @@ const getResultsAthletesByName = async (req: Request, res: Response) => {
 
         const results = await Promise.all([queryAthlete]);
 
-        // Flatten the nested arrays of results and filter out invalid entries
         athletes = results.flat().filter((athlete:any) => athlete && athlete.athlete_name);
 
-        //Remove duplicates
         const seen = new Set();
         athletes = athletes.filter((athlete: any) => {
             if (seen.has(athlete.athlete_name)) {
@@ -455,7 +434,6 @@ const getResultsAthletesByName = async (req: Request, res: Response) => {
             return true;
         });
 
-        //Format date format
         athletes = athletes.map((athlete) => ({
             ...athlete,
             athlete_birthDate: athlete.athlete_birthDate
@@ -477,25 +455,22 @@ const getResultsCompetitionsByName = async (req: Request, res: Response) => {
     try {
         let competitions: any[] = [];
 
-        // Create promises for all queries
         const queryCompetitionName = new Promise((resolve, reject) => {
             connection.query<mysql.RowDataPacket[]>(
                 `SELECT * FROM competitions WHERE competition_name LIKE ?`,
                 [`%${req.params.search}%`],
                 (err, rows) => {
                     if (err) return reject(err);
-                    resolve(rows || []); // Ensure rows is always an array
+                    resolve(rows || []); 
                 }
             );
         });
 
 
-        // Wait for all queries and combine results
         const results = await Promise.all([
             queryCompetitionName
         ]);
 
-        // Flatten the nested arrays of results and filter out invalid entries
         competitions = results.flat().filter((competition:any) => competition && competition.competition_name);
 
         const seen = new Set();
@@ -524,7 +499,6 @@ const showAthletesByNameResults = async (req : Request, res : Response) => {
         console.log("here");
         console.log(athletesByName);
 
-        // Render the results
         res.render("searchResults", {
             athletes: athletesByName,
             input: req.params.search,
@@ -545,7 +519,6 @@ const showTeamsByNameResults = async (req : Request, res : Response) => {
 
         const url = await getUrl(req, res);
 
-        // Render the results
         res.render("searchResults", {
             teams: teamsByName,
             input: req.params.search,
@@ -565,7 +538,6 @@ const showCompetitionsByNameResults = async (req : Request, res : Response) => {
 
         const url = await getUrl(req, res);
 
-        // Render the results
         res.render("searchResults", {
             competitions: competitionsByName,
             input: req.params.search,
@@ -592,7 +564,6 @@ const showAthletesByNameResultsOrdered = async (req: Request, res: Response) => 
 
         const url = await getUrl(req, res);
 
-        // Render the results
         res.render("searchResults", {
             athletes: athletes,
             input: req.params.search,
@@ -619,7 +590,6 @@ const showTeamsByNameResultsOrdered = async (req: Request, res: Response) => {
 
         const url = await getUrl(req, res);
 
-        // Render the results
         res.render("searchResults", {
             teams: teams,
             input: req.params.search,
@@ -648,7 +618,6 @@ const showCompetitionsByNameResultsOrdered = async (req: Request, res: Response)
         const url = await getUrl(req, res);
         
 
-        // Render the results
         res.render("searchResults", {
             competitions: competitions,
             input: req.params.search,

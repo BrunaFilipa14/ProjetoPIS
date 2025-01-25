@@ -66,24 +66,32 @@ async function populateTeams() {
     try {
         const competitions = await getCompetitions();
         console.log(competitions);
+
         for (const competition of competitions) {
             const res = await fetch(`https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=${competition.competitionName}`);
-            if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`)
+            if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+
             const data = await res.json();
             if (data.teams) {
-                let counter = 0;
                 for (const team of data.teams) {
-                    await populateQueryTeams(team.strTeam, team.strBadge, team.intFormedYear, team.strStadium, team.strCountry);
-                    counter++;
-                    await populateQueryCompTeam(competition.competitionId, counter);
+                    const team_id = await populateQueryTeams(
+                        team.strTeam,
+                        team.strBadge,
+                        team.intFormedYear,
+                        team.strStadium,
+                        team.strCountry
+                    );
+
+                    await populateQueryCompTeam(competition.competitionId, team_id);
                 }
             }
-
         }
-    } catch (error) {
-        throw new Error(`Cannot fetch data, error:${error}`)
+    } catch (error : any) {
+        console.error(`Cannot fetch data, error: ${error}`);
+        throw new Error(`Error populating teams: ${error.message}`);
     }
 }
+
 
 //* POPULATE ATHLETES
 //! Quando vai popular De'Aaron Fox, dá erro porque o nome tem ', por arranjar
@@ -236,18 +244,27 @@ function populateQueryCompetitions(competitionName: String, competitionSeason: S
     })
 
 }
-function populateQueryTeams(teamName: string, teamBadge: string, teamFormedYear: number, teamStadium: string, teamCountry: string): Promise<void> {
+
+function populateQueryTeams(team_name: string, team_badge: string, team_formedYear: number, team_stadium: string, team_country: string): Promise<number> {
     return new Promise((resolve, reject) => {
-        connection.query<mysql.ResultSetHeader>((`INSERT IGNORE INTO teams (team_name, team_badge, team_formedYear, team_stadium, team_country) VALUES ('${teamName}','${teamBadge}',${teamFormedYear},'${teamStadium}','${teamCountry}');`), (err, result) => {
-            if (err) {
-                console.log(err);
-                reject(err);
+        connection.query<mysql.ResultSetHeader>(
+            `INSERT INTO teams (team_name, team_badge, team_formedYear, team_stadium, team_country)
+             VALUES (?, ?, ?, ?, ?)
+             ON DUPLICATE KEY UPDATE team_id=LAST_INSERT_ID(team_id);`,
+            [team_name, team_badge, team_formedYear, team_stadium, team_country],
+            (err, result) => {
+                if (err) {
+                    console.error(`Error inserting/updating team ${team_name}:`, err);
+                    return reject(err);
+                }
+                const team_id = result.insertId;
+                console.log(`Inserted/Updated team: ${team_name}, team_id: ${team_id}`);
+                resolve(team_id);
             }
-        });
-        console.log(`${teamName} added to table TEAMS!`);
-        resolve();
-    })
+        );
+    });
 }
+
 
 function populateQueryAthletes(team_name: string, name: string, date_of_birth: string, height_cm: number, weight_kg: number, nationality: string, position: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -262,18 +279,24 @@ function populateQueryAthletes(team_name: string, name: string, date_of_birth: s
     })
 }
 
+
 function populateQueryCompTeam(competition_id: number, team_id: number): Promise<void> {
     return new Promise((resolve, reject) => {
-        connection.query<mysql.ResultSetHeader>((`INSERT IGNORE INTO competitions_teams (competition_id, team_id) VALUES (${competition_id},${team_id});`), (err, result) => {
-            if (err) {
-                console.log(err);
-                reject(err);
+        connection.query<mysql.ResultSetHeader>(
+            `INSERT IGNORE INTO competitions_teams (competition_id, team_id) VALUES (?, ?);`,
+            [competition_id, team_id],
+            (err, result) => {
+                if (err) {
+                    console.error(`Error linking team_id: ${team_id} with competition_id: ${competition_id}:`, err);
+                    return reject(err);
+                }
+                console.log(`Link created: competition_id ${competition_id}, team_id ${team_id}`);
+                resolve();
             }
-        });
-        console.log(`Link between team and competition has been made!`);
-        resolve();
-    })
+        );
+    });
 }
+
 
 function populateQueryGames(houseTeamId: number, visitTeamId: number, result: String, gameDate: String, time: String, competitionId: number): Promise<void> {
     return new Promise((resolve, reject) => {

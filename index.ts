@@ -32,7 +32,6 @@ app.set('views', __dirname + '/src/views'); //indicação de qual a pasta que ir
 
 app.use("/api", verifyJWT, logs, apiRouter);
 app.use("/view", verifyJWT, viewsRouter);
-app.use("/search", verifyJWT, searchRouter);
 app.use("/backoffice", verifyJWT, roles.authorize(1), backofficeRouter);
 app.use("/auth", userRouter);
 

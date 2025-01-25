@@ -18,7 +18,7 @@ const getAllAthletes = (req, res, callback) => {
             console.log(err);
         else {
             rows.forEach(row => {
-                row.athlete_birthDate = row.athlete_birthDate.toISOString().split('T')[0]; // Remove time from Date
+                row.athlete_birthDate = row.athlete_birthDate.toISOString().split('T')[0];
             });
             callback(rows);
         }
@@ -40,7 +40,7 @@ const createAthlete = async (req, res) => {
                         WHERE team_name LIKE ?`, [`%${req.params.search}%`], (err, rows) => {
             if (err)
                 return reject(err);
-            resolve(rows || []); // Ensure rows is always an array
+            resolve(rows || []);
         });
     });
     const results = await Promise.all([checkTeamName]);

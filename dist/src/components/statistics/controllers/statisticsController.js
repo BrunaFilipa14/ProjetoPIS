@@ -19,7 +19,6 @@ const athleteStatistics = (req, res, callback) => {
             res.status(500).send("Error fetching player statistics");
             return;
         }
-        console.log(rows);
         callback(rows);
     });
 };
@@ -30,7 +29,6 @@ const teamStatistics = (req, res, callback) => {
             res.status(500).send("Error fetching player statistics");
             return;
         }
-        console.log(rows);
         callback(rows);
     });
 };

@@ -8,6 +8,6 @@ form.addEventListener('submit', (evt) => {
     const inputValue = input.value;
     if (!inputValue) return;
     
-    window.location.href = `/search/${inputValue}`;
+    window.location.href = `/api/search/${inputValue}`;
 });
 

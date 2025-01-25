@@ -94,20 +94,7 @@ const getCompetitionGames = (req: Request, res : Response) =>{
     const compId : number = parseInt(req.params.competitionId);
 
     const query = `
-    SELECT 
-        g.game_date,
-        g.game_time,
-        ht.team_name AS house_team_name,
-        vt.team_name AS visiting_team_name,
-        g.game_result
-    FROM 
-        games g
-    JOIN 
-        teams ht ON g.game_house_team_id = ht.team_id
-    JOIN 
-        teams vt ON g.game_visiting_team_id = vt.team_id
-    WHERE 
-        g.game_competition_id = ?;`;
+    SELECT g.game_date, g.game_time, ht.team_name AS house_team_name, vt.team_name AS visiting_team_name, g.game_result FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id WHERE g.game_competition_id = ?;`;
 
     connection.query<competitionGamesOutput[]>(query,compId,(err,rows) =>{
         if(err){
@@ -119,5 +106,19 @@ const getCompetitionGames = (req: Request, res : Response) =>{
     })
 }
 
+const getTeamsbyCompetitionId = (req : Request, res : Response) =>{
+    const compId : number = parseInt(req.params.id);
+    const query = ` SELECT t.team_id, t.team_name, t.team_badge, t.team_formedYear, t.team_stadium, t.team_country FROM competitions_teams ct JOIN teams t ON ct.team_id = t.team_id WHERE ct.competition_id = ? GROUP BY t.team_id ORDER BY t.team_name;`;
 
-export default {getAllCompetitions, getCompetitionByName, createCompetition, editCompetition, deleteCompetition, deleteAllCompetitions, getCompetitionGames};
+        connection.query<competitionGamesOutput[]>(query,compId,(err,rows) =>{
+            if(err){
+                console.error("Error fetching teams:", err);
+                return res.status(500).json({ error: "Failed to fetch teams." });
+            }
+            console.log(rows);
+            res.status(200).json(rows);
+        })
+}
+
+
+export default {getAllCompetitions, getCompetitionByName, createCompetition, editCompetition, deleteCompetition, deleteAllCompetitions, getCompetitionGames, getTeamsbyCompetitionId};

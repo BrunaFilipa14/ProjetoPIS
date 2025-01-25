@@ -112,7 +112,7 @@ const createGame = async (req : Request, res : Response) => {
                         [`%${req.body.homeTeam}%`],
                         (err, rows) => {
                             if (err) return reject(err);
-                            resolve(rows || []); // Ensure rows is always an array
+                            resolve(rows || []);
                         }
                     );
         });
@@ -129,7 +129,7 @@ const createGame = async (req : Request, res : Response) => {
                         [`%${req.body.awayTeam}%`],
                         (err, rows) => {
                             if (err) return reject(err);
-                            resolve(rows || []); // Ensure rows is always an array
+                            resolve(rows || []);
                         }
                     );
         });
@@ -217,7 +217,7 @@ const editGame =  async (req: Request, res: Response): Promise<void> => {
                             [`%${req.body.homeTeam}%`],
                             (err, rows) => {
                                 if (err) return reject(err);
-                                resolve(rows || []); // Ensure rows is always an array
+                                resolve(rows || []);
                             }
                         );
             });
@@ -240,7 +240,7 @@ const editGame =  async (req: Request, res: Response): Promise<void> => {
                             [`%${req.body.awayTeam}%`],
                             (err, rows) => {
                                 if (err) return reject(err);
-                                resolve(rows || []); // Ensure rows is always an array
+                                resolve(rows || []);
                             }
                         );
             });

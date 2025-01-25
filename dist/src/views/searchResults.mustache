@@ -19,13 +19,13 @@
             Filter by
         </button>
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/search/{{input}}/athletes">Athletes</a></li>
-            <li><a class="dropdown-item" href="/search/{{input}}/teams">Teams</a></li>
-            <li><a class="dropdown-item" href="/search/{{input}}/competitions">Competitions</a></li>
+            <li><a class="dropdown-item" href="/api/search/{{input}}/athletes">Athletes</a></li>
+            <li><a class="dropdown-item" href="/api/search/{{input}}/teams">Teams</a></li>
+            <li><a class="dropdown-item" href="/api/search/{{input}}/competitions">Competitions</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/search/{{input}}/athletes/name">Athletes Name</a></li>
-            <li><a class="dropdown-item" href="/search/{{input}}/teams/name">Teams Name</a></li>
-            <li><a class="dropdown-item" href="/search/{{input}}/competitions/name">Competitions Name</a></li>
+            <li><a class="dropdown-item" href="/api/search/{{input}}/athletes/name">Athletes Name</a></li>
+            <li><a class="dropdown-item" href="/api/search/{{input}}/teams/name">Teams Name</a></li>
+            <li><a class="dropdown-item" href="/api/search/{{input}}/competitions/name">Competitions Name</a></li>
         </ul>
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Order by
@@ -195,8 +195,7 @@
             
     <script src="/js/teams/teamsFetch.js"> </script>
     <script src="/js/competitions/competitionsFetch.js"> </script>
-    <script src="/js/favourites/favouriteTeamsFetch.js"> </script>
     <script src="/js/athletes/athletesFetch.js"> </script>
-    <script src="/js/favourites/favouriteAthletesFetch.js"> </script>
+    <script src="/js/favourites/favourites.js"> </script>
 </body>
 </html>

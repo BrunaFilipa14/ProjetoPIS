@@ -4,6 +4,8 @@ import athletesController from "../../athletes/controllers/athletesController.js
 import favouritesController from "../../favourites/controllers/favouritesController.js";
 import gamesController from "../../games/controllers/gamesController.js";
 import statisticsController from "../../statistics/controllers/statisticsController.js";
+
+
 // TEAMS
 const showAllTeams = (req : any, res : any) => {
     teamsController.getAllTeams(req, res, (result) => {

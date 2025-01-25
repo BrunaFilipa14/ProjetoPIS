@@ -30,7 +30,7 @@
                     <td>{{competition_name}}</td>
                     <td>{{competition_season}}</td>
                     <td>
-                        <button type="button" class="btn btn-primary" onclick="getCompetitionTeams({{competition_id}})" data-bs-toggle="modal" data-bs-target="#competitionTeamsModal">View Teams</button>
+                        <button type="button" class="btn btn-primary" onclick="showCompetitionTeams({{competition_id}})" data-bs-toggle="modal" data-bs-target="#competitionTeamsModal">View Teams</button>
                         <button type="button" class="btn btn-primary" onclick="showCompetitionGames({{competition_id}})" data-bs-toggle="modal" data-bs-target="#competitionGamesModal">Competition Games</button>
                     </td>
                 </tr>
@@ -54,8 +54,6 @@
                         <thead>
                             <tr>
                                 <th scope="col">Name</th>
-                                <th scope="col">Initials</th>
-                                <th scope="col">Badge</th>
                                 <th scope="col">Formed Year</th>
                                 <th scope="col">Stadium</th>
                                 <th scope="col">Country</th>

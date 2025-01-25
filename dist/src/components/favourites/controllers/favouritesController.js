@@ -183,7 +183,7 @@ const showAllFavourites = async (req, res) => {
                     }
                     else {
                         rows.forEach(row => {
-                            row.athlete_birthDate = row.athlete_birthDate.toISOString().split('T')[0]; // Remove time from date
+                            row.athlete_birthDate = row.athlete_birthDate.toISOString().split('T')[0];
                         });
                         resolve(rows || []);
                     }
