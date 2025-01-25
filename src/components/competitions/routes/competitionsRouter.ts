@@ -11,14 +11,15 @@ router.get("/:competitionId/games", competitionsController.getCompetitionGames);
 router.get("/:id/teams", competitionsController.getTeamsbyCompetitionId);
 router.get("/:competitionId/players", competitionsController.getCompetitionGames);
 
-router.get("/",  (req, res) => {competitionsController.getAllCompetitions(req, res, (result) => {
+router.get("/", (req, res) => {
+    competitionsController.getAllCompetitions(req, res, (result) => {
         res.send(result);
     })
 });
 
-router.post("/", competitionsController.createCompetition); //TODO verifications
+router.post("/", competitionsController.createCompetition);
 
-router.put("/:id", competitionsController.editCompetition); //TODO verifications
+router.put("/:id", competitionsController.editCompetition);
 
 router.delete("/:id", competitionsController.deleteCompetition);
 router.delete("/", competitionsController.deleteAllCompetitions);
