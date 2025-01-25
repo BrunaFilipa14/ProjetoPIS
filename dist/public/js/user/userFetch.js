@@ -22,7 +22,7 @@ function login(event) {
     })
     .then(data => {
         if (data.auth) {
-            window.location.href = "/home";
+            window.location.href = "/";
         }
     })
     .catch(error => {

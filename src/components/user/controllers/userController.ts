@@ -107,7 +107,7 @@ const signUp = async (req:Request, res:Response) => {
           }
 
           if (decoded.type !== requiredUserType) {
-              return res.status(403).redirect("/");
+              return res.status(403).redirect("/user");
           }
 
           req.user = decoded;

@@ -87,7 +87,7 @@ function authorize(requiredUserType) {
                 return res.status(401).json({ error: "Invalid token" });
             }
             if (decoded.type !== requiredUserType) {
-                return res.status(403).redirect("/");
+                return res.status(403).redirect("/user");
             }
             req.user = decoded;
             next();

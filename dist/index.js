@@ -34,13 +34,11 @@ app.get("/sign_up", (req, res) => {
 app.get("/sign_in", (req, res) => {
     res.render("sign_in");
 });
-app.use('/', verifyJWT, (req, res) => {
-    if (roles.authorize(1)) {
-        res.render('indexAdmin');
-    }
-    else {
-        res.render('index');
-    }
+app.use('/user', verifyJWT, (req, res) => {
+    res.render('index');
+});
+app.use('/', verifyJWT, roles.authorize(1), (req, res) => {
+    res.render('indexAdmin');
 });
 app.listen(port, () => {
     console.log(`Servidor aberto em http://localhost:${port}`);
