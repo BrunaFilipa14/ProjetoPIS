@@ -4,6 +4,7 @@ import competitionsController from "../controllers/competitionsController.js";
 router.get("/:name", (req, res) => competitionsController.getCompetitionByName(req, res, (result) => {
     res.send(result);
 }));
+router.get("/:competitionId/games", competitionsController.getCompetitionGames);
 //router.get("/:name/teams", competitionsController.getCompetitionTeams);
 router.get("/:competitionId/players", competitionsController.getCompetitionGames);
 router.get("/", (req, res) => {
