@@ -25,7 +25,7 @@ const getAllGamesByDate = (req, res, callback) => {
     });
 };
 const getAllGamesByCompetition = (req, res, callback) => {
-    connection.query("SELECT c.competition_name, c.competition_season, g.game_id, g.game_time, ht.team_name AS house_team, vt.team_name AS visiting_team,g.game_result,g.game_date FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id JOIN competitions c ON g.game_competition_id = c.competition_id ORDER BY c.competition_name,g.game_date DESC; ", (err, rows, fields) => {
+    connection.query("SELECT c.competition_name, c.competition_season, g.game_id, g.game_time, ht.team_name AS house_team, vt.team_name AS visiting_team,g.game_result,g.game_date FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id JOIN competitions c ON g.game_competition_id = c.competition_id ORDER BY c.competition_name,g.game_date DESC, g.game_time DESC; ", (err, rows, fields) => {
         if (err)
             console.log(err);
         else {
@@ -37,7 +37,7 @@ const getAllGamesByCompetition = (req, res, callback) => {
     });
 };
 const getGameByCompetition = (req, res, callback) => {
-    connection.query("SELECT c.competition_name, g.game_id, g.game_time, ht.team_name AS house_team, vt.team_name AS visiting_team, g.game_result, g.game_date FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id JOIN competitions c ON g.game_competition_id = c.competition_id WHERE g.game_competition_id = ? ORDER BY g.game_date;", [req.body.competitionId], (err, rows) => {
+    connection.query("SELECT c.competition_name, g.game_id, g.game_time, ht.team_name AS house_team, vt.team_name AS visiting_team, g.game_result, g.game_date FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id JOIN competitions c ON g.game_competition_id = c.competition_id WHERE g.game_competition_id = ? ORDER BY g.game_date, g.game_time DESC;", [req.body.competitionId], (err, rows) => {
         if (err) {
             console.error("Error fetching games:", err);
         }

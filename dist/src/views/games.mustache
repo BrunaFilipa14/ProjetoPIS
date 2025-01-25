@@ -6,7 +6,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Competitions</title>
+    <title>Basket Stats</title>
 </head>
 
 <body>
@@ -15,6 +15,11 @@
     <div class="container">
         <h1>Games</h1>
         <br>
+        <!-- TO DO -->
+        <button type="button" class="btn btn-primary"" onclick="orderByDate()" style="color:#fff;">Past Games</button>
+        <button type="button" class="btn btn-primary"" onclick="orderByCompetition()" style="color:#fff;">Upcoming Games</button>
+        <!-- TO DO -->
+
         <button type="button" class="btn btn-primary"" onclick="orderByDate()" style="color:#fff;">Order By Date</button>
         <button type="button" class="btn btn-primary"" onclick="orderByCompetition()" style="color:#fff;">Order By Competition</button>
         <table class="table table-striped table-hover">
