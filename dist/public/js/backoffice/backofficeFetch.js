@@ -572,7 +572,6 @@ function deleteAllCompetitions(){
 function showCompetitionGames(competitionId){
     const modalBody = document.querySelector('#competitionGamesModal .modal-body tbody');
     modalBody.innerHTML = `<tr><td colspan="6" class="text-center">Loading...</td></tr>`;
-    console.log("test1");
     fetch(`api/competitions/${competitionId}/games`)
     .then(response =>{
         if(!response.ok){

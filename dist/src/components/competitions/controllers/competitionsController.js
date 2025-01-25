@@ -67,17 +67,30 @@ const deleteAllCompetitions = (req, res) => {
     connection.query(`DELETE FROM competitions;`);
     res.status(200).send("200");
 };
-const getCompetitionGames = (req, res, callback) => {
-    connection.query("SELECT c.competition_name, g.game_id, g.game_time, ht.team_name AS house_team, vt.team_name AS visiting_team, g.game_result, g.game_date FROM games g JOIN teams ht ON g.game_house_team_id = ht.team_id JOIN teams vt ON g.game_visiting_team_id = vt.team_id JOIN competitions c ON g.game_competition_id = c.competition_id WHERE g.game_competition_id = ? ORDER BY g.game_date, g.game_time DESC;", [req.body.competitionId], (err, rows) => {
+const getCompetitionGames = (req, res) => {
+    const compId = parseInt(req.params.competitionId);
+    const query = `
+    SELECT 
+        g.game_date,
+        g.game_time,
+        ht.team_name AS house_team_name,
+        vt.team_name AS visiting_team_name,
+        g.game_result
+    FROM 
+        games g
+    JOIN 
+        teams ht ON g.game_house_team_id = ht.team_id
+    JOIN 
+        teams vt ON g.game_visiting_team_id = vt.team_id
+    WHERE 
+        g.game_competition_id = ?;`;
+    connection.query(query, compId, (err, rows) => {
         if (err) {
             console.error("Error fetching games:", err);
+            return res.status(500).json({ error: "Failed to fetch games." });
         }
-        else {
-            rows.forEach(row => {
-                row.game_date = row.game_date.toISOString().split("T")[0];
-            });
-            callback(rows);
-        }
+        rows.forEach(row => { row.game_date = row.game_date.toISOString().split("T")[0]; });
+        res.status(200).json(rows);
     });
 };
 export default { getAllCompetitions, getCompetitionByName, createCompetition, editCompetition, deleteCompetition, deleteAllCompetitions, getCompetitionGames };
