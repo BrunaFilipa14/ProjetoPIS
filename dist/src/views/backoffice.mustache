@@ -19,6 +19,7 @@
         <button type="button" class="btn btn-primary"" onclick="showAthletes()" style="color:#fff;">Athletes</button>
         <button type="button" class="btn btn-primary"" onclick="showTeams()" style="color:#fff;">Teams</button>
         <button type="button" class="btn btn-primary"" onclick="showGames()" style="color:#fff;">Games</button>
+        <button type="button" class="btn btn-primary"" onclick="showCompetitions()" style="color:#fff;">Competitions</button>
         <button type="button" class="btn btn-primary"" onclick="showAll()" style="color:#fff;">All</button>
         <br>
         <br>
@@ -575,6 +576,158 @@
         </div>
     </div>
 
+
+    <!-- Tabela de Backoffice das COMPETITIONS -->
+    <div class="container" id="teams">
+        <h3>Teams</h3>
+        <br>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createCompetitionModal">Create New Team</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAllTeamsModal">Delete All Teams</button>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Season</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#competitions}}
+                <tr class="align-middle">
+                    <td>{{competition_name}}</td>
+                    <td>{{competition_season}}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" onclick="showCompetitionGames({{competition_id}})" data-bs-toggle="modal" data-bs-target="#competitionGamesModal">Competition Games</button>
+                        <button type="button" class="btn btn-danger" onclick="getCompetitionId({{competition_id}})" data-bs-toggle="modal" data-bs-target="#deleteCompetitionsModal">Delete</button>
+                        <button type="button" onclick="getCompetitionId({{competition_id}})" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editCompetitionsModal" style="color:#fff;">Edit</button>
+                    </td>
+                </tr>
+            {{/competitions}}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteCompetitionModal" tabindex="-1" aria-labelledby="deleteCompetitionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #e03444; color:#fff;">
+                    <h5 class="modal-title" id="deleteCompetitionModalLabel">Delete Competition</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this competition?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="deleteCompetition()" class="btn btn-danger" id="btnDeleteConfirm{{competition_id}}" data-bs-dismiss="modal">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editCompetitionModal" tabindex="-1" aria-labelledby="editCompetitionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #ffcc2c; color:#fff;">
+                    <h5 class="modal-title" id="editGamesModalLabel">Edit Competition</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editCompetitionModalForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="inputCompetitionNameEdit" class="form-label">Competition name</label>
+                            <input type="text" class="form-control" id="inputCompetitionNameEdit">
+                            <label for="inputCompetitionSeasonEdit" class="form-label">Season</label>
+                            <input type="text" class="form-control" id="inputCompetitionSeasonEdit">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="editCompetition()" class="btn btn-warning" id="btnEditConfirm{{competition_id}}" data-bs-dismiss="modal" form="editModalForm">Confirm Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Create Modal -->
+    <div class="modal fade" id="createCompetitionModal" tabindex="-1" aria-labelledby="createCompetitionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #198754; color: #ffffff;">
+                    <h5 class="modal-title" id="createCompetitionModalLabel">Create Game</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createCompetitionModalForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="inputCompetitionNameEdit" class="form-label">Competition name</label>
+                            <input type="text" class="form-control" id="inputCompetitionNameEdit">
+                            <label for="inputCompetitionSeasonEdit" class="form-label">Season</label>
+                            <input type="text" class="form-control" id="inputCompetitionSeasonEdit">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="createCompetition()" class="btn btn-warning" id="btnCreateConfirm" data-bs-dismiss="modal" form="createModalForm">Confirm Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete All Modal -->
+    <div class="modal fade" id="deleteAllCompetitionsModal" tabindex="-1" aria-labelledby="deleteAllCompetitionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #e03444; color:#fff;">
+                    <h5 class="modal-title" id="deleteAllCompetitionsModalLabel">Delete ALL Competitions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete all the Competitions? This is irreversible!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="deleteAllCompetitions()" class="btn btn-danger" id="btnDeleteAllConfirm" data-bs-dismiss="modal">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Competition Games Modal -->
+    <div class="modal fade" id="competitionGamesModal" tabindex="-1" aria-labelledby="competitionGamesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #007bff; color: #ffffff;">
+                    <h5 class="modal-title" id="competitionGamesModalLabel">Athletes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th scorpe="col">Competition</th>
+                                <th scorpe="col">Season</th>
+                                <th scope="col">Home Team</th>
+                                <th scope="col">Score</th>
+                                <th scope="col">Away Team</th>
+                                <th scorpe="col">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="competitionGamesTable">
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap Bundle w/ Popper-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
