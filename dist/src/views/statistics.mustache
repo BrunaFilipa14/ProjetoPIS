@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Basket Stats</title>
+</head>
+<body>
+
+    {{> header}}
+    
+    <!-- ATHLETES -->
+    <div class="container">
+        <h1>Statistics</h1>
+        <button type="button" class="btn btn-primary" onclick="showTeams()" style="color:#fff;">Show Teams</button>
+        <button type="button" class="btn btn-primary" onclick="showAthletes()" style="color:#fff;">Show Athletes</button>
+        <button type="button" class="btn btn-primary" onclick="showAll()" style="color:#fff;">Show All</button>
+        <br><br>
+    
+        <div id="athletes">
+            <br>
+            <h3>Athletes</h3>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Team</th>
+                        <th scope="col">Points</th>
+                        <th scope="col">Rebounds</th>
+                        <th scope="col">Assists</th>
+                        <th scope="col">Blocks</th>
+                        <th scope="col">Steals</th>
+                        <th scope="col">Turnovers</th>
+                        <th scope="col">3-Pointers Made</th>
+                        <th scope="col">Free Throws Made</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{#athletes}}
+                    <tr class="align-middle">
+                        <td>{{athlete_name}}</td>
+                        <td>{{team_name}}</td>
+                        <td>{{total_points}}</td>
+                        <td>{{total_rebounds}}</td>
+                        <td>{{total_assists}}</td>
+                        <td>{{total_blocks}}</td>
+                        <td>{{total_steals}}</td>
+                        <td>{{total_turnovers}}</td>
+                        <td>{{total_three_pointers_made}}</td>
+                        <td>{{total_free_throws_made}}</td>
+                        <td>
+                            <button type="button" class="btn" id="athlete-{{athlete_id}}" onclick="favouriteActionAthlete({{athlete_id}})" data-athlete-id="{{athlete_id}}" style="color:#fff;">🩶</button>
+                        </td>
+                    </tr>
+                {{/athletes}}
+                </tbody>
+            </table>
+            <br><br>
+        </div>
+    </div>
+
+
+    <!-- TEAMS -->
+    <div class="container">
+        <div id="teams">
+            <br>
+            <h3>Teams</h3>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Team</th>
+                        <th scope="col">Points</th>
+                        <th scope="col">Rebounds</th>
+                        <th scope="col">Assists</th>
+                        <th scope="col">Blocks</th>
+                        <th scope="col">Steals</th>
+                        <th scope="col">Turnovers</th>
+                        <th scope="col">3-Pointers Made</th>
+                        <th scope="col">Free Throws Made</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{#teams}}
+                    <tr class="align-middle">
+                        <td>{{team_name}}</td>
+                        <td>{{total_points}}</td>
+                        <td>{{total_rebounds}}</td>
+                        <td>{{total_assists}}</td>
+                        <td>{{total_blocks}}</td>
+                        <td>{{total_steals}}</td>
+                        <td>{{total_turnovers}}</td>
+                        <td>{{total_three_pointers_made}}</td>
+                        <td>{{total_free_throws_made}}</td>
+                        <td>
+                            <button type="button" class="btn" id="team-{{team_id}}" onclick="favouriteActionTeam({{team_id}})" data-team-id="{{team_id}}" style="color:#fff;">🩶</button>
+                        </td>
+                    </tr>
+                {{/teams}}
+                </tbody>
+            </table>
+        </div> 
+    </div>
+
+
+
+    <!-- Bootstrap Bundle w/ Popper-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="/js/favourites/favourites.js"> </script>
+</body>
+</html>

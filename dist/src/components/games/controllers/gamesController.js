@@ -270,9 +270,9 @@ function isValidScoreFormat(input) {
     const pattern = /^\d{1,3}-\d{1,3}$/;
     if (pattern.test(input)) {
         const [team1Score, team2Score] = input.split("-").map(Number);
-        return team1Score >= 0 && team2Score >= 0; // Scores must be non-negative numbers
+        return team1Score >= 0 && team2Score >= 0;
     }
-    return false; // Invalid format
+    return false;
 }
 const deleteGame = (req, res) => {
     connection.query(`DELETE FROM games WHERE game_id = "${req.params.id}";`);

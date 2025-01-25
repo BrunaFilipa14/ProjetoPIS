@@ -12,4 +12,5 @@ router.get("/athletes/:name", viewsController.showAthlete);
 router.get("/games/competition", viewsController.showAllGamesByCompetitition);
 router.get("/games/date", viewsController.showAllGamesByDate);
 router.get("/games", viewsController.showAllGamesByDate);
+router.get("/statistics", viewsController.showAllStatistics);
 export default router;

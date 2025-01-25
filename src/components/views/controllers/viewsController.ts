@@ -3,6 +3,7 @@ import competitionsController from "../../competitions/controllers/competitionsC
 import athletesController from "../../athletes/controllers/athletesController.js";
 import favouritesController from "../../favourites/controllers/favouritesController.js";
 import gamesController from "../../games/controllers/gamesController.js";
+import statisticsController from "../../statistics/controllers/statisticsController.js";
 // TEAMS
 const showAllTeams = (req : any, res : any) => {
     teamsController.getAllTeams(req, res, (result) => {
@@ -122,6 +123,24 @@ const showAllGamesByCompetitition = (req : any, res : any) => {
         });
     });
 };
+
+// STATISTICS
+const showAllStatistics = (req : any, res : any) => {
+    let athleteStats : any;
+    let teamStats : any;
+    statisticsController.athleteStatistics(req, res, (result) => {
+        athleteStats = result;
+        statisticsController.teamStatistics(req, res, (result) => {
+            teamStats = result;
+            res.render("statistics", {
+                athletes: athleteStats,
+                teams: teamStats
+            })
+        });
+    });
+
+};
+
 // INDEX
 const showIndex = (req : any, res : any) => {
     res.render("index");
@@ -134,5 +153,6 @@ export default { showAllTeams, showTeam,
     showAllCompetitions, showCompetition,
     showAllAthletes, showAthlete,
     showAllGamesByDate, showAllGamesByCompetitition,
+    showAllStatistics,
     showIndex,
     showFavourites };
