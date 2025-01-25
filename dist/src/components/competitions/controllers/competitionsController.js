@@ -36,7 +36,7 @@ const getCompetitionByName = (req, res, callback) => {
 };
 const createCompetition = (req, res) => {
     //TODO Verifications
-    connection.query(`INSERT INTO competitions (competition_name) VALUES ("${req.body.name}");`, (err, result) => {
+    connection.query(`INSERT INTO competitions (competition_name,competition_season) VALUES ("${req.body.name}","${req.body.season}");`, (err, result) => {
         if (err) {
             console.log(err);
         }
