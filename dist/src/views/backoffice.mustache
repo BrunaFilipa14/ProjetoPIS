@@ -212,7 +212,6 @@
             <thead>
                 <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Initials</th>
                     <th scope="col">Badge</th>
                     <th scope="col">Formed Year</th>
                     <th scope="col">Stadium</th>
@@ -224,7 +223,6 @@
             {{#teams}}
                 <tr class="align-middle">
                     <td>{{team_name}}</td>
-                    <td>{{team_initials}}</td>
                     <td><img src={{team_badge}} style="max-width:100px; max-height:100px;"></td>
                     <td>{{team_formedYear}}</td>
                     <td>{{team_stadium}}</td>
@@ -275,10 +273,6 @@
                             <input type="text" name="nameEdit" class="form-control" id="inputTeamNameEdit">
                         </div>
                         <div class="mb-3">
-                            <label for="inputTeamInitialsEdit" class="form-label">Initials</label>
-                            <input type="text" name="initialsEdit" class="form-control" id="inputTeamInitialsEdit">
-                        </div>
-                        <div class="mb-3">
                             <label for="inputTeamBadgeEdit" class="form-label">Badge</label>
                             <input class="form-control" name="teamBadgeEdit" type="file" accept="image/jpeg, image/png, image/jpg" id="inputTeamBadgeEdit">
                         </div>
@@ -318,10 +312,6 @@
                         <div class="mb-3">
                             <label for="inputTeamNameCreate" class="form-label">Name</label>
                             <input type="text" name="name" class="form-control" id="inputTeamNameCreate">
-                        </div>
-                        <div class="mb-3">
-                            <label for="inputTeamInitialsCreate" class="form-label">Initials</label>
-                            <input type="text" name="initials" class="form-control" id="inputTeamInitialsCreate">
                         </div>
                         <div class="mb-3">
                             <label for="inputTeamBadgeCreate" class="form-label">Badge</label>

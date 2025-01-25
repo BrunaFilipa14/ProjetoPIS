@@ -18,7 +18,7 @@ connection.query<mysql.ResultSetHeader>(("CREATE TABLE competitions (competition
     }
 });
 
-connection.query<mysql.ResultSetHeader>(("CREATE TABLE teams (team_id INT PRIMARY KEY AUTO_INCREMENT, team_name VARCHAR(50) UNIQUE, team_initials VARCHAR (5), team_badge VARCHAR (1024), team_formedYear INT, team_stadium VARCHAR(100), team_country VARCHAR(50));"), (err, result) => {
+connection.query<mysql.ResultSetHeader>(("CREATE TABLE teams (team_id INT PRIMARY KEY AUTO_INCREMENT, team_name VARCHAR(50) UNIQUE, team_badge VARCHAR (1024), team_formedYear INT, team_stadium VARCHAR(100), team_country VARCHAR(50));"), (err, result) => {
     if (err) {
         console.log(err);
     }
@@ -27,7 +27,7 @@ connection.query<mysql.ResultSetHeader>(("CREATE TABLE teams (team_id INT PRIMAR
     }
 });
 
-connection.query<mysql.ResultSetHeader>(("CREATE TABLE competitions_teams (competition_team_id INT PRIMARY KEY AUTO_INCREMENT, competition_id INT, team_id INT, FOREIGN KEY(competition_id) REFERENCES competitions(competition_id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY(team_id) REFERENCES teams(team_id) ON DELETE CASCADE ON UPDATE CASCADE)"),(err,result) =>{
+connection.query<mysql.ResultSetHeader>(("CREATE TABLE competitions_teams (competition_team_id INT PRIMARY KEY AUTO_INCREMENT, competition_id INT, team_id INT, FOREIGN KEY(competition_id) REFERENCES competitions(competition_id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY(team_id) REFERENCES teams(team_id) ON DELETE CASCADE ON UPDATE CASCADE);"),(err,result) =>{
     if (err){
         console.log(err);
     }else{

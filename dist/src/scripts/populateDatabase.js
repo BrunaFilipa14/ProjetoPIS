@@ -70,7 +70,7 @@ async function populateTeams() {
             if (data.teams) {
                 let counter = 0;
                 for (const team of data.teams) {
-                    await populateQueryTeams(team.strTeam, team.strTeamShort, team.strBadge, team.intFormedYear, team.strStadium, team.strCountry);
+                    await populateQueryTeams(team.strTeam, team.strBadge, team.intFormedYear, team.strStadium, team.strCountry);
                     counter++;
                     await populateQueryCompTeam(competition.competitionId, counter);
                 }
@@ -205,9 +205,9 @@ function populateQueryCompetitions(competitionName, competitionSeason) {
         resolve();
     });
 }
-function populateQueryTeams(teamName, teamInitials, teamBadge, teamFormedYear, teamStadium, teamCountry) {
+function populateQueryTeams(teamName, teamBadge, teamFormedYear, teamStadium, teamCountry) {
     return new Promise((resolve, reject) => {
-        connection.query((`INSERT IGNORE INTO teams (team_name, team_initials, team_badge, team_formedYear, team_stadium, team_country) VALUES ('${teamName}','${teamInitials}','${teamBadge}',${teamFormedYear},'${teamStadium}','${teamCountry}');`), (err, result) => {
+        connection.query((`INSERT IGNORE INTO teams (team_name, team_badge, team_formedYear, team_stadium, team_country) VALUES ('${teamName}','${teamBadge}',${teamFormedYear},'${teamStadium}','${teamCountry}');`), (err, result) => {
             if (err) {
                 console.log(err);
                 reject(err);

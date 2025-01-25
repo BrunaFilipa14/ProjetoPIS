@@ -73,7 +73,7 @@ async function populateTeams() {
             if (data.teams) {
                 let counter = 0;
                 for (const team of data.teams) {
-                    await populateQueryTeams(team.strTeam, team.strTeamShort, team.strBadge, team.intFormedYear, team.strStadium, team.strCountry);
+                    await populateQueryTeams(team.strTeam, team.strBadge, team.intFormedYear, team.strStadium, team.strCountry);
                     counter++;
                     await populateQueryCompTeam(competition.competitionId, counter);
                 }
@@ -236,9 +236,9 @@ function populateQueryCompetitions(competitionName: String, competitionSeason: S
     })
 
 }
-function populateQueryTeams(teamName: string, teamInitials: string, teamBadge: string, teamFormedYear: number, teamStadium: string, teamCountry: string): Promise<void> {
+function populateQueryTeams(teamName: string, teamBadge: string, teamFormedYear: number, teamStadium: string, teamCountry: string): Promise<void> {
     return new Promise((resolve, reject) => {
-        connection.query<mysql.ResultSetHeader>((`INSERT IGNORE INTO teams (team_name, team_initials, team_badge, team_formedYear, team_stadium, team_country) VALUES ('${teamName}','${teamInitials}','${teamBadge}',${teamFormedYear},'${teamStadium}','${teamCountry}');`), (err, result) => {
+        connection.query<mysql.ResultSetHeader>((`INSERT IGNORE INTO teams (team_name, team_badge, team_formedYear, team_stadium, team_country) VALUES ('${teamName}','${teamBadge}',${teamFormedYear},'${teamStadium}','${teamCountry}');`), (err, result) => {
             if (err) {
                 console.log(err);
                 reject(err);
