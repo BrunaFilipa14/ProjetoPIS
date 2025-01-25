@@ -93,4 +93,29 @@ const getCompetitionGames = (req, res) => {
         res.status(200).json(rows);
     });
 };
-export default { getAllCompetitions, getCompetitionByName, createCompetition, editCompetition, deleteCompetition, deleteAllCompetitions, getCompetitionGames };
+const getTeamsbyCompetitionId = (req, res) => {
+    const compId = parseInt(req.params.competitionId);
+    const query = `
+    SELECT 
+        t.team_id,
+        t.team_name,
+        t.team_badge,
+        t.team_formedYear,
+        t.team_stadium,
+        t.team_country
+    FROM 
+        competitions_teams ct
+    JOIN 
+        teams t ON ct.team_id = t.team_id
+    WHERE 
+        ct.competition_id = ?;`;
+    connection.query(query, compId, (err, rows) => {
+        if (err) {
+            console.error("Error fetching teams:", err);
+            return res.status(500).json({ error: "Failed to fetch games." });
+        }
+        console.log("Rows:", rows);
+        res.status(200).json(rows);
+    });
+};
+export default { getAllCompetitions, getCompetitionByName, createCompetition, editCompetition, deleteCompetition, deleteAllCompetitions, getCompetitionGames, getTeamsbyCompetitionId };
