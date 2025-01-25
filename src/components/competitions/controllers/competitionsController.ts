@@ -45,7 +45,7 @@ const getCompetitionByName = (req : Request, res : Response, callback: (result:a
 
 const createCompetition = (req : Request, res : Response) => {
         //TODO Verifications
-        connection.query<mysql.ResultSetHeader>(`INSERT INTO competitions (competition_name) VALUES ("${req.body.name}");`, (err : Error, result : any) => {
+        connection.query<mysql.ResultSetHeader>(`INSERT INTO competitions (competition_name,competition_season) VALUES ("${req.body.name}","${req.body.season}");`, (err : Error, result : any) => {
             if (err){
                 console.log(err);
             }else{
@@ -82,5 +82,33 @@ const deleteAllCompetitions = (req : Request, res : Response) => {
     res.status(200).send("200");
 }
 
+const getCompetitionGames = (req: Request, res : Response) =>{
+    const compId : number = parseInt(req.params.compId);
 
-export default {getAllCompetitions, getCompetitionByName, createCompetition, editCompetition, deleteCompetition, deleteAllCompetitions};
+    const query = `
+    SELECT 
+        g.game_date,
+        g.game_time,
+        ht.team_name AS house_team_name,
+        vt.team_name AS visiting_team_name,
+        g.game_result
+    FROM 
+        games g
+    JOIN 
+        teams ht ON g.game_house_team_id = ht.team_id
+    JOIN 
+        teams vt ON g.game_visiting_team_id = vt.team_id
+    WHERE 
+        g.game_competition_id = ?;`;
+
+    connection.query<mysql.ResultSetHeader[]>(query,compId,(err,rows) =>{
+        if(err){
+            console.error("Error fetching games:", err);
+            return res.status(500).json({ error: "Failed to fetch games." });
+        }
+        res.status(200).json(rows);
+    })
+}
+
+
+export default {getAllCompetitions, getCompetitionByName, createCompetition, editCompetition, deleteCompetition, deleteAllCompetitions, getCompetitionGames};

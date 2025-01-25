@@ -38,6 +38,17 @@ const showBackoffice = async (req, res) => {
             return reject();
         }));
     });
+    competitions = await new Promise((resolve, reject) => {
+        (competitionsController.getAllCompetitions(req, res, (result) => {
+            if (result.length > 0) {
+                resolve(result || []);
+            }
+            else {
+                return resolve([]);
+            }
+            return reject();
+        }));
+    });
     res.render("backoffice", {
         athletes: athletes,
         teams: teams,
