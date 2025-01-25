@@ -127,7 +127,6 @@ const checkFavouriteAthletes = (req, res) => {
         }
         else {
             const favouriteAthletes = rows.map((row) => row.fav_athlete_athlete_id);
-            console.log("oi?");
             res.status(200).json({ favouriteAthletes });
         }
     });

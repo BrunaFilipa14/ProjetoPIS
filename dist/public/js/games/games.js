@@ -6,6 +6,24 @@ function orderByCompetition(){
     window.location.href = "/view/games/competition";
 }
 
+const upcomingGames = document.getElementById("upcomingGames");
+const pastGames = document.getElementById("pastGames");
+
+function showUpcomingGames(){
+    upcomingGames.style.display = "block";
+    pastGames.style.display = "none";
+}
+
+function showPastGames(){
+    upcomingGames.style.display = "none";
+    pastGames.style.display = "block";
+}
+
+function showAllGames(){
+    upcomingGames.style.display = "block";
+    pastGames.style.display = "block";
+}
+
 
 function showAthleteStats(id){
     const modalBody = document.querySelector('#gamePlayersModal .modal-body tbody');

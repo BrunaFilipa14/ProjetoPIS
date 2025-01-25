@@ -59,9 +59,17 @@ const createGame = async (req, res) => {
         res.status(400).send("Invalid season format.");
         return;
     }
-    const gameYear = new Date(req.body.date).getFullYear();
+    const gameDate = new Date(req.body.date);
+    const gameYear = gameDate.getFullYear();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     if (!seasonYears.includes(gameYear)) {
         res.status(400).send(`Game year ${gameYear} does not match the season years.`);
+        return;
+    }
+    const isFutureGame = gameDate > today;
+    if (!isFutureGame && !isValidScoreFormat(req.body.score)) {
+        res.status(400).send("Score is required for past or current games and must be valid!");
         return;
     }
     const queryCompetition = await new Promise((resolve, reject) => {
@@ -98,10 +106,6 @@ const createGame = async (req, res) => {
     });
     if (queryAwayTeam.length <= 0) {
         res.status(400).send("Away Team does not exist!");
-        return;
-    }
-    if (!isValidScoreFormat(req.body.score)) {
-        res.status(400).send("Score is not valid!");
         return;
     }
     let time;

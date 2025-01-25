@@ -144,7 +144,6 @@ const checkFavouriteAthletes = (req: any, res: any) => {
             res.status(500).json({ error: err.message });
         } else {
             const favouriteAthletes = rows.map((row:any) => row.fav_athlete_athlete_id);
-            console.log("oi?");
             res.status(200).json({ favouriteAthletes });
         }
     });
