@@ -113,13 +113,47 @@ const editGame = async (req, res) => {
         });
         const results = await Promise.all([queryHomeTeam]);
         if (results.length > 0) {
-            connection.query(`UPDATE games SET game_competition = "${req.body.competition}" WHERE game_id = ${req.params.id};`);
-            console.log("Game COMPETITION updated successfully");
+            connection.query(`UPDATE games SET game_home_team = "${req.body.homeTeam}" WHERE game_id = ${req.params.id};`);
+            console.log("Game HOME TEAM updated successfully");
             edit += 1;
         }
         else {
             res.status(400).send("");
         }
+    }
+    if (req.body.awayTeam != null && req.body.awayTeam != "") {
+        const queryAwayTeam = new Promise((resolve, reject) => {
+            connection.query(`SELECT * FROM teams 
+                                WHERE team_name LIKE ?`, [`%${req.body.awayTeam}%`], (err, rows) => {
+                if (err)
+                    return reject(err);
+                resolve(rows || []); // Ensure rows is always an array
+            });
+        });
+        const results = await Promise.all([queryAwayTeam]);
+        if (results.length > 0) {
+            connection.query(`UPDATE games SET game_away_team = "${req.body.awayTeam}" WHERE game_id = ${req.params.id};`);
+            console.log("Game AWAY TEAM updated successfully");
+            edit += 1;
+        }
+        else {
+            res.status(400).send("");
+        }
+    }
+    if (req.body.score != null && req.body.score != "") {
+        if (isValidScoreFormat(req.body.score)) {
+            connection.query(`UPDATE games SET game_score = "${req.body.score}" WHERE game_id = ${req.params.id};`);
+            console.log("Game SCORE updated successfully");
+            edit += 1;
+        }
+        else {
+            res.status(400).send("");
+        }
+    }
+    if (req.body.date != null && req.body.date != "") {
+        connection.query(`UPDATE games SET game_date = "${req.body.score}" WHERE game_id = ${req.params.id};`);
+        console.log("Game SCORE updated successfully");
+        edit += 1;
     }
     else {
         res.status(400).send("");
@@ -140,6 +174,15 @@ function isValidSeasonFormat(input) {
         return endYear === startYear + 1;
     }
     return false;
+}
+function isValidScoreFormat(input) {
+    // Regular expression to match scores like 20-90 or 120-140
+    const pattern = /^\d{1,3}-\d{1,3}$/;
+    if (pattern.test(input)) {
+        const [team1Score, team2Score] = input.split("-").map(Number);
+        return team1Score >= 0 && team2Score >= 0; // Scores must be non-negative numbers
+    }
+    return false; // Invalid format
 }
 const deleteAthlete = (req, res) => {
     connection.query(`DELETE FROM athletes WHERE athlete_id = "${req.params.id}";`);

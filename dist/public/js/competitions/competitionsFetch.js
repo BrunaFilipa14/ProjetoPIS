@@ -99,3 +99,36 @@ function deleteAllCompetitions(){
     location.reload();
 }
 
+function showCompetitionGames(compId){
+    const modalBody = document.querySelector('#competitionGamesModal .modal-body tbody');
+    modalBody.innerHTML = `<tr><td colspan="6" class="text-center">Loading...</td></tr>`;
+
+    fetch('api/competitions/${compId}/games')
+    .then(response =>{
+        if(!response.ok){
+            throw new Error("Failed to fetch competition games.");
+        }
+        return response.json();
+    })
+    .then(data =>{
+        modalBody.innerHTML = "";
+        if(data.length > 0 ){
+            data.forEach(data => {
+                const row = `
+                    <tr class="align-middle">
+                        <td>${data.house_team_name}</td>
+                        <td>${data.game_result}</td>
+                        <td>${data.visiting_team_name}</td>
+                        <td>${data.game_date}</td>
+                        <td>${data.game_time}</td>
+                    </tr>
+                `;
+                modalBody.innerHTML += row;
+            });
+        } else {
+            modalBody.innerHTML = `<tr><td colspan="6" class="text-center">No games found for this competition.</td></tr>`;
+        }
+    })
+    .catch(err => console.error(err));
+}
+

@@ -67,4 +67,29 @@ const deleteAllCompetitions = (req, res) => {
     connection.query(`DELETE FROM competitions;`);
     res.status(200).send("200");
 };
-export default { getAllCompetitions, getCompetitionByName, createCompetition, editCompetition, deleteCompetition, deleteAllCompetitions };
+const getCompetitionGames = (req, res) => {
+    const compId = parseInt(req.params.compId);
+    const query = `
+    SELECT 
+        g.game_date,
+        g.game_time,
+        ht.team_name AS house_team_name,
+        vt.team_name AS visiting_team_name,
+        g.game_result
+    FROM 
+        games g
+    JOIN 
+        teams ht ON g.game_house_team_id = ht.team_id
+    JOIN 
+        teams vt ON g.game_visiting_team_id = vt.team_id
+    WHERE 
+        g.game_competition_id = ?;`;
+    connection.query(query, compId, (err, rows) => {
+        if (err) {
+            console.error("Error fetching games:", err);
+            return res.status(500).json({ error: "Failed to fetch games." });
+        }
+        res.status(200).json(rows);
+    });
+};
+export default { getAllCompetitions, getCompetitionByName, createCompetition, editCompetition, deleteCompetition, deleteAllCompetitions, getCompetitionGames };
