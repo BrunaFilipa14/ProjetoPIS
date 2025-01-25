@@ -44,12 +44,13 @@ app.get("/sign_in", (req,res) =>{
     res.render("sign_in");
 })
 
-app.use('/home', verifyJWT, roles.authorize(1), (req, res) => {
-    res.render('indexAdmin');
-});
-
 app.use('/', verifyJWT, (req, res) => {
-    res.render('index');
+    if(roles.authorize(1)){
+        res.render('indexAdmin');
+    }
+    else{
+        res.render('index');
+    }
 });
 
 app.listen(port, () => {

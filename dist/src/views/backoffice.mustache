@@ -420,6 +420,7 @@
                     <th scope="col">Score</th>
                     <th scope="col">Away Team</th>
                     <th scorpe="col">Date</th>
+                    <th scorpe="col">Time</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -432,10 +433,11 @@
                     <td>{{game_result}}</td>
                     <td>{{visiting_team}}</td>
                     <td>{{game_date}}</td>
+                    <td>{{game_time}}</td>
                     <td>
                         <button type="button" class="btn btn-primary" onclick="showAthleteStats({{game_id}})" data-bs-toggle="modal" data-bs-target="#gamePlayersModal">Athlete Stats</button>
-                        <button type="button" class="btn btn-danger" onclick="getCompetitionId({{competition_id}})" data-bs-toggle="modal" data-bs-target="#deleteGamesModal">Delete</button>
-                        <button type="button" onclick="getCompetitionId({{competition_id}})" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editGamesModal" style="color:#fff;">Edit</button>
+                        <button type="button" class="btn btn-danger" onclick="getGameId({{game_id}})" data-bs-toggle="modal" data-bs-target="#deleteGamesModal">Delete</button>
+                        <button type="button" onclick="getGameId({{game_id}})" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editGamesModal" style="color:#fff;">Edit</button>
                     </td>
                 </tr>
             {{/games}}
@@ -485,8 +487,11 @@
                             <input type="text" class="form-control" id="inputGameAwayTeamEdit">
                             <label for="inputGameDateEdit" class="form-label">Date</label>
                             <input type="date" class="form-control" id="inputGameDateEdit">
+                            <label for="inputGameTimeEdit" class="form-label">Time</label>
+                            <input type="text" class="form-control" id="inputGameTimeEdit">
                         </div>
                     </form>
+                    <p id="editError" style="color:red"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
@@ -519,8 +524,11 @@
                             <input type="text" class="form-control" id="inputGameAwayTeamCreate">
                             <label for="inputGameDateCreate" class="form-label">Date</label>
                             <input type="date" class="form-control" id="inputGameDateCreate">
+                            <label for="inputGameTimeCreate" class="form-label">Time</label>
+                            <input type="text" class="form-control" id="inputGameTimeCreate">
                         </div>
                     </form>
+                    <p id="createError" style="color:red"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
@@ -587,8 +595,8 @@
 
 
     <!-- Tabela de Backoffice das COMPETITIONS -->
-    <div class="container" id="teams">
-        <h3>Teams</h3>
+    <div class="container" id="competitions">
+        <h3>Competitions</h3>
         <br>
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createCompetitionModal">Create New Team</button>
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAllTeamsModal">Delete All Teams</button>

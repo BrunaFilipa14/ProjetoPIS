@@ -60,73 +60,152 @@ const getGameByCompetition = (req : Request, res : Response, callback: (result:a
 };
  
 const createGame = async (req : Request, res : Response) => {
+    if(!isValidSeasonFormat(req.body.season)){
+        res.status(400).send("Season is invalid!");
+        return; 
+    }
 
+    const seasonYears = req.body.season.split("/").map(Number);
+    if (seasonYears.length !== 2) {
+        res.status(400).send("Invalid season format.");
+        return;
+    }
 
-    const checkTeamName = new Promise((resolve, reject) => {
-                connection.query<mysql.RowDataPacket[]>(
-                    `SELECT * FROM teams 
-                        WHERE team_name LIKE ?`,
-                    [`%${req.body.house_team}%`],
-                    (err, rows) => {
-                        if (err) return reject(err);
-                        resolve(rows || []);
-                    }
-                );
-            });
+    const gameYear = new Date(req.body.date).getFullYear();
+
+    if (!seasonYears.includes(gameYear)) {
+        res.status(400).send(`Game year ${gameYear} does not match the season years.`);
+        return;
+    }
+
+        const queryCompetition : any= await new Promise((resolve, reject) => {
+                    connection.query<mysql.RowDataPacket[]>(
+                        `SELECT * FROM competitions 
+                            WHERE competition_name LIKE ? AND competition_season LIKE ?`,
+                        [`%${req.body.competition}%`, `%${req.body.season}%`],
+                        (err, rows) => {
+                            if (err) return reject(err);
+                            resolve(rows || []);
+                        }
+                    );
+        });
+        if(queryCompetition.length<=0){
+            res.status(400).send("Competition does not exist! \n Create one first!");
+            return;
+        }
+        
+
+        const queryHomeTeam : any = await new Promise((resolve, reject) => {
+                    connection.query<mysql.RowDataPacket[]>(
+                        `SELECT * FROM teams 
+                            WHERE team_name LIKE ?`,
+                        [`%${req.body.homeTeam}%`],
+                        (err, rows) => {
+                            if (err) return reject(err);
+                            resolve(rows || []); // Ensure rows is always an array
+                        }
+                    );
+        });
+
+        if(queryHomeTeam.length<=0){
+            res.status(400).send("Home Team does not exist!");
+            return; 
+        }
     
-             const results = await Promise.all([checkTeamName]);
+        const queryAwayTeam : any = await new Promise((resolve, reject) => {
+                    connection.query<mysql.RowDataPacket[]>(
+                        `SELECT * FROM teams 
+                            WHERE team_name LIKE ?`,
+                        [`%${req.body.awayTeam}%`],
+                        (err, rows) => {
+                            if (err) return reject(err);
+                            resolve(rows || []); // Ensure rows is always an array
+                        }
+                    );
+        });
 
-        //TODO Verifications
-        connection.query<mysql.ResultSetHeader>(`INSERT INTO athletes (athlete_name, athlete_birthDate, athlete_height, athlete_weight, athlete_nationality, athlete_position, athlete_position) VALUES ("${req.body.name}", "${req.body.birthDate}", "${req.body.height}", "${req.body.weight}", "${req.body.nationality}", "${req.body.position}", "${req.body.team}");`, (err : Error, result : any) => {
+        if(queryAwayTeam.length<=0){
+            res.status(400).send("Away Team does not exist!");
+            return;
+        }
+    
+        if(!isValidScoreFormat(req.body.score)){
+            res.status(400).send("Score is not valid!");
+            return; 
+        }
+
+        let time;
+            if(timeFormat(req.body.time)){
+                time = timeFormat(req.body.time);
+            }else{
+                res.status(400).send("Time is not valid!");
+                return;
+            }
+    
+
+        connection.query<mysql.ResultSetHeader>(`INSERT INTO games (game_house_team_id, game_visiting_team_id, game_result, game_date, game_competition_id, game_time) VALUES ("${queryHomeTeam[0].team_id}", "${queryAwayTeam[0].team_id}", "${req.body.score}", "${req.body.date}", "${queryCompetition[0].competition_id}", "${time}");`, (err : Error, result : any) => {
             if (err){
                 console.log(err);
             }else{
-                console.log("Teams inserted: " + result.affectedRows)
-                res.status(200).send(200);
+                res.status(200).send("GAME created successfully!");
             }
         });
 }
 
-const editGame = async (req : Request, res : Response) => {
+const editGame =  async (req: Request, res: Response): Promise<void> => {
 
     let edit = 0;
     console.log(req.body);
         if(req.body.competition != null && req.body.competition != ""){
-            const queryCompetition = new Promise((resolve, reject) => {
+            const queryCompetition : any= await new Promise((resolve, reject) => {
                         connection.query<mysql.RowDataPacket[]>(
                             `SELECT * FROM competitions 
                                 WHERE competition_name LIKE ?`,
                             [`%${req.body.competition}%`],
                             (err, rows) => {
                                 if (err) return reject(err);
-                                resolve(rows || []); // Ensure rows is always an array
+                                resolve(rows || []);
                             }
                         );
             });
-            
-            const results = await Promise.all([queryCompetition]);
-
-            if(results.length>0){
-                connection.query<mysql.ResultSetHeader>(`UPDATE games SET game_competition = "${req.body.competition}" WHERE game_id = ${req.params.id};`)
+            if(queryCompetition.length>0){
+                connection.query<mysql.ResultSetHeader>(`UPDATE games SET game_competition_id = "${queryCompetition[0].competition_id}" WHERE game_id = ${req.params.id};`)
                 console.log("Game COMPETITION updated successfully");
                 edit += 1;
             }
             else{
-                res.status(400).send("");
+                res.status(400).send("Competition does not exist!");
+                return;            
             }
         }
         if(req.body.season != null && req.body.season != ""){
+        
             if(isValidSeasonFormat(req.body.season)){
-                connection.query<mysql.ResultSetHeader>(`UPDATE games SET game_competition = "${req.body.competition}" WHERE game_id = ${req.params.id};`)
-                console.log("Game COMPETITION updated successfully");
-                edit += 1;
+                const queryCompetitionId : any= await new Promise((resolve, reject) => {
+                    connection.query<mysql.RowDataPacket[]>(
+                        `SELECT * FROM games 
+                            WHERE game_id LIKE ?`,
+                        [`%${req.params.id}%`],
+                        (err, rows) => {
+                            if (err) return reject(err);
+                            resolve(rows || []); // Ensure rows is always an array
+                        }
+                    );
+                });
+                    
+                if(queryCompetitionId.length>0){
+                    connection.query<mysql.ResultSetHeader>(`UPDATE competitions SET competition_season = "${req.body.season}" WHERE competition_id = ${queryCompetitionId[0].game_competition_id};`)
+                    console.log("Game SEASON updated successfully");
+                    edit += 1;
+                }
             }
             else{
-                res.status(400).send("");
+                res.status(400).send("Season is invalid!");
+                return; 
             }
         }
         if(req.body.homeTeam != null && req.body.homeTeam != ""){
-            const queryHomeTeam = new Promise((resolve, reject) => {
+            const queryHomeTeam : any = await new Promise((resolve, reject) => {
                         connection.query<mysql.RowDataPacket[]>(
                             `SELECT * FROM teams 
                                 WHERE team_name LIKE ?`,
@@ -137,19 +216,19 @@ const editGame = async (req : Request, res : Response) => {
                             }
                         );
             });
-            
-            const results = await Promise.all([queryHomeTeam]);
-            if(results.length>0){
-                connection.query<mysql.ResultSetHeader>(`UPDATE games SET game_home_team = "${req.body.homeTeam}" WHERE game_id = ${req.params.id};`)
+
+            if(queryHomeTeam.length>0){
+                connection.query<mysql.ResultSetHeader>(`UPDATE games SET game_house_team_id = "${queryHomeTeam[0].team_id}" WHERE game_id = ${req.params.id};`)
                 console.log("Game HOME TEAM updated successfully");
                 edit += 1;
             }
             else{
-                res.status(400).send("");
+                res.status(400).send("Team does not exist!");
+                return; 
             }
         }
         if(req.body.awayTeam != null && req.body.awayTeam != ""){
-            const queryAwayTeam = new Promise((resolve, reject) => {
+            const queryAwayTeam : any = await new Promise((resolve, reject) => {
                         connection.query<mysql.RowDataPacket[]>(
                             `SELECT * FROM teams 
                                 WHERE team_name LIKE ?`,
@@ -160,39 +239,53 @@ const editGame = async (req : Request, res : Response) => {
                             }
                         );
             });
-            
-            const results = await Promise.all([queryAwayTeam]);
-            if(results.length>0){
-                connection.query<mysql.ResultSetHeader>(`UPDATE games SET game_away_team = "${req.body.awayTeam}" WHERE game_id = ${req.params.id};`)
+
+            if(queryAwayTeam.length>0){
+                connection.query<mysql.ResultSetHeader>(`UPDATE games SET game_away_team_id = "${queryAwayTeam[0].team_id}" WHERE game_id = ${req.params.id};`)
                 console.log("Game AWAY TEAM updated successfully");
                 edit += 1;
             }
             else{
-                res.status(400).send("");
+                res.status(400).send("Team does not exist!");
+                return; 
             }
         }if(req.body.score != null && req.body.score != ""){
             if(isValidScoreFormat(req.body.score)){
-                connection.query<mysql.ResultSetHeader>(`UPDATE games SET game_score = "${req.body.score}" WHERE game_id = ${req.params.id};`)
+                connection.query<mysql.ResultSetHeader>(`UPDATE games SET game_result = "${req.body.score}" WHERE game_id = ${req.params.id};`)
                 console.log("Game SCORE updated successfully");
                 edit += 1;
             }
             else{
-                res.status(400).send("");
+                res.status(400).send("Score is not valid!");
+                return; 
             }
         }
         if(req.body.date != null && req.body.date != ""){
-                connection.query<mysql.ResultSetHeader>(`UPDATE games SET game_date = "${req.body.score}" WHERE game_id = ${req.params.id};`)
-                console.log("Game SCORE updated successfully");
+                connection.query<mysql.ResultSetHeader>(`UPDATE games SET game_date = "${req.body.date}" WHERE game_id = ${req.params.id};`)
+                console.log("Game DATE updated successfully");
                 edit += 1;
         }
-        else{
-            res.status(400).send("");
+        if(req.body.time != null && req.body.time != ""){
+            let time;
+            if(timeFormat(req.body.time)){
+                time = timeFormat(req.body.time);
+            }else{
+                res.status(400).send("Time is not valid!");
+                return;
+            }
+            connection.query<mysql.ResultSetHeader>(`UPDATE games SET game_time = "${time}" WHERE game_id = ${req.params.id};`)
+            console.log("Game TIME updated successfully");
+            edit += 1;
         }
-        if(edit > 0){
-            res.status(200).send("The Athlete was edited successfully!");
-        }else{
-            res.status(400).send("The Athlete was not edited!");
-        }
+
+    if(edit > 0){
+        res.status(200).send("The Game was edited successfully!");
+        return;
+    }
+    else{
+        res.status(400).send("Error Editing Game!");
+        return; 
+    }
 }
 
 function isValidSeasonFormat(input : any) {
@@ -209,8 +302,21 @@ function isValidSeasonFormat(input : any) {
     return false;
 }
 
+function timeFormat(inputTime : String) {
+    const pattern = /^([0-9]{1,2}):([0-5]?[0-9])$/;
+
+    const match = inputTime.match(pattern);
+    if (match) {
+        const hour = match[1].padStart(2, '0');
+        const minute = match[2].padStart(2, '0');
+        return `${hour}:${minute}`;
+    } else {
+        return false;
+    }
+}
+
 function isValidScoreFormat(input : any) {
-    // Regular expression to match scores like 20-90 or 120-140
+
     const pattern = /^\d{1,3}-\d{1,3}$/;
     if (pattern.test(input)) {
         const [team1Score, team2Score] = input.split("-").map(Number);
@@ -220,16 +326,16 @@ function isValidScoreFormat(input : any) {
 }
 
 
-const deleteAthlete = (req : Request, res : Response) => {
-    connection.query<mysql.ResultSetHeader>(`DELETE FROM athletes WHERE athlete_id = "${req.params.id}";`);
+const deleteGame = (req : Request, res : Response) => {
+    connection.query<mysql.ResultSetHeader>(`DELETE FROM games WHERE game_id = "${req.params.id}";`);
 
-    res.status(200).send("Athlete deleted successfully");
+    res.status(200).send("Game deleted successfully");
 }
 
-const deleteAllAthletes = (req : Request, res : Response) => {
-    connection.query(`DELETE FROM athletes;`);
+const deleteAllGames = (req : Request, res : Response) => {
+    connection.query(`DELETE FROM games;`);
 
-    res.status(200).send("200");
+    res.status(200).send("ALL Games deleted successfully");
 }
 
 const playerStatisticInGame = (req: Request, res: Response) => {
@@ -249,4 +355,4 @@ const playerStatisticInGame = (req: Request, res: Response) => {
 
 
 
-export default {getAllGamesByDate, getAllGamesByCompetition, getGameByCompetition, playerStatisticInGame, editGame};
+export default {getAllGamesByDate, getAllGamesByCompetition, getGameByCompetition, playerStatisticInGame, editGame, createGame, deleteAllGames, deleteGame};
