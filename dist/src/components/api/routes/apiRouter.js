@@ -4,6 +4,7 @@ import competitionsRouter from "../../competitions/routes/competitionsRouter.js"
 import gamesRouter from "../../games/routes/gamesRouter.js";
 import favouritesRouter from "../../favourites/routes/favouritesRouter.js";
 import athletesRouter from "../../athletes/routes/athletesRouter.js";
+import statisticsRouter from "../../statistics/routes/statisticsRouter.js";
 import user from "../../user/controllers/userController.js";
 const router = express.Router();
 router.post("/login", user.login);
@@ -12,6 +13,6 @@ router.use("/teams", teamsRouter);
 router.use("/athletes", athletesRouter);
 router.use("/competitions", competitionsRouter);
 router.use("/games", gamesRouter);
-// router.use("/statistics", staticticsRouter);
+router.use("/statistics", statisticsRouter);
 router.use("/favourite", favouritesRouter);
 export default router;

@@ -52,8 +52,7 @@ const checkFavouriteTeams = (req, res) => {
             res.status(500).json({ error: err.message });
         }
         else {
-            const favouriteTeams = rows.map((row) => row.fav_team_team_id); // Extract team IDs
-            console.log("oi?");
+            const favouriteTeams = rows.map((row) => row.fav_team_team_id);
             res.status(200).json({ favouriteTeams });
         }
     });
@@ -184,7 +183,7 @@ const showAllFavourites = async (req, res) => {
                     }
                     else {
                         rows.forEach(row => {
-                            row.athlete_birthDate = row.athlete_birthDate.toISOString().split('T')[0]; // Remove time from Date
+                            row.athlete_birthDate = row.athlete_birthDate.toISOString().split('T')[0]; // Remove time from date
                         });
                         resolve(rows || []);
                     }
