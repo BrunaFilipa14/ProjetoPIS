@@ -54,7 +54,6 @@ const createTeam = (req, res) => {
         }
         const { name, initials, formedYear, stadium, country } = req.body;
         const badgePath = req.file ? `/images/teams/${req.file.filename}` : null;
-        //TODO Verifications
         connection.query(`INSERT INTO teams (team_name, team_initials, team_badge, team_formedYear, team_stadium, team_country) VALUES ("${name}", "${initials}", "${badgePath}", "${formedYear}", "${stadium}", "${country}");`, (err, result) => {
             if (err) {
                 console.log(err);
@@ -75,84 +74,48 @@ const editTeam = (req, res) => {
         const { nameEdit, initialsEdit, formedYearEdit, stadiumEdit, countryEdit } = req.body;
         const badgePathEdit = req.file ? `/images/teams/${req.file.filename}` : null;
         if (nameEdit != null && nameEdit != "") {
-            //TODO Verifications
-            if (true) {
-                connection.query(`UPDATE teams SET team_name = "${nameEdit}" WHERE team_id = ${req.params.id};`);
-                console.log("Team NAME updated successfully");
-            }
-            else {
-                res.status(400).send("");
-            }
+            connection.query(`UPDATE teams SET team_name = "${nameEdit}" WHERE team_id = ${req.params.id};`);
+            console.log("Team NAME updated successfully");
         }
         if (initialsEdit != null && initialsEdit != "") {
-            //TODO Verifications
-            if (true) {
-                connection.query(`UPDATE teams SET team_initials = "${initialsEdit}" WHERE team_id = ${req.params.id};`);
-                console.log("Team INITIALS updated successfully");
-            }
-            else {
-                res.status(400).send("Numero invalido!");
-            }
+            connection.query(`UPDATE teams SET team_initials = "${initialsEdit}" WHERE team_id = ${req.params.id};`);
+            console.log("Team INITIALS updated successfully");
         }
         if (badgePathEdit != null && badgePathEdit != "") {
-            //TODO Verifications
-            if (true) {
-                connection.query(`SELECT team_badge FROM teams WHERE team_id = "${req.params.id}";`, (err, rows, result) => {
-                    if (err) {
-                        console.error("Error: " + err);
+            connection.query(`SELECT team_badge FROM teams WHERE team_id = "${req.params.id}";`, (err, rows, result) => {
+                if (err) {
+                    console.error("Error: " + err);
+                }
+                else if (rows.length > 0) {
+                    let badgePath = rows[0].team_badge;
+                    console.log(badgePath);
+                    // Delete the image from the server
+                    try {
+                        fs.unlinkSync(`dist/public${badgePath}`);
+                        console.log('File deleted!');
                     }
-                    else if (rows.length > 0) {
-                        let badgePath = rows[0].team_badge;
-                        console.log(badgePath);
-                        // Delete the image from the server
-                        try {
-                            fs.unlinkSync(`dist/public${badgePath}`);
-                            console.log('File deleted!');
-                        }
-                        catch (err) {
-                            console.error(err.message);
-                        }
+                    catch (err) {
+                        console.error(err.message);
                     }
-                    else {
-                        res.status(404).send("The team doesn't exist!");
-                    }
-                });
-                connection.query(`UPDATE teams SET team_badge = "${badgePathEdit}" WHERE team_id = ${req.params.id};`);
-                console.log("Team BADGE updated successfully");
-            }
-            else {
-                res.status(400).send("");
-            }
+                }
+                else {
+                    res.status(404).send("The team doesn't exist!");
+                }
+            });
+            connection.query(`UPDATE teams SET team_badge = "${badgePathEdit}" WHERE team_id = ${req.params.id};`);
+            console.log("Team BADGE updated successfully");
         }
         if (formedYearEdit != null && formedYearEdit != "") {
-            //TODO Verifications
-            if (true) {
-                connection.query(`UPDATE teams SET team_formedYear = ${parseInt(formedYearEdit)} WHERE team_id = ${req.params.id};`);
-                console.log("Team FORMED YEAR updated successfully");
-            }
-            else {
-                res.status(400).send("");
-            }
+            connection.query(`UPDATE teams SET team_formedYear = ${parseInt(formedYearEdit)} WHERE team_id = ${req.params.id};`);
+            console.log("Team FORMED YEAR updated successfully");
         }
         if (stadiumEdit != null && stadiumEdit != "") {
-            //TODO Verifications
-            if (true) {
-                connection.query(`UPDATE teams SET team_stadium = "${stadiumEdit}" WHERE team_id = ${req.params.id};`);
-                console.log("Team STADIUM updated successfully");
-            }
-            else {
-                res.status(400).send("");
-            }
+            connection.query(`UPDATE teams SET team_stadium = "${stadiumEdit}" WHERE team_id = ${req.params.id};`);
+            console.log("Team STADIUM updated successfully");
         }
         if (countryEdit != null && countryEdit != "") {
-            //TODO Verifications
-            if (true) {
-                connection.query(`UPDATE teams SET team_country = "${countryEdit}" WHERE team_id = ${req.params.id};`);
-                console.log("Team COUNTRY updated successfully");
-            }
-            else {
-                res.status(400).send("");
-            }
+            connection.query(`UPDATE teams SET team_country = "${countryEdit}" WHERE team_id = ${req.params.id};`);
+            console.log("Team COUNTRY updated successfully");
         }
         res.status(200).send("The team was edited successfully!");
     });

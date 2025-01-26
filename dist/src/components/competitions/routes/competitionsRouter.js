@@ -12,8 +12,8 @@ router.get("/", (req, res) => {
         res.send(result);
     });
 });
-router.post("/", competitionsController.createCompetition); //TODO verifications
-router.put("/:id", competitionsController.editCompetition); //TODO verifications
+router.post("/", competitionsController.createCompetition);
+router.put("/:id", competitionsController.editCompetition);
 router.delete("/:id", competitionsController.deleteCompetition);
 router.delete("/", competitionsController.deleteAllCompetitions);
 export default router;

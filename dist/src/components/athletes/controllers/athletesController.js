@@ -44,7 +44,6 @@ const createAthlete = async (req, res) => {
         });
     });
     const results = await Promise.all([checkTeamName]);
-    //TODO Verifications
     connection.query(`INSERT INTO athletes (athlete_name, athlete_birthDate, athlete_height, athlete_weight, athlete_nationality, athlete_position, athlete_position) VALUES ("${req.body.name}", "${req.body.birthDate}", "${req.body.height}", "${req.body.weight}", "${req.body.nationality}", "${req.body.position}", "${req.body.team}");`, (err, result) => {
         if (err) {
             console.log(err);
@@ -59,81 +58,39 @@ const editAthlete = (req, res) => {
     let edit = 0;
     console.log(req.body);
     if (req.body.name != null && req.body.name != "") {
-        //TODO Verifications
-        if (true) {
-            connection.query(`UPDATE athletes SET athlete_name = "${req.body.name}" WHERE athlete_id = ${req.params.id};`);
-            console.log("Athlete NAME updated successfully");
-            edit += 1;
-        }
-        else {
-            res.status(400).send("");
-        }
+        connection.query(`UPDATE athletes SET athlete_name = "${req.body.name}" WHERE athlete_id = ${req.params.id};`);
+        console.log("Athlete NAME updated successfully");
+        edit += 1;
     }
     if (req.body.birthDate != null && req.body.birthDate != "") {
-        //TODO Verifications
-        if (true) {
-            connection.query(`UPDATE athletes SET athlete_birthDate = "${req.body.birthDate}" WHERE athlete_id = ${req.params.id};`);
-            console.log("Athlete BIRTH DATE updated successfully");
-            edit += 1;
-        }
-        else {
-            res.status(400).send("Numero invalido!");
-        }
+        connection.query(`UPDATE athletes SET athlete_birthDate = "${req.body.birthDate}" WHERE athlete_id = ${req.params.id};`);
+        console.log("Athlete BIRTH DATE updated successfully");
+        edit += 1;
     }
     if (req.body.height != null && req.body.height != "") {
-        //TODO Verifications
-        if (true) {
-            connection.query(`UPDATE athletes SET athlete_height = "${req.body.height}" WHERE athlete_id = ${req.params.id};`);
-            console.log("Athlete HEIGHT updated successfully");
-            edit += 1;
-        }
-        else {
-            res.status(400).send("");
-        }
+        connection.query(`UPDATE athletes SET athlete_height = "${req.body.height}" WHERE athlete_id = ${req.params.id};`);
+        console.log("Athlete HEIGHT updated successfully");
+        edit += 1;
     }
     if (req.body.weight != null && req.body.weight != "") {
-        //TODO Verifications
-        if (true) {
-            connection.query(`UPDATE athletes SET athlete_weight = "${req.body.weight}" WHERE athlete_id = ${req.params.id};`);
-            console.log("Athlete WEIGHT updated successfully");
-            edit += 1;
-        }
-        else {
-            res.status(400).send("");
-        }
+        connection.query(`UPDATE athletes SET athlete_weight = "${req.body.weight}" WHERE athlete_id = ${req.params.id};`);
+        console.log("Athlete WEIGHT updated successfully");
+        edit += 1;
     }
     if (req.body.nationality != null && req.body.nationality != "") {
-        //TODO Verifications
-        if (true) {
-            connection.query(`UPDATE athletes SET athlete_nationality = "${req.body.height}" WHERE athlete_id = ${req.params.id};`);
-            console.log("Athlete NATIONALITY updated successfully");
-            edit += 1;
-        }
-        else {
-            res.status(400).send("");
-        }
+        connection.query(`UPDATE athletes SET athlete_nationality = "${req.body.height}" WHERE athlete_id = ${req.params.id};`);
+        console.log("Athlete NATIONALITY updated successfully");
+        edit += 1;
     }
     if (req.body.position != null && req.body.position != "") {
-        //TODO Verifications
-        if (true) {
-            connection.query(`UPDATE athletes SET athlete_position = "${req.body.position}" WHERE athlete_id = ${req.params.id};`);
-            console.log("Athlete POSITION updated successfully");
-            edit += 1;
-        }
-        else {
-            res.status(400).send("");
-        }
+        connection.query(`UPDATE athletes SET athlete_position = "${req.body.position}" WHERE athlete_id = ${req.params.id};`);
+        console.log("Athlete POSITION updated successfully");
+        edit += 1;
     }
     if (req.body.team != null && req.body.team != "") {
-        //TODO Verifications
-        if (true) {
-            connection.query(`UPDATE athletes SET athlete_team_name = "${req.body.team}" WHERE athlete_id = ${req.params.id};`);
-            console.log("Athlete TEAM updated successfully");
-            edit += 1;
-        }
-        else {
-            res.status(400).send("");
-        }
+        connection.query(`UPDATE athletes SET athlete_team_name = "${req.body.team}" WHERE athlete_id = ${req.params.id};`);
+        console.log("Athlete TEAM updated successfully");
+        edit += 1;
     }
     if (edit > 0) {
         res.status(200).send("The Athlete was edited successfully!");

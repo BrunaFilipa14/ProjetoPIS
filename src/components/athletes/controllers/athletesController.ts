@@ -66,20 +66,8 @@ const createAthlete = async (req: Request, res: Response) => {
                 console.log("Teams inserted: " + result.affectedRows)
                 res.status(200).send(200);
             }
-        );
-    });
-
-    const results = await Promise.all([checkTeamName]);
-
-    connection.query<mysql.ResultSetHeader>(`INSERT INTO athletes (athlete_name, athlete_birthDate, athlete_height, athlete_weight, athlete_nationality, athlete_position, athlete_position) VALUES ("${req.body.name}", "${req.body.birthDate}", "${req.body.height}", "${req.body.weight}", "${req.body.nationality}", "${req.body.position}", "${req.body.team}");`, (err: Error, result: any) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("Teams inserted: " + result.affectedRows)
-            res.status(200).send(200);
-        }
-    });
-}
+        });
+};
 
 const editAthlete = (req: Request, res: Response) => {
 

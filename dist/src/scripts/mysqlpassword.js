@@ -1,1 +1,1 @@
-export default ""; //TODO Insert password
+export default "aluno2024"; //TODO Insert password

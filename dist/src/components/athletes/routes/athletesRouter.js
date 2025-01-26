@@ -9,8 +9,8 @@ router.get("/", (req, res) => {
         res.send(result);
     });
 });
-router.post("/", teamsController.createAthlete); //TODO verifications
-router.put("/:id", teamsController.editAthlete); //TODO verifications
+router.post("/", teamsController.createAthlete);
+router.put("/:id", teamsController.editAthlete);
 router.delete("/:id", teamsController.deleteAthlete);
 router.delete("/", teamsController.deleteAllAthletes);
 export default router;
