@@ -1,6 +1,8 @@
 # ProjetoPIS
 Projeto da cadeira de PIS, realizado por Bruna Magarreiro e Rúben Dantas.
 
+The updated code is in dev.
+
 FIRST USE:
     To start write your mysql password in the file src/scripts/mysqlpassword.ts
 
